@@ -16,9 +16,9 @@ class FineTuning:
 
     def get_model(self, model_config, base_model):
         model = AutoModelForCausalLM.from_pretrained(
-                base_model, 
-                quantization_config=model_config, 
-                trust_remote_code=True
+                    base_model, 
+                    quantization_config=model_config, 
+                    trust_remote_code=True
                 )
         model.config.use_cache = False
 

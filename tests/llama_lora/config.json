@@ -1,0 +1,4 @@
+{
+	"model_name": "codellama/CodeLlama-7b-hf",
+	"adapter_type": "qlora"
+}
