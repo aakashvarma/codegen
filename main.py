@@ -1,6 +1,7 @@
 import logging
 import sys
 import torch
+import argparse
 
 sys.path.append("utils")
 sys.path.append("finetune")
@@ -27,30 +28,46 @@ class Model:
         """
         return f"Model Name: {self.model_name}"
 
-    def parse_args(self, model_config_dict):
+    def parse_args(self):
         """
         Parse model configuration dictionary to set model name and choose the appropriate adapter based on the configuration.
         """
+        logging.info("Parsing arguments.")
+        parser = argparse.ArgumentParser(description='Run model inference with prompt.')
+        parser.add_argument('json_file_path', type=str, help='Path to the JSON file containing model configuration.')
+        parser.add_argument('prompt_file_path', type=str, help='Path to the file containing the prompt text.')
+
+        args = parser.parse_args()
+
+        model_config_dict = parse_config_json(args.json_file_path)
+        self.prompt = parse_prompt_text(args.prompt_file_path)
+    
         self.model_name = model_config_dict.get("model_name")
-        config_mapping = {"lora_config": LoRA, "qlora_config": QLoRA}
-        for config_key, adapter_class in config_mapping.items():
-            if config_key in model_config_dict.get("adapter_type", []):
-                self.adapter = adapter_class()
-                logging.info("Adapter setup successful.")
-                break
-        else:
-            message = "Invalid configuration. Either 'lora_config' or 'qlora_config' should be present."
-            logging.error(message)
+        config_mapping = {
+            "lora_config": LoRA, 
+            "qlora_config": QLoRA
+        }
+        try:
+            self.adapter = config_mapping[model_config_dict.get("adapter_type")]
+            logging.info("Adapter setup successful.")
+        except KeyError as e:
+            error_message = f"Invalid adapter configuration. Either 'lora_config' or 'qlora_config' should be present: {e}"
+            logging.error(error_message)
+            raise ValueError(error_message)
 
     def setup_model(self):
         """
         Download a pretrained model and tokenizer based on the given base model ID using the selected adapter.
         """
         try:
+            logging.info("Setting up model.")
             base_model = self.model_name
-            self.model, self.tokenizer = self.adapter.fine_tuning_setup(base_model)
+            adapter = self.adapter()
+            self.model, self.tokenizer = adapter.fine_tuning_setup(base_model)
         except Exception as e:
-            logging.error(f"Error on downloading the model: {e}")
+            error_message = f"Error on downloading the model: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message)
 
     def model_inference(self):
         """
@@ -70,24 +87,24 @@ class Model:
                         )
                 print(decoded_output)
         else:
-            logging.error("Prompt cannot be empty.")
+            error_message = "Prompt cannot be empty."
+            logging.error(error_message)
+            raise ValueError(error_message)
 
     def runner(self):
         """
         Main entry point for the script. Parse command line arguments, load model configuration, and perform inference.
         """
-        if len(sys.argv) != 3:
-            print("Usage: python main.py <json_file_path> <prompt_file_path>")
-            sys.exit(1)
-
-        model_config_dict = parse_config_json(sys.argv[1])
-        self.prompt = parse_prompt_text(sys.argv[2])
-
-        self.parse_args(model_config_dict)
+        self.parse_args()
         self.setup_model()
         self.model_inference()
 
 
 if __name__ == "__main__":
     model_instance = Model()
-    model_instance.runner()
+    try:
+        model_instance.runner()
+    except ValueError as ve:
+        print(f"Error: {ve}")
+    except RuntimeError as re:
+        print(f"Runtime Error: {re}")
