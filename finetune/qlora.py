@@ -21,15 +21,15 @@ class QLoRA(FineTuning):
         logging.info("Setting up QLoRA configuration.")
         try:
             model_config = BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_quant_type="nf4",
-                bnb_4bit_compute_dtype=torch.float16,
-            )
+                    load_in_4bit=True,
+                    bnb_4bit_quant_type="nf4",
+                    bnb_4bit_compute_dtype=torch.float16,
+                    )
             model = self.get_model(model_config, base_model)
             tokenizer = self.get_tokenizer(base_model)
-                
+
             logging.info("QLoRA configuration successful.")
-            
+
         except Exception as e:
             error_message = f"Error in setting up QLoRA configuration: {e}"
             logging.error(error_message)

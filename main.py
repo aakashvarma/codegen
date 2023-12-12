@@ -41,12 +41,12 @@ class Model:
 
         model_config_dict = parse_config_json(args.json_file_path)
         self.prompt = parse_prompt_text(args.prompt_file_path)
-    
+
         self.model_name = model_config_dict.get("model_name")
         config_mapping = {
-            "lora_config": LoRA, 
-            "qlora_config": QLoRA
-        }
+                "lora_config": LoRA, 
+                "qlora_config": QLoRA
+                }
         try:
             self.adapter = config_mapping[model_config_dict.get("adapter_type")]
             logging.info("Adapter setup successful.")
