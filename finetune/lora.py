@@ -12,10 +12,18 @@ from peft import (
     prepare_model_for_int8_training,
     set_peft_model_state_dict,
 )
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer, DataCollatorForSeq2Seq, BitsAndBytesConfig
+from transformers import (
+    AutoTokenizer,
+    AutoModelForCausalLM,
+    TrainingArguments,
+    Trainer,
+    DataCollatorForSeq2Seq,
+    BitsAndBytesConfig,
+)
 
 
 from datasets import load_dataset
+
 dataset = load_dataset("b-mc2/sql-create-context", split="train")
 
 train_dataset = dataset.train_test_split(test_size=0.1)["train"]
@@ -30,9 +38,7 @@ bnb_config = BitsAndBytesConfig(
 )
 
 model = AutoModelForCausalLM.from_pretrained(
-    base_model,
-    quantization_config=bnb_config,
-    trust_remote_code=True
+    base_model, quantization_config=bnb_config, trust_remote_code=True
 )
 model.config.use_cache = False
 
@@ -54,13 +60,17 @@ model_input = tokenizer(eval_prompt, return_tensors="pt").to("cuda")
 
 model.eval()
 with torch.no_grad():
-    print(tokenizer.decode(model.generate(**model_input, max_new_tokens=100)[0], skip_special_tokens=True))
-    
+    print(
+        tokenizer.decode(
+            model.generate(**model_input, max_new_tokens=100)[0],
+            skip_special_tokens=True,
+        )
+    )
+
 
 tokenizer.add_eos_token = True
 tokenizer.pad_token_id = 0
 tokenizer.padding_side = "left"
-
 
 
 def tokenize(prompt):
@@ -79,7 +89,7 @@ def tokenize(prompt):
 
 
 def generate_and_tokenize_prompt(data_point):
-    full_prompt =f"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+    full_prompt = f"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 
 You must output the SQL query that answers the question.
 
@@ -93,7 +103,6 @@ You must output the SQL query that answers the question.
 {data_point["answer"]}
 """
     return tokenize(full_prompt)
-
 
 
 tokenized_train_dataset = train_dataset.map(generate_and_tokenize_prompt)
@@ -111,7 +120,7 @@ peft_config = LoraConfig(
     lora_dropout=lora_dropout,
     r=lora_r,
     bias="none",
-    task_type="CAUSAL_LM"
+    task_type="CAUSAL_LM",
 )
 
 
