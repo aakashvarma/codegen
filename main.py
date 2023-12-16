@@ -96,7 +96,7 @@ class Runner:
         try:
             model_infer = Model(model_config)
             model, tokenizer = model_infer.get_model_and_tokenizer()
-            output = model.infer.model_inference(model, tokenizer, prompt)
+            output = model_infer.model_inference(model, tokenizer, prompt)
             logging.info("Inference Output: %s", output)
             return output
         except Exception as e:
