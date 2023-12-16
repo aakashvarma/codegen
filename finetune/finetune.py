@@ -15,8 +15,8 @@ class FineTuner:
         device_map = "auto"
         compute_dtype = (
             torch.float16
-            if self.model_config.compute_type = "fp16"
-            else (torch.bfloat16 if self.model_config.compute_type = "bf16" else torch.float32)
+            if self.model_config.compute_type == "fp16"
+            else (torch.bfloat16 if self.model_config.compute_type == "bf16" else torch.float32)
         )
 
         model = AutoModelForCausalLM.from_pretrained(
@@ -36,8 +36,8 @@ class FineTuner:
             ),
             torch_dtype=(
                 torch.float32
-                if self.model_config.compute_type = "fp16"
-                else (torch.bfloat16 if self.model_config.compute_type = "bf16" else torch.float32)
+                if self.model_config.compute_type == "fp16"
+                else (torch.bfloat16 if self.model_config.compute_type == "bf16" else torch.float32)
             ),
             trust_remote_code=self.model_config.trust_remote_code,
             use_auth_token=self.model_config.use_auth_token,
