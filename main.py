@@ -12,6 +12,8 @@ sys.path.append("finetune")
 from model import Model
 from utils import parse_prompt_text
 
+logging.basicConfig(level=logging.DEBUG)  # You can set the level as needed
+
 class ModelArguments:
     def __init__(
         self,
@@ -119,12 +121,6 @@ class Runner:
         """
         model.setup_model()
 
-        print("Model Arguments:")
-        print(model_arguments.__dict__)
-
-        print("\nData Training Arguments:")
-        print(data_training_arguments.__dict__)
-
 
 if __name__ == "__main__":
     try:
@@ -135,7 +131,20 @@ if __name__ == "__main__":
         model_arguments = ModelArguments.from_yaml(args.yaml_path)
         data_training_arguments = DataTrainingArguments.from_yaml(args.yaml_path)
 
+        # Set up loggers
+        logger = logging.getLogger(__name__)
+        debug_logger = logging.getLogger("debug_logger")
+        error_logger = logging.getLogger("error_logger")
+
+        logger.info("Model Arguments:")
+        logger.info(model_arguments.__dict__)
+
+        logger.info("\nData Training Arguments:")
+        logger.info(data_training_arguments.__dict__)
+
     except ValueError as ve:
-        print(f"Error: {ve}")
+        error_logger.error(f"Error: {ve}")
     except RuntimeError as re:
-        print(f"Runtime Error: {re}")
+        error_logger.error(f"Runtime Error: {re}")
+    except Exception as e:
+        error_logger.error(f"An unexpected error occurred: {e}", exc_info=True)
