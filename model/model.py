@@ -6,11 +6,6 @@ import torch
 sys.path.append("../utils")
 sys.path.append("../finetune")
 
-from utils import parse_config_json, parse_prompt_text
-from qlora import QLoRA
-from lora import LoRA
-
-
 class Model:
     def __init__(self, model_name, adapter):
         """

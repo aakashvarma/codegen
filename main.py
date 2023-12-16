@@ -10,7 +10,7 @@ sys.path.append("utils")
 sys.path.append("finetune")
 
 from model import Model
-from utils import parse_config_json, parse_prompt_text
+from utils import parse_prompt_text
 
 class ModelArguments:
     def __init__(
@@ -72,26 +72,6 @@ class DataTrainingArguments:
         with open(yaml_path, "r") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["data_training_arguments"]
         return cls(**yaml_args)
-
-
-# model_arguments:
-#   model_name: "meta-llama/Llama-2-7b-hf"
-#   cache_dir: null
-#   r: 64
-#   lora_alpha: 32
-#   lora_dropout: 0.05
-#   bits: 4
-#   double_quant: true
-#   quant_type: "nf4"
-#   trust_remote_code: false
-#   use_auth_token: false
-
-# data_training_arguments:
-#   dataset_name: "Dahoas/full-hh-rlhf"
-#   block_size: 4096
-#   multi_gpu: false
-#   tensor_parallel: false
-#   model_output_dir: "LLaMA/LoRA"
 
 
 class Runner:
