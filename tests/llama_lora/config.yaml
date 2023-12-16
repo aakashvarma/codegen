@@ -1,5 +1,5 @@
 model_arguments:
-  model_name: "meta-llama/Llama-2-7b-hf"
+  model_name: "codellama/CodeLlama-7b-hf"
   cache_dir: null
   r: 64
   lora_alpha: 32
@@ -9,7 +9,7 @@ model_arguments:
   quant_type: "nf4"
   trust_remote_code: false
   use_auth_token: false
-  compute_type: "bf16"
+  compute_type: "fp16"
 
 data_training_arguments:
   dataset_name: "Dahoas/full-hh-rlhf"
