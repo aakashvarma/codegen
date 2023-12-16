@@ -7,7 +7,7 @@ def load_from_json(file_path):
     return data
 
 def parse_json(file_path):
-    data = load_data_from_json(file_path)
+    data = load_from_json(file_path)
     return data
 
 def parse_text(file_path):
