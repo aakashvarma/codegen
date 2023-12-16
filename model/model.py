@@ -7,24 +7,48 @@ sys.path.append("../finetune")
 
 from finetune.finetune import FineTuner
 
+
 class Model:
+    """
+    Class for working with a pretrained language model and performing inference.
+
+    Args:
+        model_config: Model configuration object.
+
+    Methods:
+        __init__(model_config): Initialize the Model class with attributes.
+        __str__(): Provide a string representation of the Model instance.
+        get_model_and_tokenizer(): Download a pretrained model and tokenizer based on the given base model ID using the selected adapter.
+        model_inference(model, tokenizer, prompt): Perform model inference on the provided prompt.
+
+    Attributes:
+        model_config: Model configuration object.
+    """
+
     def __init__(self, model_config):
         """
         Initialize the Model class with attributes.
+
+        Args:
+            model_config: Model configuration object.
         """
         self.model_config = model_config
 
     def __str__(self):
         """
         Provide a string representation of the Model instance.
+
+        Returns:
+            str: String representation of the Model instance.
         """
-        return (
-            f"Model Config: {self.model_config}"
-        )
+        return f"Model Config: {self.model_config}"
 
     def get_model_and_tokenizer(self):
         """
         Download a pretrained model and tokenizer based on the given base model ID using the selected adapter.
+
+        Returns:
+            tuple: A tuple containing the configured model and tokenizer.
         """
         try:
             logging.info("Setting up model.")
@@ -41,6 +65,14 @@ class Model:
     def model_inference(self, model, tokenizer, prompt):
         """
         Perform model inference on the provided prompt.
+
+        Args:
+            model: The pretrained language model.
+            tokenizer: The tokenizer associated with the model.
+            prompt (str): The input prompt for inference.
+
+        Returns:
+            str: Inference output.
         """
         try:
             if prompt:
@@ -49,7 +81,9 @@ class Model:
 
                 model.eval()
                 with torch.no_grad():
-                    generated_tokens = model.generate(**model_input, max_new_tokens=100)[0]
+                    generated_tokens = model.generate(
+                        **model_input, max_new_tokens=100
+                    )[0]
                     decoded_output = tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
