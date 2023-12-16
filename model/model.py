@@ -8,19 +8,18 @@ sys.path.append("../finetune")
 from finetune.finetune import FineTuner
 
 class Model:
-    def __init__(self, model_config, training_config):
+    def __init__(self, model_config):
         """
         Initialize the Model class with attributes.
         """
         self.model_config = model_config
-        self.training_config = training_config
 
     def __str__(self):
         """
         Provide a string representation of the Model instance.
         """
         return (
-            f"Model Config: {self.model_config}, Training Config: {self.training_config}"
+            f"Model Config: {self.model_config}}"
         )
 
     def get_model_and_tokenizer(self):
@@ -29,7 +28,7 @@ class Model:
         """
         try:
             logging.info("Setting up model.")
-            finetuner = FineTuner(self.model_config, self.training_config)
+            finetuner = FineTuner(self.model_config)
 
             model, tokenizer = finetuner.finetuning_model_setup()
             return model, tokenizer
