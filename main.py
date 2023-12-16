@@ -12,7 +12,7 @@ sys.path.append("finetune")
 from model import Model
 from utils import parse_prompt_text
 
-logging.basicConfig(level=logging.DEBUG)  # You can set the level as needed
+logging.basicConfig(level=logging.DEBUG)
 
 class ModelArguments:
     def __init__(
@@ -86,35 +86,6 @@ class Runner:
         return parser
 
 
-    # def parse_args(self):
-    #     """
-    #     Parse model configuration dictionary to set model name and choose the appropriate adapter based on the configuration.
-    #     """
-    #     logging.info("Parsing arguments.")
-    #     parser = argparse.ArgumentParser(description='Run model inference with prompt.')
-    #     parser.add_argument('json_file_path', type=str, help='Path to the JSON file containing model configuration.')
-    #     parser.add_argument('prompt_file_path', type=str, help='Path to the file containing the prompt text.')
-
-    #     args = parser.parse_args()
-
-    #     model_config_dict = parse_config_json(args.json_file_path)
-    #     self.prompt = parse_prompt_text(args.prompt_file_path)
-
-    #     self.model_name = model_config_dict.get("model_name")
-    #     config_mapping = {
-    #             "lora_config": LoRA, 
-    #             "qlora_config": QLoRA
-    #             }
-    #     try:
-    #         self.adapter = config_mapping[model_config_dict.get("adapter_type")]
-    #         logging.info("Adapter setup successful.")
-    #     except KeyError as e:
-    #         error_message = f"Invalid adapter configuration. Either 'lora_config' or 'qlora_config' should be present: {e}"
-    #         logging.error(error_message)
-    #         raise ValueError(error_message)
-
-
-
     def infer(self, model):
         """
         Main entry point for the script. Parse command line arguments, load model configuration, and perform inference.
@@ -139,7 +110,7 @@ if __name__ == "__main__":
         logger.info("Model Arguments:")
         logger.info(model_arguments.__dict__)
 
-        logger.info("\nData Training Arguments:")
+        logger.info("Data Training Arguments:")
         logger.info(data_training_arguments.__dict__)
 
     except ValueError as ve:
