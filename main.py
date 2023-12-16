@@ -78,7 +78,7 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def get_parser():
+    def get_parser(self):
         parser = argparse.ArgumentParser(description="Arguments")
         parser.add_argument("--yaml_path", required=True, help="Path to the YAML file containing both sets of arguments.")
         return parser
