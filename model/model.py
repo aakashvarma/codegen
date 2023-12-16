@@ -2,12 +2,10 @@ import logging
 import sys
 import torch
 
-
 sys.path.append("../utils")
 sys.path.append("../finetune")
 
 from finetune import FineTuner
-
 
 class Model:
     def __init__(self, model_config, training_config):
@@ -21,7 +19,9 @@ class Model:
         """
         Provide a string representation of the Model instance.
         """
-        return f"Model Name: {self.model_name}"
+        return (
+            f"Model Config: {self.model_config}, Training Config: {self.training_config}"
+        )
 
     def get_model_and_tokenizer(self):
         """
@@ -39,24 +39,29 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message)
 
-    def model_inference(self, prompt):
+    def model_inference(self, model, tokenizer, prompt):
         """
         Perform model inference on the provided prompt.
         """
-        if prompt:
-            logging.info("Running model inference on the prompt.")
-            model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+        try:
+            if prompt:
+                logging.info("Running model inference on the prompt.")
+                model_input = tokenizer(prompt, return_tensors="pt").to("cuda")
 
-            self.model.eval()
-            with torch.no_grad():
-                generated_tokens = self.model.generate(
-                    **model_input, max_new_tokens=100
-                )[0]
-                decoded_output = self.tokenizer.decode(
-                    generated_tokens, skip_special_tokens=True
-                )
-                print(decoded_output)
-        else:
-            error_message = "Prompt cannot be empty."
-            logging.error(error_message)
-            raise ValueError(error_message)
+                model.eval()
+                with torch.no_grad():
+                    generated_tokens = model.generate(**model_input, max_new_tokens=100)[0]
+                    decoded_output = tokenizer.decode(
+                        generated_tokens, skip_special_tokens=True
+                    )
+                    logging.info("Inference Output: %s", decoded_output)
+                    return decoded_output
+            else:
+                error_message = "Prompt cannot be empty."
+                logging.error(error_message)
+                raise ValueError(error_message)
+
+        except Exception as e:
+            error_message = f"Error during model inference: {e}"
+            logging.error(error_message, exc_info=True)
+            raise RuntimeError(error_message)

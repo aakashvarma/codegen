@@ -9,6 +9,7 @@ model_arguments:
   quant_type: "nf4"
   trust_remote_code: false
   use_auth_token: false
+  compute_type: "bf16"
 
 data_training_arguments:
   dataset_name: "Dahoas/full-hh-rlhf"

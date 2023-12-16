@@ -27,6 +27,7 @@ class ModelArguments:
         quant_type: str = "nf4",
         trust_remote_code: Optional[bool] = False,
         use_auth_token: Union[bool, str] = False,
+        compute_type: Optional[str] = "bf16",
     ):
         self.model_name = model_name
         self.cache_dir = cache_dir
@@ -38,6 +39,7 @@ class ModelArguments:
         self.quant_type = quant_type
         self.trust_remote_code = trust_remote_code
         self.use_auth_token = use_auth_token
+        self.compute_type = compute_type
 
     @classmethod
     def from_args(cls, args):
@@ -83,39 +85,71 @@ class Runner:
     def get_parser(self):
         parser = argparse.ArgumentParser(description="Arguments")
         parser.add_argument("--yaml_path", required=True, help="Path to the YAML file containing both sets of arguments.")
+        parser.add_argument("--prompt_file", required=True, help="Path to the text file containing the prompt.")
+        parser.add_argument("--infer", action="store_true", help="Perform inference.")
+        parser.add_argument("--finetune", action="store_true", help="Perform finetuning.")
         return parser
 
-
-    def infer(self, model):
+    def infer(self, model_config, prompt):
         """
         Main entry point for the script. Parse command line arguments, load model configuration, and perform inference.
         """
-        model.setup_model()
+        try:
+            model_infer = Model(model_config)
+            model, tokenizer = model_infer.get_model_and_tokenizer()
+            output = model.infer.model_inference(model, tokenizer, prompt)
+            logging.info("Inference Output: %s", output)
+            return output
+        except Exception as e:
+            logging.error("Error during inference: %s", e, exc_info=True)
+            raise e
+
+    def finetune(self, model_config, data_training_config):
+        """
+        Placeholder for the finetuning function. Implement this function based on your finetuning logic.
+        """
+        logging.info("Finetuning function placeholder. Implement based on your logic.")
+
+    def main(self):
+        try:
+            args = self.get_parser().parse_args()
+
+            # Set up loggers
+            logging.basicConfig(level=logging.INFO)
+            logger = logging.getLogger(__name__)
+            debug_logger = logging.getLogger("debug_logger")
+            error_logger = logging.getLogger("error_logger")
+
+            logger.info("Starting the script.")
+
+            # Create instances of the classes from the YAML file
+            model_arguments = ModelArguments.from_yaml(args.yaml_path)
+            data_training_arguments = DataTrainingArguments.from_yaml(args.yaml_path)
+
+            logger.info("Model Arguments:")
+            logger.info(model_arguments.__dict__)
+
+            logger.info("Data Training Arguments:")
+            logger.info(data_training_arguments.__dict__)
+
+            # Read the prompt from the text file
+            with open(args.prompt_file, "r") as prompt_file:
+                prompt = prompt_file.read()
+
+            if args.infer:
+                result = self.infer(model_arguments, prompt)
+                logger.info("Script completed successfully with result: %s", result)
+            elif args.finetune:
+                self.finetune(model_arguments, data_training_arguments)
+                logger.info("Script completed finetuning successfully.")
+
+        except ValueError as ve:
+            error_logger.error("ValueError: %s", ve)
+        except RuntimeError as re:
+            error_logger.error("RuntimeError: %s", re)
+        except Exception as e:
+            error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
 
 
 if __name__ == "__main__":
-    try:
-        runner = Runner()
-        args = runner.get_parser().parse_args()
-
-        # Create instances of the classes from the YAML file
-        model_arguments = ModelArguments.from_yaml(args.yaml_path)
-        data_training_arguments = DataTrainingArguments.from_yaml(args.yaml_path)
-
-        # Set up loggers
-        logger = logging.getLogger(__name__)
-        debug_logger = logging.getLogger("debug_logger")
-        error_logger = logging.getLogger("error_logger")
-
-        logger.info("Model Arguments:")
-        logger.info(model_arguments.__dict__)
-
-        logger.info("Data Training Arguments:")
-        logger.info(data_training_arguments.__dict__)
-
-    except ValueError as ve:
-        error_logger.error(f"Error: {ve}")
-    except RuntimeError as re:
-        error_logger.error(f"Runtime Error: {re}")
-    except Exception as e:
-        error_logger.error(f"An unexpected error occurred: {e}", exc_info=True)
+    Runner().main()
