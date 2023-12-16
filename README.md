@@ -19,8 +19,8 @@ This documentation provides information on the usage and configuration of the sc
 1. Clone the repository:
 
    ```bash
-   git clone <repository_url>
-   cd <repository_directory>
+   git clone git@github.com:aakashvarma/codegen.git
+   cd codegen
    ```
 
 2. Install the required dependencies:
@@ -109,4 +109,4 @@ Contributions to the project are welcome. If you find a bug or have suggestions 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to use and modify the code according to the terms of the license.
+This project is licensed under the [Apache-2.0 license](LICENSE). Feel free to use and modify the code according to the terms of the license.
