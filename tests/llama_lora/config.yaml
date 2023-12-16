@@ -1,0 +1,19 @@
+model_arguments:
+  model_name: "codellama/CodeLlama-7b-hf"
+  cache_dir: null
+  r: 64
+  lora_alpha: 32
+  lora_dropout: 0.05
+  bits: 4
+  double_quant: true
+  quant_type: "nf4"
+  trust_remote_code: false
+  use_auth_token: false
+  compute_type: "fp16"
+
+data_training_arguments:
+  dataset_name: "Dahoas/full-hh-rlhf"
+  block_size: 4096
+  multi_gpu: false
+  tensor_parallel: false
+  model_output_dir: "LLaMA/LoRA"
