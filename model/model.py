@@ -19,7 +19,7 @@ class Model:
         Provide a string representation of the Model instance.
         """
         return (
-            f"Model Config: {self.model_config}}"
+            f"Model Config: {self.model_config}"
         )
 
     def get_model_and_tokenizer(self):
