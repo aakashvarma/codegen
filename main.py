@@ -7,10 +7,9 @@ from typing import Optional, Union
 
 sys.path.append("model")
 sys.path.append("utils")
-sys.path.append("finetune")
 
 from model import Model
-from utils import parse_prompt_text
+from utils import parse_text
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -133,8 +132,7 @@ class Runner:
             logger.info(data_training_arguments.__dict__)
 
             # Read the prompt from the text file
-            with open(args.prompt_file, "r") as prompt_file:
-                prompt = prompt_file.read()
+            prompt = parse_text(args.prompt_file)
 
             if args.infer:
                 result = self.infer(model_arguments, prompt)

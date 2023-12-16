@@ -5,7 +5,7 @@ import torch
 sys.path.append("../utils")
 sys.path.append("../finetune")
 
-from finetune import FineTuner
+from finetune.finetune import FineTuner
 
 class Model:
     def __init__(self, model_config, training_config):
