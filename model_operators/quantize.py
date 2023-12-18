@@ -7,7 +7,7 @@ from transformers import (
 )
 
 
-class FineTuner:
+class Quantizer:
     """
     Class for setting up and configuring a model for fine-tuning.
 
@@ -17,19 +17,12 @@ class FineTuner:
     Methods:
         get_model(): Get the fine-tuning model based on the provided configuration.
         get_tokenizer(): Get the tokenizer for the fine-tuning model.
-        finetuning_model_setup(): Set up fine-tuning configuration.
+        model_setup(): Set up fine-tuning configuration.
 
     Attributes:
         model_config: Model configuration object.
     """
-
     def __init__(self, model_config):
-        """
-        Initialize FineTuner with a model configuration.
-
-        Args:
-            model_config: Model configuration object.
-        """
         self.model_config = model_config
 
     def get_model(self):
@@ -91,7 +84,7 @@ class FineTuner:
         tokenizer = AutoTokenizer.from_pretrained(self.model_config.model_name)
         return tokenizer
 
-    def finetuning_model_setup(self):
+    def model_setup(self):
         """
         Set up Finetune configuration.
 

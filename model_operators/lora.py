@@ -171,7 +171,7 @@
 
 
 import logging
-from finetune.finetune import FineTuning
+from model_operators.finetune import FineTuning
 
 import torch
 from transformers import BitsAndBytesConfig

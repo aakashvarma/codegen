@@ -1,9 +1,6 @@
-model_arguments:
+model_config:
   model_name: "codellama/CodeLlama-7b-hf"
   cache_dir: null
-  r: 64
-  lora_alpha: 32
-  lora_dropout: 0.05
   bits: 4
   double_quant: true
   quant_type: "nf4"
@@ -11,9 +8,22 @@ model_arguments:
   use_auth_token: false
   compute_type: "fp16"
 
-data_training_arguments:
-  dataset_name: "Dahoas/full-hh-rlhf"
-  block_size: 4096
-  multi_gpu: false
-  tensor_parallel: false
-  model_output_dir: "LLaMA/LoRA"
+finetune_config:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+
+trainer_config:
+  dataset_name: "b-mc2/sql-create-context"
+  block_size: 512
+  output_dir: "LLaMA/LoRA"
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  optim: "paged_adamw_32bit"
+  save_steps: 100
+  logging_steps: 10
+  learning_rate: 2e-4
+  max_grad_norm: 0.3
+  max_steps: 100
+  warmup_ratio: 0.03
+  lr_scheduler_type: "constant"

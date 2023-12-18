@@ -13,7 +13,7 @@ from utils import parse_text
 logging.basicConfig(level=logging.DEBUG)
 
 
-class ModelArguments:
+class ModelConfiguration:
     """
     Configuration class for model arguments.
 
@@ -58,35 +58,22 @@ class ModelArguments:
         self.compute_type = compute_type
 
     @classmethod
-    def from_args(cls, args):
-        """
-        Create an instance of ModelArguments from command line arguments.
-
-        Args:
-            args: Command line arguments.
-
-        Returns:
-            ModelArguments: An instance of ModelArguments.
-        """
-        return cls(**vars(args))
-
-    @classmethod
     def from_yaml(cls, yaml_path):
         """
-        Create an instance of ModelArguments from a YAML file.
+        Create an instance of ModelConfiguration from a YAML file.
 
         Args:
             yaml_path (str): Path to the YAML file.
 
         Returns:
-            ModelArguments: An instance of ModelArguments.
+            ModelConfiguration: An instance of ModelConfiguration.
         """
         with open(yaml_path, "r") as yaml_file:
-            yaml_args = yaml.safe_load(yaml_file)["model_arguments"]
+            yaml_args = yaml.safe_load(yaml_file)["model_config"]
         return cls(**yaml_args)
 
 
-class DataTrainingArguments:
+class TrainerConfiguration:
     """
     Configuration class for data training arguments.
 
@@ -105,39 +92,72 @@ class DataTrainingArguments:
         multi_gpu: Optional[bool] = False,
         tensor_parallel: Optional[bool] = False,
         model_output_dir: Optional[str] = "LLaMA/LoRA",
+        per_device_train_batch_size: Optional[int] = 4,
+        gradient_accumulation_steps: Optional[int] = 4,
+        optim: Optional[str] = "paged_adamw_32bit",
+        save_steps: Optional[int] = 100,
+        logging_steps: Optional[int] = 10,
+        learning_rate: Optional[float] = 2e-4,
+        max_grad_norm: Optional[float] = 0.3,
+        max_steps: Optional[int] = 100,
+        warmup_ratio: Optional[float] = 0.03,
+        lr_scheduler_type: Optional[str] = "constant",
     ):
         self.dataset_name = dataset_name
         self.block_size = block_size
         self.multi_gpu = multi_gpu
         self.tensor_parallel = tensor_parallel
         self.model_output_dir = model_output_dir
-
-    @classmethod
-    def from_args(cls, args):
-        """
-        Create an instance of DataTrainingArguments from command line arguments.
-
-        Args:
-            args: Command line arguments.
-
-        Returns:
-            DataTrainingArguments: An instance of DataTrainingArguments.
-        """
-        return cls(**vars(args))
+        self.per_device_train_batch_size = per_device_train_batch_size
+        self.gradient_accumulation_steps = gradient_accumulation_steps
+        self.optim = optim
+        self.save_steps = save_steps
+        self.logging_steps = logging_steps
+        self.learning_rate = learning_rate
+        self.max_grad_norm = max_grad_norm
+        self.max_steps = max_steps
+        self.warmup_ratio = warmup_ratio
+        self.lr_scheduler_type = lr_scheduler_type
 
     @classmethod
     def from_yaml(cls, yaml_path):
         """
-        Create an instance of DataTrainingArguments from a YAML file.
+        Create an instance of TrainerConfiguration from a YAML file.
 
         Args:
             yaml_path (str): Path to the YAML file.
 
         Returns:
-            DataTrainingArguments: An instance of DataTrainingArguments.
+            TrainerConfiguration: An instance of TrainerConfiguration.
         """
         with open(yaml_path, "r") as yaml_file:
-            yaml_args = yaml.safe_load(yaml_file)["data_training_arguments"]
+            yaml_args = yaml.safe_load(yaml_file)["trainer_config"]
+        return cls(**yaml_args)
+
+class FineTuneConfiguration:
+    """
+    Configuration class for fine-tuning arguments.
+
+    Args:
+        r (Optional[int]): Parameter 'r' for fine-tuning. Default is 16.
+        lora_alpha (Optional[float]): Alpha value for LoRA during fine-tuning. Default is 32.
+        lora_dropout (Optional[float]): Dropout value for LoRA during fine-tuning. Default is 0.05.
+    """
+
+    def __init__(
+        self,
+        r: Optional[int] = 16,
+        lora_alpha: Optional[float] = 32,
+        lora_dropout: Optional[float] = 0.05,
+    ):
+        self.r = r
+        self.lora_alpha = lora_alpha
+        self.lora_dropout = lora_dropout
+
+    @classmethod
+    def from_yaml(cls, yaml_path):
+        with open(yaml_path, "r") as yaml_file:
+            yaml_args = yaml.safe_load(yaml_file)["finetune_config"]
         return cls(**yaml_args)
 
 
@@ -148,7 +168,7 @@ class Runner:
     Methods:
         get_parser(): Get the argument parser.
         infer(model_config, prompt): Perform inference using the specified model configuration and prompt.
-        finetune(model_config, data_training_config): Placeholder for the finetuning function.
+        finetune(model_config, trainer_config): Placeholder for the finetuning function.
         main(): Main entry point for the script.
     """
 
@@ -191,17 +211,22 @@ class Runner:
             str: Inference output.
         """
         try:
-            model_infer = Model(model_config)
-            model, tokenizer = model_infer.get_model_and_tokenizer()
-            output = model_infer.model_inference(model, tokenizer, prompt)
+            model = Model(model_config)
+            output = model.infer_model(prompt)
             logging.info("Inference Output: %s", output)
             return output
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
-    def finetune(self, model_config, data_training_config):
-        pass
+    def finetune(self, model_config, trainer_config):
+        try:
+            model = Model(model_config, trainer_config)
+            model.finetune_model()
+            logging.info("Finetuning completed")
+        except Exception as e:
+            logging.error("Error during inference: %s", e, exc_info=True)
+            raise e
 
     def main(self):
         """
@@ -217,22 +242,26 @@ class Runner:
 
             logger.info("Starting the script.")
 
-            model_arguments = ModelArguments.from_yaml(args.yaml_path)
-            data_training_arguments = DataTrainingArguments.from_yaml(args.yaml_path)
+            model_config = ModelConfiguration.from_yaml(args.yaml_path)
+            trainer_config = TrainerConfiguration.from_yaml(args.yaml_path)
+            finetune_config = FineTuneConfiguration.from_yaml(args.yaml_path)
 
-            logger.info("Model Arguments:")
-            logger.info(model_arguments.__dict__)
+            logger.info("Model Configuration:")
+            logger.info(model_config.__dict__)
 
-            logger.info("Data Training Arguments:")
-            logger.info(data_training_arguments.__dict__)
+            logger.info("Trainer Configuration:")
+            logger.info(trainer_config.__dict__)
+
+            logger.info("FineTune Configuration:")
+            logger.info(finetune_config.__dict__)
 
             prompt = parse_text(args.prompt_file)
 
             if args.infer:
-                result = self.infer(model_arguments, prompt)
+                result = self.infer(model_config, prompt)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
-                self.finetune(model_arguments, data_training_arguments)
+                self.finetune(model_config, trainer_config, finetune_config)
                 logger.info("Script completed finetuning successfully.")
 
         except ValueError as ve:
@@ -241,6 +270,7 @@ class Runner:
             error_logger.error("RuntimeError: %s", re)
         except Exception as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
+
 
 
 if __name__ == "__main__":
