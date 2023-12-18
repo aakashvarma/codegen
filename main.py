@@ -222,7 +222,7 @@ class Runner:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
-    def finetune(self, model_config, trainer_config):
+    def finetune(self, model_config, trainer_config, finetune_config):
         try:
             model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
