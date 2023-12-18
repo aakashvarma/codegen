@@ -11,7 +11,6 @@ class Trainer:
 		self.tokenizer = tokenizer
 
 	def get_dataset(self):
-		import pdb; pdb.set_trace()
 		dataset = load_dataset(self.trainer_config.dataset_name, split="train")
 
 		train_dataset = dataset.train_test_split(test_size=0.1)["train"]
