@@ -40,7 +40,7 @@ class FineTuner(Quantizer):
             task_type = "CAUSAL_LM"
         )
         DEVICE = 'cuda'
-        model = model.to(DEVICE)
+        # model = model.to(DEVICE)
         model = prepare_model_for_kbit_training(model)
         model = get_peft_model(model, LORA_CONFIG)
 
