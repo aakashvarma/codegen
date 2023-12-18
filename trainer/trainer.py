@@ -71,7 +71,7 @@ class Trainer:
 			max_grad_norm = self.trainer_config.max_grad_norm,
 			max_steps = self.trainer_config.max_steps,
 			warmup_ratio = self.trainer_config.warmup_ratio,
-			group_by_length = self.trainer_config.True,
+			group_by_length = True,
 			lr_scheduler_type = self.trainer_config.lr_scheduler_type,
 		)
 
