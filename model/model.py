@@ -136,7 +136,8 @@ class Model:
         """
         try:
             self.get_finetuning_model_and_tokenizer()
-            trainer = Trainer(self.model, self.tokenizer, self.trainer_config)
+            trainer_obj = Trainer(self.model, self.tokenizer, self.trainer_config)
+            trainer = trainer_obj.get_trianer()
             trainer.train()
             self.model.save_pretrained(self.trainer_config.output_dir)
 
