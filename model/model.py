@@ -142,4 +142,7 @@ class Model:
 
             logging.info("Finetuned model saved to: %s", self.trainer_config.output_dir)
         except Exception as e:
-            logging.error(f"Error in model training: {e}")
+            error_message = f"Error in model training: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message)
+
