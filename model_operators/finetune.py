@@ -14,7 +14,7 @@ from peft import (
 )
 
 
-from model_operators.finetune import Quantizer,
+from model_operators.finetune import Quantizer
 
 
 class FineTuner(Quantizer):
