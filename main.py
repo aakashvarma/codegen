@@ -252,7 +252,7 @@ class Runner:
             logger.info("Model Configuration:")
             logger.info(model_config.__dict__)
 
-            logger.info("Trainer Configuration:")
+            logger.info("LLMTrainer Configuration:")
             logger.info(trainer_config.__dict__)
 
             logger.info("FineTune Configuration:")

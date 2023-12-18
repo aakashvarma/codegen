@@ -16,7 +16,7 @@
 #     AutoTokenizer,
 #     AutoModelForCausalLM,
 #     TrainingArguments,
-#     Trainer,
+#     LLMTrainer,
 #     DataCollatorForSeq2Seq,
 #     BitsAndBytesConfig,
 # )
@@ -157,7 +157,7 @@
 
 # model.add_adapter(peft_config)
 
-# trainer = Trainer(
+# trainer = LLMTrainer(
 #     model=model,
 #     train_dataset=tokenized_train_dataset,
 #     eval_dataset=tokenized_val_dataset,

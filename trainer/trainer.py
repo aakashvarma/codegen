@@ -1,9 +1,9 @@
 import logging
-from transformers import TrainingArguments, DataCollatorForSeq2Seq
+from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
 
 
-class Trainer:
+class LLMTrainer:
 
 	def __init__(self, model, tokenizer, trainer_config):
 		self.model = model

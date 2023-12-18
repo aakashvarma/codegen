@@ -7,7 +7,7 @@ sys.path.append("../model_operators")
 sys.path.append("../trainer")
 
 from model_operators.finetune import Quantizer, FineTuner
-from trainer.trainer import Trainer
+from trainer.trainer import LLMTrainer
 
 
 class Model:
@@ -136,7 +136,7 @@ class Model:
         """
         try:
             self.get_finetuning_model_and_tokenizer()
-            trainer_obj = Trainer(self.model, self.tokenizer, self.trainer_config)
+            trainer_obj = LLMTrainer(self.model, self.tokenizer, self.trainer_config)
             trainer = trainer_obj.get_trianer()
             trainer.train()
             self.model.save_pretrained(self.trainer_config.output_dir)
