@@ -24,10 +24,10 @@ class FineTuner(Quantizer):
         self.finetune_config = finetune_config
 
     def get_model(self):
-        super().get_model(self)
+        super().get_model()
 
     def get_tokenizer(self):
-        super().get_tokenizer(self)  
+        super().get_tokenizer()  
 
     def prepare_model(self, model):
         target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj'] # edit with your desired target modules
