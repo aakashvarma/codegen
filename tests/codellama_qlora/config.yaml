@@ -22,7 +22,7 @@ trainer_config:
   optim: "paged_adamw_32bit"
   save_steps: 100
   logging_steps: 10
-  learning_rate: 2e-4
+  learning_rate: 0.0002
   max_grad_norm: 0.3
   max_steps: 100
   warmup_ratio: 0.03
