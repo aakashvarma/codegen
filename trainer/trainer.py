@@ -59,7 +59,7 @@ class Trainer:
 		tokenized_val_dataset = eval_dataset.map(self.generate_and_tokenize_prompt)
 
 		training_arguments = TrainingArguments(
-			output_dir = self.trainer_config.output_dir,
+			output_dir = self.trainer_config.model_output_dir,
 			per_device_train_batch_size = self.trainer_config.per_device_train_batch_size,
 			gradient_accumulation_steps = self.trainer_config.gradient_accumulation_steps,
 			optim = self.trainer_config.optim,
