@@ -27,3 +27,4 @@ trainer_config:
   max_steps: 100
   warmup_ratio: 0.03
   lr_scheduler_type: "constant"
+  compute_type: "fp16"

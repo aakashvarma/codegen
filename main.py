@@ -28,7 +28,7 @@ class ModelConfiguration:
         quant_type (str): Type of quantization. Default is "nf4".
         trust_remote_code (Optional[bool]): Whether to trust remote code or not. Default is False.
         use_auth_token (Union[bool, str]): Authentication token. Default is False.
-        compute_type (Optional[str]): Type of computation. Default is "bf16".
+        compute_type (Optional[str]): Type of computation. Default is "fp16".
     """
 
     def __init__(
@@ -83,6 +83,7 @@ class TrainerConfiguration:
         multi_gpu (Optional[bool]): Whether to use multiple GPUs. Default is False.
         tensor_parallel (Optional[bool]): Whether to use tensor parallelism. Default is False.
         model_output_dir (Optional[str]): Output directory for the model. Default is "LLaMA/LoRA".
+        compute_type (Optional[str]): Type of computation. Default is "fp16".
     """
 
     def __init__(
@@ -102,6 +103,7 @@ class TrainerConfiguration:
         max_steps: Optional[int] = 100,
         warmup_ratio: Optional[float] = 0.03,
         lr_scheduler_type: Optional[str] = "constant",
+        compute_type: Optional[str] = "fp16"
     ):
         self.dataset_name = dataset_name
         self.block_size = block_size
@@ -118,6 +120,7 @@ class TrainerConfiguration:
         self.max_steps = max_steps
         self.warmup_ratio = warmup_ratio
         self.lr_scheduler_type = lr_scheduler_type
+        self.compute_type = compute_type
 
     @classmethod
     def from_yaml(cls, yaml_path):
