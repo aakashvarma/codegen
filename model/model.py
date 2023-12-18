@@ -27,7 +27,7 @@ class Model:
         model_config: Model configuration object.
     """
 
-    def __init__(self, model_config, trainer_config=None):
+    def __init__(self, model_config, trainer_config=None, finetune_config=None):
         """
         Initialize the Model class with attributes.
 
@@ -36,6 +36,7 @@ class Model:
         """
         self.model_config = model_config
         self.trainer_config = trainer_config
+        self.finetune_config = finetune_config
         self.model = None
         self.tokenizer = None
 
@@ -76,7 +77,7 @@ class Model:
         """
         try:
             logging.info("Setting up model.")
-            finetuner = FineTuner(self.model_config)
+            finetuner = FineTuner(self.model_config, self.finetune_config)
 
             self.model, self.tokenizer = finetuner.model_setup()
             return self.model, self.tokenizer

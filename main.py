@@ -224,7 +224,7 @@ class Runner:
 
     def finetune(self, model_config, trainer_config):
         try:
-            model = Model(model_config, trainer_config)
+            model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
             logging.info("Finetuning completed")
         except Exception as e:
