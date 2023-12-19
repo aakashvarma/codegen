@@ -139,9 +139,9 @@ class Model:
             trainer_obj = LLMTrainer(self.model, self.tokenizer, self.trainer_config)
             trainer = trainer_obj.get_trianer()
             trainer.train()
-            self.model.save_pretrained(self.trainer_config.output_dir)
+            self.model.save_pretrained(self.trainer_config.model_output_dir)
 
-            logging.info("Finetuned model saved to: %s", self.trainer_config.output_dir)
+            logging.info("Finetuned model saved to: %s", self.trainer_config.model_output_dir)
         except Exception as e:
             error_message = f"Error in model training: {e}"
             logging.error(error_message)
