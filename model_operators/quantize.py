@@ -2,6 +2,10 @@ import logging
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
+from logging_config import configure_logging
+
+configure_logging()
+logger = logging.getLogger(__name__)
 
 class Quantizer:
     """

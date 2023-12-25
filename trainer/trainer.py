@@ -2,6 +2,10 @@ import logging
 from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
 
+from logging_config import configure_logging
+
+configure_logging()
+logger = logging.getLogger(__name__)
 
 class LLMTrainer:
     """

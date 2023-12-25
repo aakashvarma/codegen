@@ -3,6 +3,10 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from model_operators.quantize import Quantizer
 
+from logging_config import configure_logging
+
+configure_logging()
+logger = logging.getLogger(__name__)
 
 class FineTuner(Quantizer):
     """
