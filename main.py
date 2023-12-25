@@ -300,7 +300,7 @@ class Runner:
             error_logger.error("ValueError: %s", ve)
         except RuntimeError as re:
             error_logger.error("RuntimeError: %s", re)
-        except Exception as e:
+        except ImportError as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
 
 
