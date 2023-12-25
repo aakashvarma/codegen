@@ -107,24 +107,35 @@ class Model:
             str: Inference output.
         """
         try:
-            self.get_inference_model_and_tokenizer()
-            if prompt:
-                logging.info("Running model inference on the prompt.")
-                model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
-                self.model.eval()
-                with torch.no_grad():
-                    generated_tokens = self.model.generate(
-                        **model_input, max_new_tokens=100
-                    )[0]
-                    decoded_output = self.tokenizer.decode(
-                        generated_tokens, skip_special_tokens=True
-                    )
-                    logging.info("Model inference done.")
-                    return decoded_output
-            else:
-                error_message = "Prompt cannot be empty."
-                logging.error(error_message)
-                raise ValueError(error_message)
+            def get_sql_query_response(self, prompt):
+                if prompt:
+                    logging.info("Running model inference on the prompt.")
+                    model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+                    self.model.eval()
+                    with torch.no_grad():
+                        generated_tokens = self.model.generate(
+                            **model_input, max_new_tokens=100
+                        )[0]
+                        decoded_output = self.tokenizer.decode(
+                            generated_tokens, skip_special_tokens=True
+                        )
+                        logging.info("Model inference done.")
+
+                        # Extract text after "### Response"
+                        response_marker = "### Response"
+                        response_start = decoded_output.find(response_marker)
+
+                        if response_start != -1:
+                            response_start += len(response_marker)
+                            response_text = decoded_output[response_start:].strip()
+                            return response_text
+                        else:
+                            logging.warning("No response found in the model output.")
+                            return None
+                else:
+                    error_message = "Prompt cannot be empty."
+                    logging.error(error_message)
+                    raise ValueError(error_message)
 
         except Exception as e:
             error_message = f"Error during model inference: {e}"
