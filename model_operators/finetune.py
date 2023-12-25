@@ -1,19 +1,6 @@
 import logging
-import torch
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    BitsAndBytesConfig,
-)
-from peft import (
-    LoraConfig,
-    get_peft_model,
-    get_peft_model_state_dict,
-    prepare_model_for_kbit_training,
-    set_peft_model_state_dict,
-)
-
-
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from model_operators.quantize import Quantizer
 
 
@@ -34,7 +21,6 @@ class FineTuner(Quantizer):
 
         model_setup(self):
             Sets up the fine-tuning configuration, including loading the model and tokenizer.
-
     """
 
     def __init__(self, model_config, finetune_config):
@@ -58,8 +44,8 @@ class FineTuner(Quantizer):
         Returns:
             model: The prepared model for fine-tuning.
         """
-        target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj'] # edit with your desired target modules
-        LORA_CONFIG = LoraConfig(
+        target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj']
+        lora_config = LoraConfig(
             r=self.finetune_config.r,
             lora_alpha=self.finetune_config.lora_alpha,
             target_modules=target_modules,
@@ -67,10 +53,8 @@ class FineTuner(Quantizer):
             bias="none",
             task_type="CAUSAL_LM"
         )
-        DEVICE = 'cuda'
-        # model = model.to(DEVICE)
         model = prepare_model_for_kbit_training(model)
-        model = get_peft_model(model, LORA_CONFIG)
+        model = get_peft_model(model, lora_config)
 
         return model
 
@@ -90,8 +74,7 @@ class FineTuner(Quantizer):
             logging.info("Finetuning configuration successful.")
 
         except Exception as e:
-            error_message = f"Error in setting up Finetuning configuration: {e}"
-            logging.error(error_message)
-            raise RuntimeError(error_message)
+            logging.error(f"Error in setting up Finetuning configuration: {e}")
+            raise
 
         return model, tokenizer

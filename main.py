@@ -18,7 +18,7 @@ class ModelConfiguration:
     Configuration class for model arguments.
 
     Args:
-        model_name (Optional[str]): The name of the model. Default is "meta-llama/Llama-2-7b-hf".
+        model_name (Optional[str]): The name of the model. Default is "codellama/CodeLlama-7b-hf".
         cache_dir (Optional[str]): The directory to cache the model. Default is None.
         r (Optional[int]): Parameter 'r' for the model. Default is 64.
         lora_alpha (Optional[float]): Alpha value for LoRA. Default is 32.
@@ -68,7 +68,7 @@ class ModelConfiguration:
         Returns:
             ModelConfiguration: An instance of ModelConfiguration.
         """
-        with open(yaml_path, "r") as yaml_file:
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["model_config"]
         return cls(**yaml_args)
 
@@ -133,7 +133,7 @@ class TrainerConfiguration:
         Returns:
             TrainerConfiguration: An instance of TrainerConfiguration.
         """
-        with open(yaml_path, "r") as yaml_file:
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["trainer_config"]
         return cls(**yaml_args)
 
@@ -159,7 +159,16 @@ class FineTuneConfiguration:
 
     @classmethod
     def from_yaml(cls, yaml_path):
-        with open(yaml_path, "r") as yaml_file:
+        """
+        Create an instance of FineTuneConfiguration from a YAML file.
+
+        Args:
+            yaml_path (str): Path to the YAML file.
+
+        Returns:
+            FineTuneConfiguration: An instance of FineTuneConfiguration.
+        """
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["finetune_config"]
         return cls(**yaml_args)
 
@@ -171,7 +180,7 @@ class Runner:
     Methods:
         get_parser(): Get the argument parser.
         infer(model_config, prompt): Perform inference using the specified model configuration and prompt.
-        finetune(model_config, trainer_config): Placeholder for the finetuning function.
+        finetune(model_config, trainer_config, finetune_config): Perform fine-tuning using the specified configurations.
         main(): Main entry point for the script.
     """
 
@@ -185,7 +194,7 @@ class Runner:
         Returns:
             argparse.ArgumentParser: The argument parser.
         """
-        parser = argparse.ArgumentParser(description="Arguments")
+        parser = argparse.ArgumentParser(description="Script Arguments")
         parser.add_argument(
             "--yaml_path",
             required=True,
@@ -198,7 +207,7 @@ class Runner:
         )
         parser.add_argument("--infer", action="store_true", help="Perform inference.")
         parser.add_argument(
-            "--finetune", action="store_true", help="Perform finetuning."
+            "--finetune", action="store_true", help="Perform fine-tuning."
         )
         return parser
 
@@ -223,12 +232,20 @@ class Runner:
             raise e
 
     def finetune(self, model_config, trainer_config, finetune_config):
+        """
+        Perform fine-tuning.
+
+        Args:
+            model_config: Model configuration.
+            trainer_config: Trainer configuration.
+            finetune_config: Fine-tune configuration.
+        """
         try:
             model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
-            logging.info("Finetuning completed")
+            logging.info("Fine-tuning completed")
         except Exception as e:
-            logging.error("Error during inference: %s", e, exc_info=True)
+            logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
     def main(self):
@@ -240,7 +257,6 @@ class Runner:
 
             logging.basicConfig(level=logging.INFO)
             logger = logging.getLogger(__name__)
-            debug_logger = logging.getLogger("debug_logger")
             error_logger = logging.getLogger("error_logger")
 
             logger.info("Starting the script.")
@@ -265,7 +281,7 @@ class Runner:
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
                 self.finetune(model_config, trainer_config, finetune_config)
-                logger.info("Script completed finetuning successfully.")
+                logger.info("Script completed fine-tuning successfully.")
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)
@@ -273,7 +289,6 @@ class Runner:
             error_logger.error("RuntimeError: %s", re)
         except Exception as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
-
 
 
 if __name__ == "__main__":

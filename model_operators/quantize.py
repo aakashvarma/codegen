@@ -1,10 +1,6 @@
 import logging
 import torch
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    BitsAndBytesConfig,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 
 class Quantizer:
@@ -99,8 +95,7 @@ class Quantizer:
             logging.info("Finetuning configuration successful.")
 
         except Exception as e:
-            error_message = f"Error in setting up Finetuning configuration: {e}"
-            logging.error(error_message)
-            raise RuntimeError(error_message)
+            logging.error(f"Error in setting up Finetuning configuration: {e}")
+            raise
 
         return model, tokenizer
