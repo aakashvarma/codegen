@@ -323,5 +323,5 @@ class Runner:
         except ImportError as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
 
-    if __name__ == "__main__":
-        Runner().main()
+if __name__ == "__main__":
+    Runner().main()
