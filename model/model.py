@@ -1,14 +1,13 @@
 import logging
+
+from model_operators.finetune import Quantizer, FineTuner
+from trainer.trainer import LLMTrainer
 import sys
 import torch
 
 sys.path.append("../utils")
 sys.path.append("../model_operators")
 sys.path.append("../trainer")
-
-from model_operators.finetune import Quantizer, FineTuner
-from trainer.trainer import LLMTrainer
-
 
 class Model:
     """
@@ -66,7 +65,7 @@ class Model:
         except Exception as e:
             error_message = f"Error on downloading the model: {e}"
             logging.error(error_message)
-            raise RuntimeError(error_message)
+            raise RuntimeError(error_message) from e
     
     def get_finetuning_model_and_tokenizer(self):
         """
@@ -85,7 +84,7 @@ class Model:
         except Exception as e:
             error_message = f"Error on downloading the model: {e}"
             logging.error(error_message)
-            raise RuntimeError(error_message)
+            raise RuntimeError(error_message) from e
 
     def infer_model(self, prompt):
         """
@@ -123,7 +122,7 @@ class Model:
         except Exception as e:
             error_message = f"Error during model inference: {e}"
             logging.error(error_message, exc_info=True)
-            raise RuntimeError(error_message)
+            raise RuntimeError(error_message) from e
         
     def finetune_model(self):
         """
@@ -145,5 +144,5 @@ class Model:
         except Exception as e:
             error_message = f"Error in model training: {e}"
             logging.error(error_message)
-            raise RuntimeError(error_message)
+            raise RuntimeError(error_message) from e
 
