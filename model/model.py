@@ -1,5 +1,6 @@
 import logging
 import sys
+import re
 
 import torch
 
@@ -121,16 +122,14 @@ class Model:
                         )
                         logging.info("Model inference done.")
 
-                        # Extract text after "### Response"
-                        response_marker = "### Response:"
-                        response_start = decoded_output.find(response_marker)
-
-                        if response_start != -1:
-                            response_start += len(response_marker)
-                            response_text = decoded_output[response_start:].strip()
-                            return response_text
+                        match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                        if match:
+                            sql_query = match.group(1).strip()
+                            # Remove empty lines at the end
+                            sql_query = re.sub(r'\n\s*\n', '\n', sql_query)
+                            print(sql_query)
                         else:
-                            logging.warning("No response found in the model output.")
+                            print("No match found.")
                             return None
                 else:
                     error_message = "Prompt cannot be empty."
