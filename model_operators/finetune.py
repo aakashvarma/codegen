@@ -5,8 +5,8 @@ from model_operators.quantize import Quantizer
 
 from logging_config import configure_logging
 
-configure_logging()
-logger = logging.getLogger(__name__)
+# configure_logging()
+# logger = logging.getLogger(__name__)
 
 class FineTuner(Quantizer):
     """
