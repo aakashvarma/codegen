@@ -62,6 +62,7 @@ python script.py --yaml_path <path_to_yaml_file> --prompt_file <path_to_prompt_f
 The script supports configuring the model through a YAML file. Below are the available model configuration options:
 
 - `model_name` (optional): Name of the model.
+- `pretrained_model_dir` (optional): Pre-trained model directory path. NOTE: if this is None, model will we downloaded from the internet
 - `cache_dir` (optional): Directory for caching model files.
 - `r` (optional): Value for the `r` parameter.
 - `lora_alpha` (optional): Value for the `lora_alpha` parameter.
