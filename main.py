@@ -224,9 +224,7 @@ class Runner:
         """
         try:
             model = Model(model_config)
-            output = model.infer_model(prompt)
-            logging.info("Inference Output: %s", output)
-            return output
+            model.infer_model(prompt)
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
@@ -277,8 +275,8 @@ class Runner:
             prompt = parse_text(args.prompt_file)
 
             if args.infer:
-                result = self.infer(model_config, prompt)
-                logger.info("Script completed successfully with result: %s", result)
+                self.infer(model_config, prompt)
+                logger.info("Script completed successfully.")
             elif args.finetune:
                 self.finetune(model_config, trainer_config, finetune_config)
                 logger.info("Script completed fine-tuning successfully.")
