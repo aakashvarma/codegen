@@ -108,33 +108,32 @@ class Model:
             str: Inference output.
         """
         try:
-            def get_sql_query_response(self, prompt):
-                if prompt:
-                    logging.info("Running model inference on the prompt.")
-                    model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
-                    self.model.eval()
-                    with torch.no_grad():
-                        generated_tokens = self.model.generate(
-                            **model_input, max_new_tokens=100
-                        )[0]
-                        decoded_output = self.tokenizer.decode(
-                            generated_tokens, skip_special_tokens=True
-                        )
-                        logging.info("Model inference done.")
+            if prompt:
+                logging.info("Running model inference on the prompt.")
+                model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+                self.model.eval()
+                with torch.no_grad():
+                    generated_tokens = self.model.generate(
+                        **model_input, max_new_tokens=100
+                    )[0]
+                    decoded_output = self.tokenizer.decode(
+                        generated_tokens, skip_special_tokens=True
+                    )
+                    logging.info("Model inference done.")
 
-                        match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
-                        if match:
-                            sql_query = match.group(1).strip()
-                            # Remove empty lines at the end
-                            sql_query = re.sub(r'\n\s*\n', '\n', sql_query)
-                            print(sql_query)
-                        else:
-                            print("No match found.")
-                            return None
-                else:
-                    error_message = "Prompt cannot be empty."
-                    logging.error(error_message)
-                    raise ValueError(error_message)
+                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                    if match:
+                        sql_query = match.group(1).strip()
+                        # Remove empty lines at the end
+                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query)
+                        print(sql_query)
+                    else:
+                        print("No match found.")
+                        return None
+            else:
+                error_message = "Prompt cannot be empty."
+                logging.error(error_message)
+                raise ValueError(error_message)
 
         except Exception as e:
             error_message = f"Error during model inference: {e}"
