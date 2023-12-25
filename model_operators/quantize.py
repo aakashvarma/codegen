@@ -75,7 +75,7 @@ class Quantizer:
             model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
         else:
             error_message = "Pretrained model directory is not present."
-            logger.error(error_message)
+            logging.error(error_message)
             raise ValueError(error_message)
 
         return model
