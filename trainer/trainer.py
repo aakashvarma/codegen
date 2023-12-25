@@ -53,6 +53,18 @@ class LLMTrainer:
         dataset = load_dataset(self.trainer_config.dataset_name, split="train")
         train_dataset = dataset.train_test_split(test_size=0.1)["train"]
         eval_dataset = dataset.train_test_split(test_size=0.1)["test"]
+
+        import pdb; pdb.set_trace()
+        # 90% train, 10% test + validation
+        train_test_dataset = dataset.train_test_split(test=0.1)
+        # Split the 10% test + valid in half test, half valid
+        test_valid = train_test_dataset['test'].train_test_split(test=0.5)
+        # gather everyone if you want to have a single DatasetDict
+        # train_test_valid_dataset = DatasetDict({
+        #     'train': train_test_dataset['train'],
+        #     'test': test_valid['test'],
+        #     'valid': test_valid['train']})
+
         return train_dataset, eval_dataset
 
     def tokenize(self, prompt):
