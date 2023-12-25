@@ -51,6 +51,7 @@ class ModelConfiguration:
     def __init__(
         self,
         model_name: Optional[str] = "codellama/CodeLlama-7b-hf",
+        pretrained_model_dir: Optional[str] = None,
         cache_dir: Optional[str] = None,
         r: Optional[int] = 64,
         lora_alpha: Optional[float] = 32,
@@ -63,6 +64,7 @@ class ModelConfiguration:
         compute_type: Optional[str] = "fp16",
     ):
         self.model_name = model_name
+        self.pretrained_model_dir = pretrained_model_dir
         self.cache_dir = cache_dir
         self.r = r
         self.lora_alpha = lora_alpha

@@ -1,6 +1,7 @@
 import logging
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from peft import PeftModel
 
 
 class Quantizer:
@@ -67,6 +68,9 @@ class Quantizer:
             use_auth_token=self.model_config.use_auth_token,
         )
         model.config.use_cache = False
+
+        if self.model_config.pretrained_model_dir:
+            model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
 
         return model
 
