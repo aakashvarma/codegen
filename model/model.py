@@ -108,6 +108,7 @@ class Model:
             str: Inference output.
         """
         try:
+            self.get_inference_model_and_tokenizer()
             if prompt:
                 logging.info("Running model inference on the prompt.")
                 model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
@@ -120,16 +121,15 @@ class Model:
                         generated_tokens, skip_special_tokens=True
                     )
                     logging.info("Model inference done.")
-
                     match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
                     if match:
                         sql_query = match.group(1).strip()
-                        # Remove empty lines at the end
-                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query)
-                        print(sql_query)
+                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                        return sql_query
                     else:
-                        print("No match found.")
-                        return None
+                        error_message = "Output ###Response: not found."
+                        logging.error(error_message)
+                        raise ValueError(error_message)
             else:
                 error_message = "Prompt cannot be empty."
                 logging.error(error_message)
