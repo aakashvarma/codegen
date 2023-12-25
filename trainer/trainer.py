@@ -51,7 +51,8 @@ class LLMTrainer:
             tuple: A tuple containing the training and evaluation datasets.
         """
         dataset = load_dataset(self.trainer_config.dataset_name, split="train")
-        train_dataset, eval_dataset = dataset.train_test_split(test_size=0.1)["train", "test"]
+        train_dataset = dataset.train_test_split(test_size=0.1)["train"]
+        eval_dataset = dataset.train_test_split(test_size=0.1)["test"]
         return train_dataset, eval_dataset
 
     def tokenize(self, prompt):
