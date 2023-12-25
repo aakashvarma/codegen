@@ -1,10 +1,11 @@
-import os
-import logging
-import sys
 import argparse
-import yaml
-from typing import Optional, Union
+import logging
+import os
+import sys
 from datetime import datetime
+from typing import Optional, Union
+
+import yaml
 
 sys.path.append("model")
 sys.path.append("utils")

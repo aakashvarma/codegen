@@ -1,7 +1,8 @@
 import logging
+
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 
 class Quantizer:
@@ -19,6 +20,7 @@ class Quantizer:
     Attributes:
         model_config: Model configuration object.
     """
+
     def __init__(self, model_config):
         self.model_config = model_config
 

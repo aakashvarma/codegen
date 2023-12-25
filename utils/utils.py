@@ -1,5 +1,4 @@
 import json
-import sys
 
 
 def load_from_json(file_path):
@@ -43,7 +42,9 @@ def parse_prompt(file_path):
     """
     with open(file_path, "r") as file:
         eval_prompt = file.read()
-    additional_info = "You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.You must output the SQL query that answers the question. "
+    additional_info = ("You are a powerful text-to-SQL model. Your job is to answer questions about a database. You "
+                       "are given a question and context regarding one or more tables.You must output the SQL query "
+                       "that answers the question.")
     eval_prompt = additional_info + eval_prompt
     return eval_prompt
 
