@@ -8,10 +8,6 @@ sys.path.append("../utils")
 sys.path.append("../model_operators")
 sys.path.append("../trainer")
 
-from logging_config import configure_logging
-
-# configure_logging()
-# logger = logging.getLogger(__name__)
 
 class Model:
     """
