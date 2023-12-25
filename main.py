@@ -257,10 +257,6 @@ class Runner:
         try:
             args = self.get_parser().parse_args()
 
-            logging.basicConfig(level=logging.INFO)
-            logger = logging.getLogger(__name__)
-            error_logger = logging.getLogger("error_logger")
-
             logger.info("Starting the script.")
 
             model_config = ModelConfiguration.from_yaml(args.yaml_path)
