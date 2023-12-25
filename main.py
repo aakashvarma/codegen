@@ -10,6 +10,15 @@ sys.path.append("utils")
 from model import Model
 from utils import parse_text
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+
+# Create loggers
+logger = logging.getLogger(__name__)
+error_logger = logging.getLogger(__name__ + "_error")
 
 class ModelConfiguration:
     """
