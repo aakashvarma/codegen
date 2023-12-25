@@ -1,10 +1,7 @@
 import logging
 import torch
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    BitsAndBytesConfig,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+from peft import PeftModel
 
 
 class Quantizer:
@@ -72,6 +69,9 @@ class Quantizer:
         )
         model.config.use_cache = False
 
+        if self.model_config.pretrained_model_dir:
+            model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
+
         return model
 
     def get_tokenizer(self):
@@ -99,8 +99,7 @@ class Quantizer:
             logging.info("Finetuning configuration successful.")
 
         except Exception as e:
-            error_message = f"Error in setting up Finetuning configuration: {e}"
-            logging.error(error_message)
-            raise RuntimeError(error_message)
+            logging.error(f"Error in setting up Finetuning configuration: {e}")
+            raise
 
         return model, tokenizer

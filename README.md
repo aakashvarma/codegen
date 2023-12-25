@@ -57,6 +57,8 @@ python script.py --yaml_path <path_to_yaml_file> --prompt_file <path_to_prompt_f
 
 ### Model Arguments
 
+### Model Configuration
+
 The script supports configuring the model through a YAML file. Below are the available model configuration options:
 
 - `model_name` (optional): Name of the model.
@@ -71,15 +73,26 @@ The script supports configuring the model through a YAML file. Below are the ava
 - `use_auth_token`: Boolean or string indicating whether to use an authentication token.
 - `compute_type` (optional): Type of computation.
 
-### Data Training Arguments
+### Data Training Configuration
 
-For finetuning, the script uses data training arguments. Below are the available options:
+For fine-tuning, the script uses data training arguments. Below are the available options:
 
 - `dataset_name` (optional): Name of the dataset.
 - `block_size` (optional): Block size for data training.
 - `multi_gpu` (optional): Boolean indicating whether to use multiple GPUs.
 - `tensor_parallel` (optional): Boolean indicating whether to use tensor parallelism.
 - `model_output_dir` (optional): Directory for model output.
+- `per_device_train_batch_size` (optional): Batch size per device during training.
+- `gradient_accumulation_steps` (optional): Number of gradient accumulation steps.
+- `optim` (optional): Optimization algorithm.
+- `save_steps` (optional): Number of steps before saving a checkpoint.
+- `logging_steps` (optional): Number of steps before logging.
+- `learning_rate` (optional): Learning rate for training.
+- `max_grad_norm` (optional): Maximum gradient norm for gradient clipping.
+- `max_steps` (optional): Maximum number of training steps.
+- `warmup_ratio` (optional): Warmup ratio for learning rate schedule.
+- `lr_scheduler_type` (optional): Type of learning rate scheduler.
+- `compute_type` (optional): Type of computation.
 
 ## Examples
 
@@ -96,7 +109,7 @@ python script.py --yaml_path config.yaml --prompt_file prompt.txt --infer
 Performing model finetuning:
 
 ```bash
-python script.py --yaml_path config.yaml --prompt_file prompt.txt --finetune
+python script_name.py --yaml_path path/to/config.yaml --finetune
 ```
 
 ## Error Handling

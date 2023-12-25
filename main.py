@@ -1,8 +1,10 @@
+import os
 import logging
 import sys
 import argparse
 import yaml
 from typing import Optional, Union
+from datetime import datetime
 
 sys.path.append("model")
 sys.path.append("utils")
@@ -10,15 +12,30 @@ sys.path.append("utils")
 from model import Model
 from utils import parse_text
 
-logging.basicConfig(level=logging.DEBUG)
 
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+
+
+log_file = os.path.join(log_dir, f"script_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler(sys.stdout),
+    ]
+)
+
+logger = logging.getLogger(__name__)
+error_logger = logging.getLogger(__name__ + "_error")
 
 class ModelConfiguration:
     """
     Configuration class for model arguments.
 
     Args:
-        model_name (Optional[str]): The name of the model. Default is "meta-llama/Llama-2-7b-hf".
+        model_name (Optional[str]): The name of the model. Default is "codellama/CodeLlama-7b-hf".
         cache_dir (Optional[str]): The directory to cache the model. Default is None.
         r (Optional[int]): Parameter 'r' for the model. Default is 64.
         lora_alpha (Optional[float]): Alpha value for LoRA. Default is 32.
@@ -34,6 +51,7 @@ class ModelConfiguration:
     def __init__(
         self,
         model_name: Optional[str] = "codellama/CodeLlama-7b-hf",
+        pretrained_model_dir: Optional[str] = None,
         cache_dir: Optional[str] = None,
         r: Optional[int] = 64,
         lora_alpha: Optional[float] = 32,
@@ -46,6 +64,7 @@ class ModelConfiguration:
         compute_type: Optional[str] = "fp16",
     ):
         self.model_name = model_name
+        self.pretrained_model_dir = pretrained_model_dir
         self.cache_dir = cache_dir
         self.r = r
         self.lora_alpha = lora_alpha
@@ -68,7 +87,7 @@ class ModelConfiguration:
         Returns:
             ModelConfiguration: An instance of ModelConfiguration.
         """
-        with open(yaml_path, "r") as yaml_file:
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["model_config"]
         return cls(**yaml_args)
 
@@ -88,17 +107,17 @@ class TrainerConfiguration:
 
     def __init__(
         self,
-        dataset_name: Optional[str] = "Dahoas/full-hh-rlhf",
-        block_size: Optional[int] = 4096,
+        dataset_name: Optional[str] = "b-mc2/sql-create-context",
+        block_size: Optional[int] = 512,
         multi_gpu: Optional[bool] = False,
         tensor_parallel: Optional[bool] = False,
-        model_output_dir: Optional[str] = "LLaMA/LoRA",
+        model_output_dir: Optional[str] = "__run.default",
         per_device_train_batch_size: Optional[int] = 4,
         gradient_accumulation_steps: Optional[int] = 4,
         optim: Optional[str] = "paged_adamw_32bit",
         save_steps: Optional[int] = 100,
         logging_steps: Optional[int] = 10,
-        learning_rate: Optional[float] = 2e-4,
+        learning_rate: Optional[float] = 0.0002,
         max_grad_norm: Optional[float] = 0.3,
         max_steps: Optional[int] = 100,
         warmup_ratio: Optional[float] = 0.03,
@@ -133,7 +152,7 @@ class TrainerConfiguration:
         Returns:
             TrainerConfiguration: An instance of TrainerConfiguration.
         """
-        with open(yaml_path, "r") as yaml_file:
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["trainer_config"]
         return cls(**yaml_args)
 
@@ -159,7 +178,16 @@ class FineTuneConfiguration:
 
     @classmethod
     def from_yaml(cls, yaml_path):
-        with open(yaml_path, "r") as yaml_file:
+        """
+        Create an instance of FineTuneConfiguration from a YAML file.
+
+        Args:
+            yaml_path (str): Path to the YAML file.
+
+        Returns:
+            FineTuneConfiguration: An instance of FineTuneConfiguration.
+        """
+        with open(yaml_path, encoding="utf-8") as yaml_file:
             yaml_args = yaml.safe_load(yaml_file)["finetune_config"]
         return cls(**yaml_args)
 
@@ -171,7 +199,7 @@ class Runner:
     Methods:
         get_parser(): Get the argument parser.
         infer(model_config, prompt): Perform inference using the specified model configuration and prompt.
-        finetune(model_config, trainer_config): Placeholder for the finetuning function.
+        finetune(model_config, trainer_config, finetune_config): Perform fine-tuning using the specified configurations.
         main(): Main entry point for the script.
     """
 
@@ -185,7 +213,7 @@ class Runner:
         Returns:
             argparse.ArgumentParser: The argument parser.
         """
-        parser = argparse.ArgumentParser(description="Arguments")
+        parser = argparse.ArgumentParser(description="Script Arguments")
         parser.add_argument(
             "--yaml_path",
             required=True,
@@ -198,7 +226,7 @@ class Runner:
         )
         parser.add_argument("--infer", action="store_true", help="Perform inference.")
         parser.add_argument(
-            "--finetune", action="store_true", help="Perform finetuning."
+            "--finetune", action="store_true", help="Perform fine-tuning."
         )
         return parser
 
@@ -216,19 +244,27 @@ class Runner:
         try:
             model = Model(model_config)
             output = model.infer_model(prompt)
-            logging.info("Inference Output: %s", output)
+            logging.info("Inference Done")
             return output
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
     def finetune(self, model_config, trainer_config, finetune_config):
+        """
+        Perform fine-tuning.
+
+        Args:
+            model_config: Model configuration.
+            trainer_config: Trainer configuration.
+            finetune_config: Fine-tune configuration.
+        """
         try:
             model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
-            logging.info("Finetuning completed")
+            logging.info("Fine-tuning completed.")
         except Exception as e:
-            logging.error("Error during inference: %s", e, exc_info=True)
+            logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
     def main(self):
@@ -237,11 +273,6 @@ class Runner:
         """
         try:
             args = self.get_parser().parse_args()
-
-            logging.basicConfig(level=logging.INFO)
-            logger = logging.getLogger(__name__)
-            debug_logger = logging.getLogger("debug_logger")
-            error_logger = logging.getLogger("error_logger")
 
             logger.info("Starting the script.")
 
@@ -265,15 +296,14 @@ class Runner:
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
                 self.finetune(model_config, trainer_config, finetune_config)
-                logger.info("Script completed finetuning successfully.")
+                logger.info("Script completed fine-tuning successfully.")
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)
         except RuntimeError as re:
             error_logger.error("RuntimeError: %s", re)
-        except Exception as e:
+        except ImportError as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
-
 
 
 if __name__ == "__main__":
