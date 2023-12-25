@@ -273,7 +273,6 @@ class Runner:
         )
         parser.add_argument(
             "--prompt_file",
-            required=True,
             help="Path to the text file containing the prompt.",
         )
         parser.add_argument("--infer", action="store_true", help="Perform inference.")
