@@ -122,7 +122,7 @@ class Model:
                         logging.info("Model inference done.")
 
                         # Extract text after "### Response"
-                        response_marker = "### Response"
+                        response_marker = "### Response:"
                         response_start = decoded_output.find(response_marker)
 
                         if response_start != -1:
