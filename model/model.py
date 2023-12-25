@@ -117,7 +117,7 @@ class Model:
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    logging.info("Inference Output: %s", decoded_output)
+                    logging.info("Model inference done.")
                     return decoded_output
             else:
                 error_message = "Prompt cannot be empty."
