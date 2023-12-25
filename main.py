@@ -10,7 +10,7 @@ sys.path.append("model")
 sys.path.append("utils")
 
 from model import Model
-from utils import parse_text
+from utils import parse_prompt
 
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
@@ -206,30 +206,6 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def get_parser(self):
-        """
-        Get the argument parser.
-
-        Returns:
-            argparse.ArgumentParser: The argument parser.
-        """
-        parser = argparse.ArgumentParser(description="Script Arguments")
-        parser.add_argument(
-            "--yaml_path",
-            required=True,
-            help="Path to the YAML file containing both sets of arguments.",
-        )
-        parser.add_argument(
-            "--prompt_file",
-            required=True,
-            help="Path to the text file containing the prompt.",
-        )
-        parser.add_argument("--infer", action="store_true", help="Perform inference.")
-        parser.add_argument(
-            "--finetune", action="store_true", help="Perform fine-tuning."
-        )
-        return parser
-
     def infer(self, model_config, prompt):
         """
         Perform inference.
@@ -267,6 +243,38 @@ class Runner:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
+    def get_parser(self):
+        """
+        Get the argument parser.
+
+        Returns:
+            argparse.ArgumentParser: The argument parser.
+        """
+        parser = argparse.ArgumentParser(description="Script Arguments")
+        parser.add_argument(
+            "--model_yaml",
+            required=True,
+            help="Path to the YAML file containing model configuration.",
+        )
+        parser.add_argument(
+            "--trainer_yaml",
+            help="Path to the YAML file containing trainer configuration.",
+        )
+        parser.add_argument(
+            "--finetune_yaml",
+            help="Path to the YAML file containing fine-tune configuration.",
+        )
+        parser.add_argument(
+            "--prompt_file",
+            required=True,
+            help="Path to the text file containing the prompt.",
+        )
+        parser.add_argument("--infer", action="store_true", help="Perform inference.")
+        parser.add_argument(
+            "--finetune", action="store_true", help="Perform fine-tuning."
+        )
+        return parser
+
     def main(self):
         """
         Main entry point for the script.
@@ -276,25 +284,34 @@ class Runner:
 
             logger.info("Starting the script.")
 
-            model_config = ModelConfiguration.from_yaml(args.yaml_path)
-            trainer_config = TrainerConfiguration.from_yaml(args.yaml_path)
-            finetune_config = FineTuneConfiguration.from_yaml(args.yaml_path)
-
-            logger.info("Model Configuration:")
-            logger.info(model_config.__dict__)
-
-            logger.info("LLMTrainer Configuration:")
-            logger.info(trainer_config.__dict__)
-
-            logger.info("FineTune Configuration:")
-            logger.info(finetune_config.__dict__)
-
-            prompt = parse_text(args.prompt_file)
+            model_config = ModelConfiguration.from_yaml(args.model_yaml)
 
             if args.infer:
+                # For inference, only model YAML is required
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                prompt = parse_prompt(args.prompt_file)
+
                 result = self.infer(model_config, prompt)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
+                # For fine-tuning, all three YAML files are required
+                if not args.trainer_yaml or not args.finetune_yaml:
+                    raise ValueError("Both --trainer_yaml and --finetune_yaml are required for fine-tuning.")
+
+                trainer_config = TrainerConfiguration.from_yaml(args.trainer_yaml)
+                finetune_config = FineTuneConfiguration.from_yaml(args.finetune_yaml)
+
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                logger.info("LLMTrainer Configuration:")
+                logger.info(trainer_config.__dict__)
+
+                logger.info("FineTune Configuration:")
+                logger.info(finetune_config.__dict__)
+
                 self.finetune(model_config, trainer_config, finetune_config)
                 logger.info("Script completed fine-tuning successfully.")
 
@@ -305,6 +322,5 @@ class Runner:
         except ImportError as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
 
-
-if __name__ == "__main__":
-    Runner().main()
+    if __name__ == "__main__":
+        Runner().main()
