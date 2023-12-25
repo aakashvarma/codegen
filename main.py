@@ -12,10 +12,8 @@ sys.path.append("utils")
 from model import Model
 from utils import parse_text
 
-
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
-
 
 log_file = os.path.join(log_dir, f"script_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
 logging.basicConfig(
@@ -29,6 +27,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 error_logger = logging.getLogger(__name__ + "_error")
+
 
 class ModelConfiguration:
     """
@@ -49,19 +48,19 @@ class ModelConfiguration:
     """
 
     def __init__(
-        self,
-        model_name: Optional[str] = "codellama/CodeLlama-7b-hf",
-        pretrained_model_dir: Optional[str] = None,
-        cache_dir: Optional[str] = None,
-        r: Optional[int] = 64,
-        lora_alpha: Optional[float] = 32,
-        lora_dropout: Optional[float] = 0.05,
-        bits: Optional[int] = 4,
-        double_quant: Optional[bool] = True,
-        quant_type: str = "nf4",
-        trust_remote_code: Optional[bool] = False,
-        use_auth_token: Union[bool, str] = False,
-        compute_type: Optional[str] = "fp16",
+            self,
+            model_name: Optional[str] = "codellama/CodeLlama-7b-hf",
+            pretrained_model_dir: Optional[str] = None,
+            cache_dir: Optional[str] = None,
+            r: Optional[int] = 64,
+            lora_alpha: Optional[float] = 32,
+            lora_dropout: Optional[float] = 0.05,
+            bits: Optional[int] = 4,
+            double_quant: Optional[bool] = True,
+            quant_type: str = "nf4",
+            trust_remote_code: Optional[bool] = False,
+            use_auth_token: Union[bool, str] = False,
+            compute_type: Optional[str] = "fp16",
     ):
         self.model_name = model_name
         self.pretrained_model_dir = pretrained_model_dir
@@ -106,23 +105,23 @@ class TrainerConfiguration:
     """
 
     def __init__(
-        self,
-        dataset_name: Optional[str] = "b-mc2/sql-create-context",
-        block_size: Optional[int] = 512,
-        multi_gpu: Optional[bool] = False,
-        tensor_parallel: Optional[bool] = False,
-        model_output_dir: Optional[str] = "__run.default",
-        per_device_train_batch_size: Optional[int] = 4,
-        gradient_accumulation_steps: Optional[int] = 4,
-        optim: Optional[str] = "paged_adamw_32bit",
-        save_steps: Optional[int] = 100,
-        logging_steps: Optional[int] = 10,
-        learning_rate: Optional[float] = 0.0002,
-        max_grad_norm: Optional[float] = 0.3,
-        max_steps: Optional[int] = 100,
-        warmup_ratio: Optional[float] = 0.03,
-        lr_scheduler_type: Optional[str] = "constant",
-        compute_type: Optional[str] = "fp16"
+            self,
+            dataset_name: Optional[str] = "b-mc2/sql-create-context",
+            block_size: Optional[int] = 512,
+            multi_gpu: Optional[bool] = False,
+            tensor_parallel: Optional[bool] = False,
+            model_output_dir: Optional[str] = "__run.default",
+            per_device_train_batch_size: Optional[int] = 4,
+            gradient_accumulation_steps: Optional[int] = 4,
+            optim: Optional[str] = "paged_adamw_32bit",
+            save_steps: Optional[int] = 100,
+            logging_steps: Optional[int] = 10,
+            learning_rate: Optional[float] = 0.0002,
+            max_grad_norm: Optional[float] = 0.3,
+            max_steps: Optional[int] = 100,
+            warmup_ratio: Optional[float] = 0.03,
+            lr_scheduler_type: Optional[str] = "constant",
+            compute_type: Optional[str] = "fp16"
     ):
         self.dataset_name = dataset_name
         self.block_size = block_size
@@ -156,6 +155,7 @@ class TrainerConfiguration:
             yaml_args = yaml.safe_load(yaml_file)["trainer_config"]
         return cls(**yaml_args)
 
+
 class FineTuneConfiguration:
     """
     Configuration class for fine-tuning arguments.
@@ -167,10 +167,10 @@ class FineTuneConfiguration:
     """
 
     def __init__(
-        self,
-        r: Optional[int] = 16,
-        lora_alpha: Optional[float] = 32,
-        lora_dropout: Optional[float] = 0.05,
+            self,
+            r: Optional[int] = 16,
+            lora_alpha: Optional[float] = 32,
+            lora_dropout: Optional[float] = 0.05,
     ):
         self.r = r
         self.lora_alpha = lora_alpha
