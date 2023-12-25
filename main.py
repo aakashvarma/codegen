@@ -1,8 +1,10 @@
+import os
 import logging
 import sys
 import argparse
 import yaml
 from typing import Optional, Union
+from datetime import datetime
 
 sys.path.append("model")
 sys.path.append("utils")
@@ -10,13 +12,21 @@ sys.path.append("utils")
 from model import Model
 from utils import parse_text
 
-# Configure logging
+
+log_dir = "logs"
+os.makedirs(log_dir, exist_ok=True)
+
+
+log_file = os.path.join(log_dir, f"script_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler(sys.stdout),
+    ]
 )
 
-# Create loggers
 logger = logging.getLogger(__name__)
 error_logger = logging.getLogger(__name__ + "_error")
 
