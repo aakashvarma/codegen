@@ -1,6 +1,8 @@
 import logging
 from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
+import pickle
+import os
 
 
 class LLMTrainer:
@@ -51,8 +53,30 @@ class LLMTrainer:
             tuple: A tuple containing the training and evaluation datasets.
         """
         dataset = load_dataset(self.trainer_config.dataset_name, split="train")
-        train_dataset = dataset.train_test_split(test_size=0.1)["train"]
-        eval_dataset = dataset.train_test_split(test_size=0.1)["test"]
+        # 80% train, 20% test
+        train_test_dataset = dataset.train_test_split(test_size=0.2)
+        # Split the 20% test into half test, half valid
+        test_valid = train_test_dataset['test'].train_test_split(test_size=0.5)
+
+        train_dataset = train_test_dataset['train']
+        eval_dataset = test_valid['train']
+        validation_dataset = test_valid['test']
+
+        val_context = validation_dataset['context']
+        val_question = validation_dataset['context']
+        val_answer = validation_dataset['context']
+
+        # Dumping the validation lists to a file using pickle
+        try:
+            val_data_filename = "val_data.pkl"
+            val_file_path = os.path.join(self.trainer_config.model_output_dir, val_data_filename)
+            with open(val_file_path, "wb") as file:
+                data = {"context": val_context, "question": val_question, "answer": val_answer}
+                pickle.dump(data, file)
+        except Exception as e:
+            logging.error("Error while dumping pickle file: %s", e, exc_info=True)
+            raise e
+
         return train_dataset, eval_dataset
 
     def tokenize(self, prompt):
@@ -83,21 +107,25 @@ class LLMTrainer:
             data_point (dict): The data point containing question, context, and answer.
 
         Returns:
-            dict: A dictionary containing tokenized input and labels for the generated prompt.
+            dict: A dictionary containing tokenized input and labels for the generated
+                  prompt.
         """
-        full_prompt = f"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+        full_prompt = (
+            f"""You are a powerful text-to-SQL model. Your job is to answer questions about
+            a database. You are given a question and context regarding one or more tables.
 
-                        You must output the SQL query that answers the question.
+            You must output the SQL query that answers the question.
 
-                        ### Input:
-                        {data_point["question"]}
+            ### Input:
+            {data_point["question"]}
 
-                        ### Context:
-                        {data_point["context"]}
+            ### Context:
+            {data_point["context"]}
 
-                        ### Response:
-                        {data_point["answer"]}
-                        """
+            ### Response:
+            {data_point["answer"]}
+            """
+        )
         return self.tokenize(full_prompt)
 
     def get_trainer(self):

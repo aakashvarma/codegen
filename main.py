@@ -1,16 +1,17 @@
-import os
-import logging
-import sys
 import argparse
-import yaml
-from typing import Optional, Union
+import logging
+import os
+import pickle
+import sys
 from datetime import datetime
+
+import yaml
 
 sys.path.append("model")
 sys.path.append("utils")
 
 from model import Model
-from utils import parse_text
+from utils import parse_prompt
 
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
@@ -34,33 +35,33 @@ class ModelConfiguration:
     Configuration class for model arguments.
 
     Args:
-        model_name (Optional[str]): The name of the model. Default is "codellama/CodeLlama-7b-hf".
-        cache_dir (Optional[str]): The directory to cache the model. Default is None.
-        r (Optional[int]): Parameter 'r' for the model. Default is 64.
-        lora_alpha (Optional[float]): Alpha value for LoRA. Default is 32.
-        lora_dropout (Optional[float]): Dropout value for LoRA. Default is 0.05.
-        bits (Optional[int]): Number of bits. Default is 4.
-        double_quant (Optional[bool]): Whether to double quantization or not. Default is True.
+        model_name (str): The name of the model. Default is "codellama/CodeLlama-7b-hf".
+        pretrained_model_dir (str): The directory to cache the model. Default is None.
+        cache_dir (str): The directory to cache the model. Default is None.
+        r (int): Parameter 'r' for the model. Default is 64.
+        lora_alpha (float): Alpha value for LoRA. Default is 32.
+        lora_dropout (float): Dropout value for LoRA. Default is 0.05.
+        bits (int): Number of bits. Default is 4.
+        double_quant (bool): Whether to double quantization or not. Default is True.
         quant_type (str): Type of quantization. Default is "nf4".
-        trust_remote_code (Optional[bool]): Whether to trust remote code or not. Default is False.
-        use_auth_token (Union[bool, str]): Authentication token. Default is False.
-        compute_type (Optional[str]): Type of computation. Default is "fp16".
+        trust_remote_code (bool): Whether to trust remote code or not. Default is False.
+        use_auth_token (bool): Authentication token. Default is False.
+        compute_type (str): Type of computation. Default is "fp16".
     """
-
     def __init__(
             self,
-            model_name: Optional[str] = "codellama/CodeLlama-7b-hf",
-            pretrained_model_dir: Optional[str] = None,
-            cache_dir: Optional[str] = None,
-            r: Optional[int] = 64,
-            lora_alpha: Optional[float] = 32,
-            lora_dropout: Optional[float] = 0.05,
-            bits: Optional[int] = 4,
-            double_quant: Optional[bool] = True,
-            quant_type: str = "nf4",
-            trust_remote_code: Optional[bool] = False,
-            use_auth_token: Union[bool, str] = False,
-            compute_type: Optional[str] = "fp16",
+            model_name="codellama/CodeLlama-7b-hf",
+            pretrained_model_dir=None,
+            cache_dir=None,
+            r=64,
+            lora_alpha=32.0,
+            lora_dropout=0.05,
+            bits=4,
+            double_quant=True,
+            quant_type="nf4",
+            trust_remote_code=False,
+            use_auth_token=False,
+            compute_type="fp16",
     ):
         self.model_name = model_name
         self.pretrained_model_dir = pretrained_model_dir
@@ -90,38 +91,46 @@ class ModelConfiguration:
             yaml_args = yaml.safe_load(yaml_file)["model_config"]
         return cls(**yaml_args)
 
-
 class TrainerConfiguration:
     """
     Configuration class for data training arguments.
 
     Args:
-        dataset_name (Optional[str]): Name of the dataset. Default is "Dahoas/full-hh-rlhf".
-        block_size (Optional[int]): Block size for the dataset. Default is 4096.
-        multi_gpu (Optional[bool]): Whether to use multiple GPUs. Default is False.
-        tensor_parallel (Optional[bool]): Whether to use tensor parallelism. Default is False.
-        model_output_dir (Optional[str]): Output directory for the model. Default is "LLaMA/LoRA".
-        compute_type (Optional[str]): Type of computation. Default is "fp16".
+        dataset_name (str): Name of the dataset. Default is "b-mc2/sql-create-context".
+        block_size (int): Block size for the dataset. Default is 512.
+        multi_gpu (bool): Whether to use multiple GPUs. Default is False.
+        tensor_parallel (bool): Whether to use tensor parallelism. Default is False.
+        model_output_dir (str): Output directory for the model. Default is "__run.default".
+        per_device_train_batch_size (int): Batch size per device during training. Default is 4.
+        gradient_accumulation_steps (int): Number of steps for gradient accumulation. Default is 4.
+        optim (str): Optimization algorithm. Default is "paged_adamw_32bit".
+        save_steps (int): Frequency of saving model checkpoints. Default is 100.
+        logging_steps (int): Frequency of logging training information. Default is 10.
+        learning_rate (float): Initial learning rate for the optimizer. Default is 0.0002.
+        max_grad_norm (float): Maximum gradient norm for gradient clipping. Default is 0.3.
+        max_steps (int): Maximum number of training steps. Default is 100.
+        warmup_ratio (float): Ratio of warmup steps during learning rate warm-up. Default is 0.03.
+        lr_scheduler_type (str): Type of learning rate scheduler. Default is "constant".
+        compute_type (str): Type of computation. Default is "fp16".
     """
-
     def __init__(
             self,
-            dataset_name: Optional[str] = "b-mc2/sql-create-context",
-            block_size: Optional[int] = 512,
-            multi_gpu: Optional[bool] = False,
-            tensor_parallel: Optional[bool] = False,
-            model_output_dir: Optional[str] = "__run.default",
-            per_device_train_batch_size: Optional[int] = 4,
-            gradient_accumulation_steps: Optional[int] = 4,
-            optim: Optional[str] = "paged_adamw_32bit",
-            save_steps: Optional[int] = 100,
-            logging_steps: Optional[int] = 10,
-            learning_rate: Optional[float] = 0.0002,
-            max_grad_norm: Optional[float] = 0.3,
-            max_steps: Optional[int] = 100,
-            warmup_ratio: Optional[float] = 0.03,
-            lr_scheduler_type: Optional[str] = "constant",
-            compute_type: Optional[str] = "fp16"
+            dataset_name="b-mc2/sql-create-context",
+            block_size=512,
+            multi_gpu=False,
+            tensor_parallel=False,
+            model_output_dir="__run.default",
+            per_device_train_batch_size=4,
+            gradient_accumulation_steps=4,
+            optim="paged_adamw_32bit",
+            save_steps=100,
+            logging_steps=10,
+            learning_rate=0.0002,
+            max_grad_norm=0.3,
+            max_steps=100,
+            warmup_ratio=0.03,
+            lr_scheduler_type="constant",
+            compute_type="fp16"
     ):
         self.dataset_name = dataset_name
         self.block_size = block_size
@@ -161,16 +170,15 @@ class FineTuneConfiguration:
     Configuration class for fine-tuning arguments.
 
     Args:
-        r (Optional[int]): Parameter 'r' for fine-tuning. Default is 16.
-        lora_alpha (Optional[float]): Alpha value for LoRA during fine-tuning. Default is 32.
-        lora_dropout (Optional[float]): Dropout value for LoRA during fine-tuning. Default is 0.05.
+        r (int): Parameter 'r' for fine-tuning. Default is 16.
+        lora_alpha (float): Alpha value for LoRA during fine-tuning. Default is 32.
+        lora_dropout (float): Dropout value for LoRA during fine-tuning. Default is 0.05.
     """
-
     def __init__(
             self,
-            r: Optional[int] = 16,
-            lora_alpha: Optional[float] = 32,
-            lora_dropout: Optional[float] = 0.05,
+            r=16,
+            lora_alpha=32.0,
+            lora_dropout=0.05,
     ):
         self.r = r
         self.lora_alpha = lora_alpha
@@ -206,30 +214,6 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def get_parser(self):
-        """
-        Get the argument parser.
-
-        Returns:
-            argparse.ArgumentParser: The argument parser.
-        """
-        parser = argparse.ArgumentParser(description="Script Arguments")
-        parser.add_argument(
-            "--yaml_path",
-            required=True,
-            help="Path to the YAML file containing both sets of arguments.",
-        )
-        parser.add_argument(
-            "--prompt_file",
-            required=True,
-            help="Path to the text file containing the prompt.",
-        )
-        parser.add_argument("--infer", action="store_true", help="Perform inference.")
-        parser.add_argument(
-            "--finetune", action="store_true", help="Perform fine-tuning."
-        )
-        return parser
-
     def infer(self, model_config, prompt):
         """
         Perform inference.
@@ -242,6 +226,7 @@ class Runner:
             str: Inference output.
         """
         try:
+            logging.info("Inference started.")
             model = Model(model_config)
             output = model.infer_model(prompt)
             logging.info("Inference Done")
@@ -260,12 +245,75 @@ class Runner:
             finetune_config: Fine-tune configuration.
         """
         try:
+            logging.info("Fine-tuning started.")
             model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
             logging.info("Fine-tuning completed.")
         except Exception as e:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
+
+    def validate(self, model_config):
+        try:
+            logging.info("Validation started.")
+            val_data_filename = "val_data.pkl"
+            val_file_path = os.path.join(model_config.pretrained_model_dir, val_data_filename)
+            with open(val_file_path, "rb") as file:
+                loaded_data = pickle.load(file)
+        except Exception as e:
+            logging.error("Error while loading pickle file: %s", e, exc_info=True)
+            raise e
+        try:
+            val_context = loaded_data["context"]
+            val_question = loaded_data["question"]
+            val_answer = loaded_data["answer"]
+
+            for i in range(0, 1):
+                prompt_template = "### Input: {}\n### Context: {}\n### Response:\n "
+                prompt = prompt_template.format(val_question[i], val_context[i])
+                output = self.infer(model_config, prompt)
+                print(output)
+                print(val_answer)
+            logging.info("Validation completed.")
+        except Exception as e:
+            logging.error("Error during model validation: %s", e, exc_info=True)
+            raise e
+
+    def get_parser(self):
+        """
+        Get the argument parser.
+
+        Returns:
+            argparse.ArgumentParser: The argument parser.
+        """
+        parser = argparse.ArgumentParser(description="Script Arguments")
+        parser.add_argument(
+            "--model_yaml",
+            required=True,
+            help="Path to the YAML file containing model configuration.",
+        )
+        parser.add_argument(
+            "--trainer_yaml",
+            help="Path to the YAML file containing trainer configuration.",
+        )
+        parser.add_argument(
+            "--finetune_yaml",
+            help="Path to the YAML file containing fine-tune configuration.",
+        )
+        parser.add_argument(
+            "--prompt_file",
+            help="Path to the text file containing the prompt.",
+        )
+        parser.add_argument(
+            "--infer", action="store_true", help="Perform inference."
+        )
+        parser.add_argument(
+            "--finetune", action="store_true", help="Perform fine-tuning."
+        )
+        parser.add_argument(
+            "--validate", action="store_true", help="Perform validation."
+        )
+        return parser
 
     def main(self):
         """
@@ -276,27 +324,42 @@ class Runner:
 
             logger.info("Starting the script.")
 
-            model_config = ModelConfiguration.from_yaml(args.yaml_path)
-            trainer_config = TrainerConfiguration.from_yaml(args.yaml_path)
-            finetune_config = FineTuneConfiguration.from_yaml(args.yaml_path)
-
-            logger.info("Model Configuration:")
-            logger.info(model_config.__dict__)
-
-            logger.info("LLMTrainer Configuration:")
-            logger.info(trainer_config.__dict__)
-
-            logger.info("FineTune Configuration:")
-            logger.info(finetune_config.__dict__)
-
-            prompt = parse_text(args.prompt_file)
+            model_config = ModelConfiguration.from_yaml(args.model_yaml)
 
             if args.infer:
+                # For inference, only model YAML is required
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                prompt = parse_prompt(args.prompt_file)
+
                 result = self.infer(model_config, prompt)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
+                # For fine-tuning, all three YAML files are required
+                if not args.trainer_yaml or not args.finetune_yaml:
+                    raise ValueError("Both --trainer_yaml and --finetune_yaml are required for fine-tuning.")
+
+                trainer_config = TrainerConfiguration.from_yaml(args.trainer_yaml)
+                finetune_config = FineTuneConfiguration.from_yaml(args.finetune_yaml)
+
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                logger.info("LLMTrainer Configuration:")
+                logger.info(trainer_config.__dict__)
+
+                logger.info("FineTune Configuration:")
+                logger.info(finetune_config.__dict__)
+
                 self.finetune(model_config, trainer_config, finetune_config)
                 logger.info("Script completed fine-tuning successfully.")
+            elif args.validate:
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                self.validate(model_config)
+                logger.info("Script completed successfully")
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)
@@ -304,7 +367,6 @@ class Runner:
             error_logger.error("RuntimeError: %s", re)
         except ImportError as e:
             error_logger.error("An unexpected error occurred: %s", e, exc_info=True)
-
 
 if __name__ == "__main__":
     Runner().main()

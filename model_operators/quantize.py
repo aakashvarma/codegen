@@ -1,7 +1,8 @@
 import logging
+
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 
 class Quantizer:
@@ -19,6 +20,7 @@ class Quantizer:
     Attributes:
         model_config: Model configuration object.
     """
+
     def __init__(self, model_config):
         self.model_config = model_config
 
@@ -70,7 +72,13 @@ class Quantizer:
         model.config.use_cache = False
 
         if self.model_config.pretrained_model_dir:
-            model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
+            try:
+                model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
+                logging.info("Picking the pre-tuned model from the path: {}".format(self.model_config.pretrained_model_dir))
+            except Exception as e:
+                error_message = "Pretrained model directory is not present."
+                logging.error(error_message)
+                raise ValueError(error_message)
 
         return model
 
@@ -91,15 +99,15 @@ class Quantizer:
         Returns:
             tuple: A tuple containing the configured model and tokenizer.
         """
-        logging.info("Setting up Finetuning configuration.")
+        logging.info("Setting up Model configuration.")
         try:
             model = self.get_model()
             tokenizer = self.get_tokenizer()
 
-            logging.info("Finetuning configuration successful.")
+            logging.info("Model configuration successful.")
 
         except Exception as e:
-            logging.error(f"Error in setting up Finetuning configuration: {e}")
+            logging.error(f"Error in setting up Model configuration: {e}")
             raise
 
         return model, tokenizer

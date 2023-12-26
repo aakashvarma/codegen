@@ -1,6 +1,9 @@
 import logging
 import sys
+import re
+
 import torch
+
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
 
@@ -118,7 +121,15 @@ class Model:
                         generated_tokens, skip_special_tokens=True
                     )
                     logging.info("Model inference done.")
-                    return decoded_output
+                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                    if match:
+                        sql_query = match.group(1).strip()
+                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                        return sql_query
+                    else:
+                        error_message = "Output ###Response: not found."
+                        logging.error(error_message)
+                        raise ValueError(error_message)
             else:
                 error_message = "Prompt cannot be empty."
                 logging.error(error_message)
