@@ -74,7 +74,7 @@ class Quantizer:
         if self.model_config.pretrained_model_dir:
             try:
                 model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
-                logging.info("Picking the pre-tuned model from the path: ", str(self.model_config.pretrained_model_dir))
+                logging.info("Picking the pre-tuned model from the path: {}".format(self.model_config.pretrained_model_dir))
             except Exception as e:
                 error_message = "Pretrained model directory is not present."
                 logging.error(error_message)
