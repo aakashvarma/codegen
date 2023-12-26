@@ -64,7 +64,7 @@ class LLMTrainer:
 
         val_context = validation_dataset['context']
         val_question = validation_dataset['question']
-        val_answer = validation_dataset['context']
+        val_answer = validation_dataset['answer']
 
         # Dumping the validation lists to a file using pickle
         try:
