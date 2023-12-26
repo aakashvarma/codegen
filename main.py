@@ -269,7 +269,7 @@ class Runner:
             val_answer = loaded_data["answer"]
 
             for i in range(0, 5):
-                prompt_template = "### Input: {}\n### Context: {}\n### Response: "
+                prompt_template = "### Input: {}\n### Context: {}\n### Response:\n "
                 prompt = prompt_template.format(val_question[i], val_context[i])
                 output = self.infer(model_config, prompt)
                 print(output)
