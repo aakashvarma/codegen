@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import pickle
 import sys
 from datetime import datetime
 
@@ -225,6 +226,7 @@ class Runner:
             str: Inference output.
         """
         try:
+            logging.info("Inference started.")
             model = Model(model_config)
             output = model.infer_model(prompt)
             logging.info("Inference Done")
@@ -243,11 +245,37 @@ class Runner:
             finetune_config: Fine-tune configuration.
         """
         try:
+            logging.info("Fine-tuning started.")
             model = Model(model_config, trainer_config, finetune_config)
             model.finetune_model()
             logging.info("Fine-tuning completed.")
         except Exception as e:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
+            raise e
+
+    def validate(self, model_config):
+        try:
+            logging.info("Validation started.")
+            val_data_filename = "val_data.pkl"
+            val_file_path = os.path.join(model_config.pretrained_model_dir, val_data_filename)
+            with open(val_file_path, "rb") as file:
+                loaded_data = pickle.load(file)
+        except Exception as e:
+            logging.error("Error while loading pickle file: %s", e, exc_info=True)
+            raise e
+        try:
+            val_context = loaded_data["context"]
+            val_question = loaded_data["question"]
+            val_answer = loaded_data["answer"]
+
+            for i in range(0, 5):
+                prompt_template = "### Input: {}\n### Context: {}\n### Response: {}"
+                prompt = prompt_template.format("", val_question[i], val_context[i], val_answer[i])
+                output = self.infer(model_config, prompt)
+                print(output)
+            logging.info("Validation completed.")
+        except Exception as e:
+            logging.error("Error during model validation: %s", e, exc_info=True)
             raise e
 
     def get_parser(self):
@@ -275,9 +303,14 @@ class Runner:
             "--prompt_file",
             help="Path to the text file containing the prompt.",
         )
-        parser.add_argument("--infer", action="store_true", help="Perform inference.")
+        parser.add_argument(
+            "--infer", action="store_true", help="Perform inference."
+        )
         parser.add_argument(
             "--finetune", action="store_true", help="Perform fine-tuning."
+        )
+        parser.add_argument(
+            "--validate", action="store_true", help="Perform validation."
         )
         return parser
 
@@ -320,6 +353,12 @@ class Runner:
 
                 self.finetune(model_config, trainer_config, finetune_config)
                 logger.info("Script completed fine-tuning successfully.")
+            elif args.validate:
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                self.validate(model_config)
+                logger.info("Script completed successfully")
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)

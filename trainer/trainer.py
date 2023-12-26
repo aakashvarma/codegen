@@ -67,11 +67,15 @@ class LLMTrainer:
         val_answer = validation_dataset['context']
 
         # Dumping the validation lists to a file using pickle
-        val_data_filename = "val_data.pkl"
-        val_file_path = os.path.join(self.trainer_config.model_output_dir, val_data_filename)
-        with open(val_file_path, "wb") as file:
-            data = {"context": val_context, "question": val_question, "answer": val_answer}
-            pickle.dump(data, file)
+        try:
+            val_data_filename = "val_data.pkl"
+            val_file_path = os.path.join(self.trainer_config.model_output_dir, val_data_filename)
+            with open(val_file_path, "wb") as file:
+                data = {"context": val_context, "question": val_question, "answer": val_answer}
+                pickle.dump(data, file)
+        except Exception as e:
+            logging.error("Error while dumping pickle file: %s", e, exc_info=True)
+            raise e
 
         return train_dataset, eval_dataset
 
