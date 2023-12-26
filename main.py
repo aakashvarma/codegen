@@ -273,7 +273,7 @@ class Runner:
                 prompt = prompt_template.format(val_question[i], val_context[i])
                 output = self.infer(model_config, prompt)
                 print(output)
-                print(val_answer)
+                print(val_answer[i])
             logging.info("Validation completed.")
         except Exception as e:
             logging.error("Error during model validation: %s", e, exc_info=True)
