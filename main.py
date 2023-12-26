@@ -269,10 +269,11 @@ class Runner:
             val_answer = loaded_data["answer"]
 
             for i in range(0, 5):
-                prompt_template = "### Input: {}\n### Context: {}\n### Response: {}"
-                prompt = prompt_template.format("", val_question[i], val_context[i], val_answer[i])
+                prompt_template = "### Input: {}\n### Context: {}\n### Response: "
+                prompt = prompt_template.format("", val_question[i], val_context[i])
                 output = self.infer(model_config, prompt)
                 print(output)
+                print(val_answer)
             logging.info("Validation completed.")
         except Exception as e:
             logging.error("Error during model validation: %s", e, exc_info=True)
