@@ -1,6 +1,8 @@
 import logging
 from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
+import pickle
+import os
 
 
 class LLMTrainer:
@@ -51,19 +53,25 @@ class LLMTrainer:
             tuple: A tuple containing the training and evaluation datasets.
         """
         dataset = load_dataset(self.trainer_config.dataset_name, split="train")
-        train_dataset = dataset.train_test_split(test_size=0.1)["train"]
-        eval_dataset = dataset.train_test_split(test_size=0.1)["test"]
-
-        import pdb; pdb.set_trace()
-        # 90% train, 10% test + validation
-        train_test_dataset = dataset.train_test_split(test_size=0.1)
-        # Split the 10% test + valid in half test, half valid
+        # 80% train, 20% test
+        train_test_dataset = dataset.train_test_split(test_size=0.2)
+        # Split the 20% test into half test, half valid
         test_valid = train_test_dataset['test'].train_test_split(test_size=0.5)
-        # gather everyone if you want to have a single DatasetDict
-        # train_test_valid_dataset = DatasetDict({
-        #     'train': train_test_dataset['train'],
-        #     'test': test_valid['test'],
-        #     'valid': test_valid['train']})
+
+        train_dataset = train_test_dataset['train']
+        eval_dataset = test_valid['train']
+        validation_dataset = test_valid['test']
+
+        val_context = validation_dataset['context']
+        val_question = validation_dataset['context']
+        val_answer = validation_dataset['context']
+
+        # Dumping the validation lists to a file using pickle
+        val_data_filename = "val_data.pkl"
+        val_file_path = os.path.join(self.trainer_config.model_output_dir, val_data_filename)
+        with open(val_file_path, "wb") as file:
+            data = {"context": val_context, "question": val_question, "answer": val_answer}
+            pickle.dump(data, file)
 
         return train_dataset, eval_dataset
 
