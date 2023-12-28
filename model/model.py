@@ -154,10 +154,10 @@ You must output the SQL query that answers the question.
                     error_message = "Output ###Response: not found."
                     logging.error(error_message)
                     raise ValueError(error_message)
-            else:
-                error_message = "Prompt cannot be empty."
-                logging.error(error_message)
-                raise ValueError(error_message)
+            # else:
+            #     error_message = "Prompt cannot be empty."
+            #     logging.error(error_message)
+            #     raise ValueError(error_message)
 
         except Exception as e:
             error_message = f"Error during model inference: {e}"
