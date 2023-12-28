@@ -113,20 +113,17 @@ class Model:
             for i in range(0, len(context)):
 
                 full_prompt = (
-                            """You are a powerful text-to-SQL model. Your job is to answer questions about
-                            a database. You are given a question and context regarding one or more tables.
+"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+You must output the SQL query that answers the question.
 
-                            You must output the SQL query that answers the question.
+### Input:
+{}
 
-                            ### Input:
-                            {}
+### Context:
+{}
 
-                            ### Context:
-                            {}
-
-                            ### Response:
-                            
-                            """
+### Response:
+"""
                 )
 
                 # prompt_template = "  ### Input: {}\n### Context: {}\n### Response:\n "
