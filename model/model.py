@@ -3,6 +3,7 @@ import sys
 import re
 
 import torch
+import pickle
 
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
@@ -110,8 +111,9 @@ class Model:
         try:
             self.get_inference_model_and_tokenizer()
             logging.info("Start model inference.")
-            prompt = []
-            for i in range(0, 2):
+            sql_output_arr = []
+            real_output_arr = []
+            for i in range(0, len(context)):
                 full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
@@ -125,35 +127,41 @@ You must output the SQL query that answers the question.
 ### Response:
 """
                 )
-                prompt.append(full_prompt.format(question[i], context[i]))
+                prompt = full_prompt.format(question[i], context[i])
 
-            logging.info("Start tokenizing prompts.")
-            model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
+                logging.info("Start tokenizing prompts.")
+                model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
 
-            logging.info("Start generating outputs.")
-            # for model_input in model_inputs.input_ids:
-            self.model.eval()
-            with torch.no_grad():
-                generated_tokens = self.model.generate(
-                    **model_inputs, max_new_tokens=100
-                )[0]
-                decoded_output = self.tokenizer.decode(
-                    generated_tokens, skip_special_tokens=True
-                )
-                print(decoded_output)
-                logging.info("Model inference done.")
-                # match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
-                # if match:
-                #     sql_query = match.group(1).strip()
-                #     sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
-                #     print(sql_query)
-                #     # return sql_query
-                # else:
-                #     error_message = "Output ###Response: not found."
-                #     logging.error(error_message)
-                #     raise ValueError(error_message)
+                logging.info("Start generating outputs.")
 
-            # prompt = []
+                self.model.eval()
+                with torch.no_grad():
+                    generated_tokens = self.model.generate(
+                        **model_inputs, max_new_tokens=100
+                    )[0]
+                    decoded_output = self.tokenizer.decode(
+                        generated_tokens, skip_special_tokens=True
+                    )
+                    # print(decoded_output)
+                    logging.info("Model inference done.")
+                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                    if match:
+                        sql_query = match.group(1).strip()
+                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                        sql_output_arr.append(sql_query)
+                        real_output_arr.append(answer[i])
+                        print(sql_query)
+                    else:
+                        error_message = "Output ###Response: not found."
+                        logging.error(error_message)
+                        raise ValueError(error_message)
+
+            with open('output_data.pkl', 'wb') as file:
+                pickle.dump((sql_output_arr, real_output_arr), file)
+
+            # with open('output_data.pkl', 'rb') as file:
+            #     loaded_sql_output_arr, loaded_real_output_arr = pickle.load(file)
+
             # else:
             #     error_message = "Prompt cannot be empty."
             #     logging.error(error_message)
