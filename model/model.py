@@ -129,7 +129,7 @@ class Model:
                         sql_query = match.group(1).strip()
                         sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
                         print(sql_query)
-                        return sql_query
+                        # return sql_query
                     else:
                         error_message = "Output ###Response: not found."
                         logging.error(error_message)
