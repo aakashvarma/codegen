@@ -111,20 +111,18 @@ class LLMTrainer:
                   prompt.
         """
         full_prompt = (
-            f"""You are a powerful text-to-SQL model. Your job is to answer questions about
-            a database. You are given a question and context regarding one or more tables.
+f"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+You must output the SQL query that answers the question.
 
-            You must output the SQL query that answers the question.
+### Input:
+{data_point["question"]}
 
-            ### Input:
-            {data_point["question"]}
+### Context:
+{data_point["context"]}
 
-            ### Context:
-            {data_point["context"]}
-
-            ### Response:
-            {data_point["answer"]}
-            """
+### Response:
+{data_point["answer"]}
+"""
         )
         return self.tokenize(full_prompt)
 
