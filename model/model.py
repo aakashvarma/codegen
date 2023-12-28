@@ -97,7 +97,7 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
-    def infer_model(self, prompt):
+    def infer_model(self, context, question, answer):
         """
         Perform model inference on the provided prompt.
 
@@ -109,8 +109,11 @@ class Model:
         """
         try:
             self.get_inference_model_and_tokenizer()
-            if prompt:
-                logging.info("Running model inference on the prompt.")
+            logging.info("Running model inference on the prompt.")
+            for i in range(0, len(context)):
+                prompt_template = "### Input: {}\n### Context: {}\n### Response:\n "
+                prompt = prompt_template.format(question[i], context[i])
+
                 model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
                 self.model.eval()
                 with torch.no_grad():
@@ -125,6 +128,7 @@ class Model:
                     if match:
                         sql_query = match.group(1).strip()
                         sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                        print(sql_query)
                         return sql_query
                     else:
                         error_message = "Output ###Response: not found."

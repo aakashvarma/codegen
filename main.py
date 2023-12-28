@@ -214,7 +214,7 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, prompt):
+    def infer(self, model_config, context, question, answer):
         """
         Perform inference.
 
@@ -228,7 +228,7 @@ class Runner:
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(prompt)
+            output = model.infer_model(context, question, answer)
             logging.info("Inference Done")
             return output
         except Exception as e:
@@ -268,12 +268,11 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            for i in range(0, 1):
-                prompt_template = "### Input: {}\n### Context: {}\n### Response:\n "
-                prompt = prompt_template.format(val_question[i], val_context[i])
-                output = self.infer(model_config, prompt)
-                print(output)
-                print(val_answer[i])
+            output = self.infer(model_config, val_context, val_question, val_answer)
+
+            # print(output)
+            # print(val_answer[i])
+
             logging.info("Validation completed.")
         except Exception as e:
             logging.error("Error during model validation: %s", e, exc_info=True)
