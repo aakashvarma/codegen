@@ -90,6 +90,9 @@ class Quantizer:
             transformers.AutoTokenizer: The fine-tuning model tokenizer.
         """
         tokenizer = AutoTokenizer.from_pretrained(self.model_config.model_name)
+        if tokenizer.pad_token is None:
+            # tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+            tokenizer.pad_token = tokenizer.eos_token
         return tokenizer
 
     def model_setup(self):
