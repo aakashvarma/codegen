@@ -111,7 +111,7 @@ class Model:
             self.get_inference_model_and_tokenizer()
             logging.info("Start model inference.")
             prompt = []
-            for i in range(0, len(context), 100):
+            for i in range(0, 2):
                 full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
@@ -125,8 +125,6 @@ You must output the SQL query that answers the question.
 ### Response:
 """
                 )
-
-                # prompt_template = "  ### Input: {}\n### Context: {}\n### Response:\n "
                 prompt.append(full_prompt.format(question[i], context[i]))
 
             logging.info("Start tokenizing prompts.")
@@ -142,17 +140,18 @@ You must output the SQL query that answers the question.
                 decoded_output = self.tokenizer.decode(
                     generated_tokens, skip_special_tokens=True
                 )
+                print(decoded_output)
                 logging.info("Model inference done.")
-                match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
-                if match:
-                    sql_query = match.group(1).strip()
-                    sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
-                    print(sql_query)
-                    # return sql_query
-                else:
-                    error_message = "Output ###Response: not found."
-                    logging.error(error_message)
-                    raise ValueError(error_message)
+                # match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                # if match:
+                #     sql_query = match.group(1).strip()
+                #     sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                #     print(sql_query)
+                #     # return sql_query
+                # else:
+                #     error_message = "Output ###Response: not found."
+                #     logging.error(error_message)
+                #     raise ValueError(error_message)
 
             # prompt = []
             # else:
