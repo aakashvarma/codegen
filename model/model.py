@@ -134,7 +134,7 @@ You must output the SQL query that answers the question.
             model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
 
             logging.info("Start generating outputs.")
-            for model_input in model_inputs:
+            for model_input in model_inputs.input_ids:
                 self.model.eval()
                 with torch.no_grad():
                     generated_tokens = self.model.generate(
