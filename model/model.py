@@ -111,8 +111,26 @@ class Model:
             self.get_inference_model_and_tokenizer()
             logging.info("Running model inference on the prompt.")
             for i in range(0, len(context)):
-                prompt_template = "### Input: {}\n### Context: {}\n### Response:\n "
-                prompt = prompt_template.format(question[i], context[i])
+
+                full_prompt = (
+                            """You are a powerful text-to-SQL model. Your job is to answer questions about
+                            a database. You are given a question and context regarding one or more tables.
+
+                            You must output the SQL query that answers the question.
+
+                            ### Input:
+                            {}
+
+                            ### Context:
+                            {}
+
+                            ### Response:
+                            
+                            """
+                )
+
+                # prompt_template = "  ### Input: {}\n### Context: {}\n### Response:\n "
+                prompt = full_prompt.format(question[i], context[i])
 
                 model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
                 self.model.eval()
