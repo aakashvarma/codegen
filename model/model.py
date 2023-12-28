@@ -110,6 +110,7 @@ class Model:
         try:
             self.get_inference_model_and_tokenizer()
             logging.info("Running model inference on the prompt.")
+            prompt = []
             for i in range(0, len(context)):
 
                 full_prompt = (
@@ -127,9 +128,11 @@ You must output the SQL query that answers the question.
                 )
 
                 # prompt_template = "  ### Input: {}\n### Context: {}\n### Response:\n "
-                prompt = full_prompt.format(question[i], context[i])
+                prompt.append(full_prompt.format(question[i], context[i]))
 
-                model_input = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+                model_inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda")
+
+            for model_input in model_inputs:
                 self.model.eval()
                 with torch.no_grad():
                     generated_tokens = self.model.generate(
