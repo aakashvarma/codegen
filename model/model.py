@@ -134,26 +134,26 @@ You must output the SQL query that answers the question.
             model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
 
             logging.info("Start generating outputs.")
-            for model_input in model_inputs.input_ids:
-                self.model.eval()
-                with torch.no_grad():
-                    generated_tokens = self.model.generate(
-                        **model_input, max_new_tokens=100
-                    )[0]
-                    decoded_output = self.tokenizer.decode(
-                        generated_tokens, skip_special_tokens=True
-                    )
-                    logging.info("Model inference done.")
-                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
-                    if match:
-                        sql_query = match.group(1).strip()
-                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
-                        print(sql_query)
-                        # return sql_query
-                    else:
-                        error_message = "Output ###Response: not found."
-                        logging.error(error_message)
-                        raise ValueError(error_message)
+            # for model_input in model_inputs.input_ids:
+            self.model.eval()
+            with torch.no_grad():
+                generated_tokens = self.model.generate(
+                    **model_inputs, max_new_tokens=100
+                )[0]
+                decoded_output = self.tokenizer.decode(
+                    generated_tokens, skip_special_tokens=True
+                )
+                logging.info("Model inference done.")
+                match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                if match:
+                    sql_query = match.group(1).strip()
+                    sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                    print(sql_query)
+                    # return sql_query
+                else:
+                    error_message = "Output ###Response: not found."
+                    logging.error(error_message)
+                    raise ValueError(error_message)
             else:
                 error_message = "Prompt cannot be empty."
                 logging.error(error_message)
