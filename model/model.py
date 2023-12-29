@@ -143,11 +143,10 @@ You must output the SQL query that answers the question.
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                    match = re.search(r'### Result:(.+)', decoded_output, re.DOTALL)
                     if match:
-                        sql_query = match.group(1).strip()
-                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
-                        sql_output_arr.append(sql_query)
+                        result_line = match.group(1).strip()
+                        sql_output_arr.append(result_line)
                         real_output_arr.append(answer[i])
                         print(i,  ": ", decoded_output)
                     else:
