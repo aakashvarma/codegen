@@ -142,15 +142,13 @@ You must output the SQL query that answers the question.
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    # print(decoded_output)
-                    # logging.info("Model inference done.")
                     match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
                     if match:
                         sql_query = match.group(1).strip()
                         sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
                         sql_output_arr.append(sql_query)
                         real_output_arr.append(answer[i])
-                        print(i,  ": ", sql_query)
+                        print(i,  ": ", decoded_output)
                     else:
                         error_message = "Output ###Response: not found."
                         logging.error(error_message)
@@ -158,14 +156,6 @@ You must output the SQL query that answers the question.
 
             with open('output_data.pkl', 'wb') as file:
                 pickle.dump((sql_output_arr, real_output_arr), file)
-
-            # with open('output_data.pkl', 'rb') as file:
-            #     loaded_sql_output_arr, loaded_real_output_arr = pickle.load(file)
-
-            # else:
-            #     error_message = "Prompt cannot be empty."
-            #     logging.error(error_message)
-            #     raise ValueError(error_message)
 
         except Exception as e:
             error_message = f"Error during model inference: {e}"
