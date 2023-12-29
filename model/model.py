@@ -209,7 +209,7 @@ You must output the SQL query that answers the question.
 
             with torch.no_grad():
                 generated_tokens = self.model.generate(
-                    **model_inputs, max_new_tokens=50
+                    **model_inputs, max_new_tokens=100
                 )[0]
                 decoded_output = self.tokenizer.batch_decode(
                     generated_tokens, skip_special_tokens=True
