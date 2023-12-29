@@ -134,13 +134,13 @@ You must output the SQL query that answers the question.
                 prompt = full_prompt.format(question[i], context[i])
                 model_inputs.append(self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda"))
 
-                logging.info("Start generating outputs.")
-
+            logging.info("Start generating outputs.")
             self.model.eval()
-            for i in range(0, len(model_inputs)):
-                with torch.no_grad():
+
+            with torch.no_grad():
+                for i in range(0, len(model_inputs)):
                     generated_tokens = self.model.generate(
-                        **model_inputs[i], max_new_tokens=100
+                        **model_inputs[i], max_new_tokens=50
                     )[0]
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
