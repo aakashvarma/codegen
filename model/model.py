@@ -114,7 +114,7 @@ class Model:
             sql_output_arr = []
             real_output_arr = []
             prompt = []
-            mini_batch = 1
+            mini_batch = 3
             for j in range(0, len(context), mini_batch):
                 for i in range(j, j + mini_batch):
                     full_prompt = (
@@ -131,6 +131,7 @@ You must output the SQL query that answers the question.
 """
                     )
                     prompt.append(full_prompt.format(question[i], context[i]))
+                    real_output_arr.append(answer[i])
 
                 logging.info("Start tokenizing prompts.")
                 model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
@@ -142,7 +143,7 @@ You must output the SQL query that answers the question.
                     generated_tokens = self.model.generate(
                         **model_inputs, max_new_tokens=100
                     )[0]
-                    decoded_output = self.tokenizer.decode(
+                    decoded_output = self.tokenizer.batch_decode(
                         generated_tokens, skip_special_tokens=True
                     )
                     # print(decoded_output)
@@ -152,7 +153,6 @@ You must output the SQL query that answers the question.
                         sql_query = match.group(1).strip()
                         sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
                         sql_output_arr.append(sql_query)
-                        real_output_arr.append(answer[i])
                         print(i,  ": ", sql_query)
                         prompt = []
                     else:
