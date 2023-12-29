@@ -143,7 +143,7 @@ You must output the SQL query that answers the question.
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    match = re.search(r'### Response:(.+)', decoded_output, re.DOTALL)
+                    match = re.search(r'### Response:(.+)### Input:', decoded_output)
                     if match:
                         result_line = match.group(1).strip()
                         sql_output_arr.append(result_line)
