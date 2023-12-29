@@ -113,8 +113,11 @@ class Model:
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
-            for i in range(0, len(context)):
-                full_prompt = (
+            prompt = []
+            mini_batch = 1
+            for j in range(0, len(context), mini_batch):
+                for i in range(j, j + mini_batch):
+                    full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
 
@@ -126,8 +129,8 @@ You must output the SQL query that answers the question.
 
 ### Response:
 """
-                )
-                prompt = full_prompt.format(question[i], context[i])
+                    )
+                    prompt.append(full_prompt.format(question[i], context[i]))
 
                 logging.info("Start tokenizing prompts.")
                 model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
@@ -150,11 +153,14 @@ You must output the SQL query that answers the question.
                         sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
                         sql_output_arr.append(sql_query)
                         real_output_arr.append(answer[i])
-                        print(sql_query)
+                        print(i,  ": ", sql_query)
+                        prompt = []
                     else:
                         error_message = "Output ###Response: not found."
                         logging.error(error_message)
                         raise ValueError(error_message)
+
+
 
             with open('output_data.pkl', 'wb') as file:
                 pickle.dump((sql_output_arr, real_output_arr), file)
