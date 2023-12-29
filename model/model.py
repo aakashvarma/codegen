@@ -156,10 +156,10 @@ You must output the SQL query that answers the question.
                     #     sql_output_arr.append(sql_query)
                     #     print(i,  ": ", sql_query)
                     #     prompt = []
-                    else:
-                        error_message = "Output ###Response: not found."
-                        logging.error(error_message)
-                        raise ValueError(error_message)
+                    # else:
+                    #     error_message = "Output ###Response: not found."
+                    #     logging.error(error_message)
+                    #     raise ValueError(error_message)
 
 
 
