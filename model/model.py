@@ -148,7 +148,7 @@ You must output the SQL query that answers the question.
                         result_line = match.group(1).strip()
                         sql_output_arr.append(result_line)
                         real_output_arr.append(answer[i])
-                        print(i,  ": ", decoded_output)
+                        print(i,  ": ", result_line)
                     else:
                         error_message = "Output ### Response: not found."
                         logging.error(error_message)
