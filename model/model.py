@@ -114,7 +114,10 @@ class Model:
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
-            for i in tqdm.tqdm(range(0, 1000), desc="Processing"):
+            model_inputs = []
+
+            logging.info("Start tokenizing prompts.")
+            for i in range(0, 1000):
                 full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
@@ -129,30 +132,32 @@ You must output the SQL query that answers the question.
 """
                 )
                 prompt = full_prompt.format(question[i], context[i])
+                model_inputs.append(self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda"))
 
-                # logging.info("Start tokenizing prompts.")
-                model_inputs = self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda")
+                logging.info("Start generating outputs.")
 
-                # logging.info("Start generating outputs.")
-
-                self.model.eval()
+            self.model.eval()
+            for i in range(0, len(model_inputs)):
                 with torch.no_grad():
                     generated_tokens = self.model.generate(
-                        **model_inputs, max_new_tokens=100
+                        **model_inputs[i], max_new_tokens=100
                     )[0]
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    match = re.search(r'### Response:(.+?)(?:\n|$)', decoded_output, re.DOTALL)
-                    if match:
-                        result_line = match.group(1).strip()
-                        sql_output_arr.append(result_line)
-                        real_output_arr.append(answer[i])
-                        print(i,  ": ", result_line)
-                    else:
-                        error_message = "Output ### Response: not found."
-                        logging.error(error_message)
-                        raise ValueError(error_message)
+                    sql_output_arr.append(decoded_output)
+                    real_output_arr.append(answer[i])
+                    print(i, ": ", decoded_output)
+                    # match = re.search(r'### Response:(.+?)(?:\n|$)', decoded_output, re.DOTALL)
+                    # if match:
+                    #     result_line = match.group(1).strip()
+                    #     sql_output_arr.append(result_line)
+                    #     real_output_arr.append(answer[i])
+                    #     print(i,  ": ", result_line)
+                    # else:
+                    #     error_message = "Output ### Response: not found."
+                    #     logging.error(error_message)
+                    #     raise ValueError(error_message)
 
             with open('output_data.pkl', 'wb') as file:
                 pickle.dump((sql_output_arr, real_output_arr), file)
