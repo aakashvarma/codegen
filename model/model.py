@@ -99,6 +99,74 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
+#     def infer_model(self, context, question, answer):
+#         """
+#         Perform model inference on the provided prompt.
+#
+#         Args:
+#             prompt (str): The input prompt for inference.
+#
+#         Returns:
+#             str: Inference output.
+#         """
+#         try:
+#             self.get_inference_model_and_tokenizer()
+#             logging.info("Start model inference.")
+#             sql_output_arr = []
+#             real_output_arr = []
+#             model_inputs = []
+#
+#             logging.info("Start tokenizing prompts.")
+#             for i in range(0, 1000):
+#                 full_prompt = (
+# """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+# You must output the SQL query that answers the question.
+#
+# ### Input:
+# {}
+#
+# ### Context:
+# {}
+#
+# ### Response:
+# """
+#                 )
+#                 prompt = full_prompt.format(question[i], context[i])
+#                 model_inputs.append(self.tokenizer(prompt, return_tensors="pt").to("cuda"))
+#
+#             logging.info("Start generating outputs.")
+#             self.model.eval()
+#
+#             with torch.no_grad():
+#                 for i in range(0, len(model_inputs)):
+#                     generated_tokens = self.model.generate(
+#                         **model_inputs[i], max_new_tokens=50
+#                     )[0]
+#                     decoded_output = self.tokenizer.decode(
+#                         generated_tokens, skip_special_tokens=True
+#                     )
+#                     sql_output_arr.append(decoded_output)
+#                     real_output_arr.append(answer[i])
+#                     print(i, ": ", decoded_output)
+#                     # match = re.search(r'### Response:(.+?)(?:\n|$)', decoded_output, re.DOTALL)
+#                     # if match:
+#                     #     result_line = match.group(1).strip()
+#                     #     sql_output_arr.append(result_line)
+#                     #     real_output_arr.append(answer[i])
+#                     #     print(i,  ": ", result_line)
+#                     # else:
+#                     #     error_message = "Output ### Response: not found."
+#                     #     logging.error(error_message)
+#                     #     raise ValueError(error_message)
+#
+#             with open('output_data.pkl', 'wb') as file:
+#                 pickle.dump((sql_output_arr, real_output_arr), file)
+#
+#         except Exception as e:
+#             error_message = f"Error during model inference: {e}"
+#             logging.error(error_message, exc_info=True)
+#             raise RuntimeError(error_message) from e
+
     def infer_model(self, context, question, answer):
         """
         Perform model inference on the provided prompt.
@@ -115,9 +183,10 @@ class Model:
             sql_output_arr = []
             real_output_arr = []
             model_inputs = []
+            prompts = []
 
             logging.info("Start tokenizing prompts.")
-            for i in range(0, 1000):
+            for i in range(0, 4):
                 full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
@@ -131,33 +200,23 @@ You must output the SQL query that answers the question.
 ### Response:
 """
                 )
-                prompt = full_prompt.format(question[i], context[i])
-                model_inputs.append(self.tokenizer(prompt, padding=True, return_tensors="pt").to("cuda"))
+                prompts.append(full_prompt.format(question[i], context[i]))
+                model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
 
             logging.info("Start generating outputs.")
             self.model.eval()
 
             with torch.no_grad():
-                for i in range(0, len(model_inputs)):
-                    generated_tokens = self.model.generate(
-                        **model_inputs[i], max_new_tokens=50
-                    )[0]
-                    decoded_output = self.tokenizer.decode(
-                        generated_tokens, skip_special_tokens=True
-                    )
-                    sql_output_arr.append(decoded_output)
-                    real_output_arr.append(answer[i])
-                    print(i, ": ", decoded_output)
-                    # match = re.search(r'### Response:(.+?)(?:\n|$)', decoded_output, re.DOTALL)
-                    # if match:
-                    #     result_line = match.group(1).strip()
-                    #     sql_output_arr.append(result_line)
-                    #     real_output_arr.append(answer[i])
-                    #     print(i,  ": ", result_line)
-                    # else:
-                    #     error_message = "Output ### Response: not found."
-                    #     logging.error(error_message)
-                    #     raise ValueError(error_message)
+                generated_tokens = self.model.generate(
+                    **model_inputs, max_new_tokens=50
+                )[0]
+                decoded_output = self.tokenizer.batch_decode(
+                    generated_tokens, skip_special_tokens=True
+                )
+                sql_output_arr.append(decoded_output)
+                # real_output_arr.append(answer)
+                print(decoded_output)
+
 
             with open('output_data.pkl', 'wb') as file:
                 pickle.dump((sql_output_arr, real_output_arr), file)
