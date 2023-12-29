@@ -201,7 +201,8 @@ You must output the SQL query that answers the question.
 """
                 )
                 prompts.append(full_prompt.format(question[i], context[i]))
-                model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
+
+            model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
 
             logging.info("Start generating outputs.")
             self.model.eval()
