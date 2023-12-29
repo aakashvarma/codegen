@@ -148,13 +148,14 @@ You must output the SQL query that answers the question.
                     )
                     # print(decoded_output)
                     logging.info("Model inference done.")
-                    match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
-                    if match:
-                        sql_query = match.group(1).strip()
-                        sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
-                        sql_output_arr.append(sql_query)
-                        print(i,  ": ", sql_query)
-                        prompt = []
+                    print(j, ": ", decoded_output)
+                    # match = re.search(r'### Response:\n(.+)', decoded_output, re.DOTALL)
+                    # if match:
+                    #     sql_query = match.group(1).strip()
+                    #     sql_query = re.sub(r'\n\s*\n', '\n', sql_query) # Remove empty lines at the end
+                    #     sql_output_arr.append(sql_query)
+                    #     print(i,  ": ", sql_query)
+                    #     prompt = []
                     else:
                         error_message = "Output ###Response: not found."
                         logging.error(error_message)
