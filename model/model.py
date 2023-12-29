@@ -4,7 +4,7 @@ import re
 
 import torch
 import pickle
-import tqdm
+from tqdm import tqdm
 
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
@@ -182,12 +182,14 @@ class Model:
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
-            model_inputs = []
             prompts = []
+            answers = []
+            mini_batch = 4
 
             logging.info("Start tokenizing prompts.")
-            for i in range(0, 4):
-                full_prompt = (
+            for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
+                for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
+                    full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
 
@@ -199,25 +201,28 @@ You must output the SQL query that answers the question.
 
 ### Response:
 """
-                )
-                prompts.append(full_prompt.format(question[i], context[i]))
+                    )
+                    prompts.append(full_prompt.format(question[i], context[i]))
+                    answers.append(answer[i])
 
-            model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
+                model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
 
-            logging.info("Start generating outputs.")
-            self.model.eval()
+                logging.info("Start generating outputs.")
+                self.model.eval()
 
-            with torch.no_grad():
-                generated_tokens = self.model.generate(
-                    **model_inputs, max_new_tokens=100
-                )
-                decoded_output = self.tokenizer.batch_decode(
-                    generated_tokens, skip_special_tokens=True
-                )
-                sql_output_arr.append(decoded_output)
-                # real_output_arr.append(answer)
-                print(decoded_output)
+                with torch.no_grad():
+                    generated_tokens = self.model.generate(
+                        **model_inputs, max_new_tokens=100
+                    )
+                    decoded_output = self.tokenizer.batch_decode(
+                        generated_tokens, skip_special_tokens=True
+                    )
+                    sql_output_arr.append(decoded_output)
+                    real_output_arr.append(answers)
+                    # print(decoded_output)
 
+                prompts = []
+                answers = []
 
             with open('output_data.pkl', 'wb') as file:
                 pickle.dump((sql_output_arr, real_output_arr), file)
