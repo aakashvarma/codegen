@@ -4,6 +4,7 @@ import re
 
 import torch
 import pickle
+import tqdm
 
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
@@ -113,7 +114,7 @@ class Model:
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
-            for i in range(0, 1000):
+            for i in tqdm.tqdm(range(0, 1000), desc="Processing"):
                 full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
