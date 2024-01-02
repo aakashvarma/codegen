@@ -131,11 +131,11 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, context, question, answer, is_verif):
+    def infer(self, model_config, context, question, answer, is_verif=False, val_output_filepath=None):
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(context, question, answer, is_verif)
+            output = model.infer_model(context, question, answer, is_verif, val_output_filepath)
             logging.info("Inference Done")
             return output
         except Exception as e:
@@ -152,12 +152,14 @@ class Runner:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
-    def validate(self, model_config, validation_data_file):
+    def validate(self, model_config, validation_dir):
         try:
             logging.info("Validation started.")
-            val_data_filename = "val_data.pkl"
-            # val_file_path = os.path.join(model_config.pretrained_model_dir, val_data_filename)
-            with open(validation_data_file, "rb") as file:
+            val_input_filename = "val_data.pkl"
+            val_output_filename = "val_output.pkl"
+            val_input_filepath = os.path.join(model_config.validation_dir, val_input_filename)
+            val_output_filepath = os.path.join(model_config.validation_dir, val_output_filename)
+            with open(val_input_filepath, "rb") as file:
                 loaded_data = pickle.load(file)
         except Exception as e:
             logging.error("Error while loading pickle file: %s", e, exc_info=True)
@@ -167,7 +169,7 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            self.infer(model_config, val_context, val_question, val_answer, True)
+            self.infer(model_config, val_context, val_question, val_answer, True, val_output_filepath)
 
             logging.info("Validation completed.")
         except Exception as e:
@@ -194,7 +196,7 @@ class Runner:
             help="Path to the text file containing the prompt.",
         )
         parser.add_argument(
-            "--validation_data_file",
+            "--validation_dir",
             help="Path to the pickle file containing the validation data.",
         )
         parser.add_argument(
