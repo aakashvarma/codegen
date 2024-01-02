@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
-from utils.utils import extract_sql_output
+from utils import extract_sql_output
 
 sys.path.append("../utils")
 sys.path.append("../model_operators")

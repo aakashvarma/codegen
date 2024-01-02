@@ -10,8 +10,8 @@ import yaml
 sys.path.append("model")
 sys.path.append("utils")
 
-from model.model import Model
-from utils.utils import parse_prompt, extract_question_context
+from model import Model
+from utils import parse_prompt, extract_question_context
 
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
