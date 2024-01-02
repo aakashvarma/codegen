@@ -157,8 +157,8 @@ class Runner:
             logging.info("Validation started.")
             val_input_filename = "val_data.pkl"
             val_output_filename = "val_output.pkl"
-            val_input_filepath = os.path.join(model_config.validation_dir, val_input_filename)
-            val_output_filepath = os.path.join(model_config.validation_dir, val_output_filename)
+            val_input_filepath = os.path.join(validation_dir, val_input_filename)
+            val_output_filepath = os.path.join(validation_dir, val_output_filename)
             with open(val_input_filepath, "rb") as file:
                 loaded_data = pickle.load(file)
         except Exception as e:
@@ -251,7 +251,7 @@ class Runner:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.validate(model_config, args.validation_data_file)
+                self.validate(model_config, args.validation_dir)
                 logger.info("Script completed successfully")
 
         except ValueError as ve:
