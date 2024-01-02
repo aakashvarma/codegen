@@ -81,7 +81,7 @@ You must output the SQL query that answers the question.
             )
             if(is_verif):
                 mini_batch = 4
-                logging.info("Start tokenizing prompts.")
+                logging.info("Start tokenizing prompts and generate outputs.")
                 for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
                     for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
                         prompts.append(full_prompt.format(question[i], context[i]))
@@ -89,7 +89,6 @@ You must output the SQL query that answers the question.
 
                     model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
 
-                    logging.info("Start generating outputs.")
                     self.model.eval()
 
                     with torch.no_grad():
