@@ -35,7 +35,8 @@ def main():
             # real_output = response_pattern.findall(real_output)[0].strip()
             sql_output_arr.append(sql_output)
             real_output_arr.append(real_output)
-        accuracy = calculate_accuracy(sql_output_arr, real_output_arr)
+
+    accuracy = calculate_accuracy(sql_output_arr, real_output_arr)
 
     print(f'Accuracy: {accuracy * 100:.2f}%')
 
