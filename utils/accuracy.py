@@ -1,5 +1,6 @@
 import pickle
 import argparse
+import re
 
 
 def calculate_accuracy(sql_output_arr, real_output_arr):
@@ -25,7 +26,16 @@ def main():
     with open(args.file_path, 'rb') as file:
         loaded_sql_output_arr, loaded_real_output_arr = pickle.load(file)
 
-    accuracy = calculate_accuracy(loaded_sql_output_arr, loaded_real_output_arr)
+    sql_output_arr = []
+    real_output_arr = []
+    for batch_sql_output, batch_real_output in zip(loaded_sql_output_arr, loaded_real_output_arr):
+        for sql_output, real_output in zip(batch_sql_output, batch_real_output):
+            response_pattern = re.compile(r'### Response:\n(.*?)\n', re.DOTALL)
+            sql_output = response_pattern.findall(sql_output)[0].strip()
+            real_output = response_pattern.findall(real_output)[0].strip()
+            sql_output_arr.append(sql_output)
+            real_output_arr.append(real_output)
+        accuracy = calculate_accuracy(sql_output_arr, real_output_arr)
 
     print(f'Accuracy: {accuracy * 100:.2f}%')
 
