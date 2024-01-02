@@ -31,7 +31,7 @@ def main():
     real_output_arr = []
     for batch_sql_output, batch_real_output in zip(loaded_sql_output_arr, loaded_real_output_arr):
         for sql_output, real_output in zip(batch_sql_output, batch_real_output):
-            match = re.search(r'### Response:\n(.+)', sql_output, re.DOTALL)
+            match = re.search(r'### Response:\s*(.*?)\s*(?:###|$)', sql_output, re.DOTALL)
             sql_query = match.group(1).strip()
             sql_output = re.sub(r'\n\s*\n', '\n', sql_query)
             sql_output_arr.append(sql_output)
