@@ -10,6 +10,7 @@ def calculate_accuracy(sql_output_arr, real_output_arr):
     print("Mismatched predictions:")
     for index in mismatched_indices:
         print(f"Index {index}: SQL Output: {sql_output_arr[index]}, Real Output: {real_output_arr[index]}")
+        print()
 
     correct_predictions = len(sql_output_arr) - len(mismatched_indices)
     total_predictions = len(sql_output_arr)
