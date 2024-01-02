@@ -1,0 +1,1926 @@
+Mismatched predictions:
+Index 0: SQL Output: SELECT makeid, make FROM car_names WHERE makeid IN (SELECT makeid FROM cars_data WHERE horsepower < 4), Real Output: SELECT t2.makeid, t2.make FROM cars_data AS t1 JOIN car_names AS t2 ON t1.id = t2.makeid WHERE t1.horsepower > (SELECT MIN(horsepower) FROM cars_data) AND t1.cylinders < 4
+
+Index 1: SQL Output: SELECT color_commentator_s_ FROM table_name_42 WHERE sideline_reporter_s_ = 'Eric Dickerson' AND sideline_reporter_s_ = 'Melissa Stark' AND year = '2001', Real Output: SELECT color_commentator_s_ FROM table_name_42 WHERE sideline_reporter_s_ = "eric dickerson and melissa stark" AND year = 2001
+
+Index 2: SQL Output: SELECT kickoff FROM table_name_30 WHERE date = '2000-10-22', Real Output: SELECT kickoff FROM table_name_30 WHERE date = "october 22, 2000"
+
+Index 3: SQL Output: SELECT * FROM table_name_47 WHERE Id < 9%, Real Output: SELECT AVG(2006) FROM table_name_47 WHERE 1970 < 9
+
+Index 4: SQL Output: SELECT SUM(against) FROM table_name_86, Real Output: SELECT SUM(against) FROM table_name_86 WHERE opposing_team = "cuyo selection"
+
+Index 5: SQL Output: SELECT * FROM table_name_41 WHERE green_party < 4 AND fine_gael < 2 AND town = 'Athy', Real Output: SELECT SUM(green_party) FROM table_name_41 WHERE fine_gael < 4 AND fianna_fáil < 2 AND town = "athy"
+
+Index 6: SQL Output: SELECT COUNT(podiums) FROM table_name_93 WHERE class = 'total', Real Output: SELECT COUNT(podiums) FROM table_name_93 WHERE class = "total"
+
+Index 7: SQL Output: SELECT bhofen_number2__rk_, ga_pa__rk_ FROM table_14948647_1 WHERE bhofen_number2__rk_ = '2' AND ga_pa__rk_ = '233.4', Real Output: SELECT bhofen_number2__rk_ FROM table_14948647_1 WHERE ga_pa__rk_ = "233.4 (16)"
+
+Index 8: SQL Output: SELECT MIN(goals_against) FROM table_name_18 WHERE wins > 5;, Real Output: SELECT MIN(goals_against) FROM table_name_18 WHERE wins > 5
+
+Index 9: SQL Output: SELECT barangay FROM table_name_66 WHERE exit = 'Sisiman', Real Output: SELECT barangay FROM table_name_66 WHERE exit = "sisiman toll barrier"
+
+Index 10: SQL Output: SELECT report FROM table_name_54 WHERE home_team = 'Townsville Crocodiles', Real Output: SELECT report FROM table_name_54 WHERE home_team = "townsville crocodiles"
+
+Index 11: SQL Output: SELECT COUNT(*) FROM table_15467476_3 WHERE played = '277', Real Output: SELECT played FROM table_15467476_3 WHERE points_for = "277"
+
+Index 12: SQL Output: SELECT title FROM table_name_18 WHERE label = 'Pye' AND format = 'LP', Real Output: SELECT title FROM table_name_18 WHERE format = "mono lp" AND label = "pye"
+
+Index 13: SQL Output: SELECT MIN(Ends) FROM table_16922657_2 WHERE country = 'Norway', Real Output: SELECT MIN(Ends) AS lost FROM table_16922657_2 WHERE country = Norway
+
+Index 14: SQL Output: SELECT competition FROM table_name_16 WHERE score = '5-0' AND date = '2005-08-03', Real Output: SELECT competition FROM table_name_16 WHERE score = "5-0" AND date = "august 3, 2005"
+
+Index 15: SQL Output: SELECT largest_ethnic_group__2002_ FROM table_2562572_44 WHERE cyrillic_name_other_names = 'банатски карловац', Real Output: SELECT largest_ethnic_group__2002_ FROM table_2562572_44 WHERE cyrillic_name_other_names = "Банатски Карловац"
+
+Index 16: SQL Output: SELECT AVG(attendance) FROM table_name_34 WHERE date = '2008-01-06', Real Output: SELECT AVG(attendance) FROM table_name_34 WHERE date = "january 6, 2008"
+
+Index 17: SQL Output: SELECT loan_club FROM table_name_35 WHERE name = 'C. Dickinson', Real Output: SELECT loan_club FROM table_name_35 WHERE name = "c. dickinson"
+
+Index 18: SQL Output: SELECT score FROM table_name_98 WHERE year = '1991' AND category = 'IVA', Real Output: SELECT score FROM table_name_98 WHERE year > 1991 AND category = "iva"
+
+Index 19: SQL Output: SELECT location_attendance FROM table_name_3 WHERE date = '2017-09-11', Real Output: SELECT location_attendance FROM table_name_3 WHERE date = "september 11"
+
+Index 21: SQL Output: SELECT starring FROM table_name_61 WHERE network = 'Vara', Real Output: SELECT starring FROM table_name_61 WHERE network = "vara"
+
+Index 22: SQL Output: SELECT assists FROM table_19722233_5 WHERE points = '251', Real Output: SELECT assists FROM table_19722233_5 WHERE points = 251
+
+Index 23: SQL Output: SELECT week_4 FROM table_name_75 WHERE week_2 = 'Lexi Lombardelli', Real Output: SELECT week_4 FROM table_name_75 WHERE week_2 = "lexi lombardelli"
+
+Index 24: SQL Output: SELECT player FROM table_name_1 WHERE nationality = 'united states' AND position = 'forward' AND school_club_team = 'notre dame', Real Output: SELECT player FROM table_name_1 WHERE nationality = "united states" AND position = "forward" AND school_club_team = "notre dame"
+
+Index 26: SQL Output: SELECT * FROM table_name_99 WHERE branding = 'DWLL', Real Output: SELECT branding FROM table_name_99 WHERE callsign = "dwll"
+
+Index 27: SQL Output: SELECT grand_prix FROM table_name_55 WHERE grand_prix = 'casey stoner' AND circuit = 'circuit of losail', Real Output: SELECT grand_prix FROM table_name_55 WHERE motogp_winner = "casey stoner" AND circuit = "losail"
+
+Index 28: SQL Output: SELECT MAX(rank) FROM table_name_21 WHERE capacity__thousands_of_metric_tons_ > 45, Real Output: SELECT MAX(rank) FROM table_name_21 WHERE county_and_state = "silver bow county, montana" AND capacity__thousands_of_metric_tons_ > 45
+
+Index 29: SQL Output: SELECT * FROM table_name_95 WHERE surface = 'Surface 95' AND week = 'Week 1', Real Output: SELECT surface FROM table_name_95 WHERE week = "march 1"
+
+Index 30: SQL Output: SELECT chapter FROM table_name_65 WHERE location = 'Normal, Illinois', Real Output: SELECT chapter FROM table_name_65 WHERE location = "normal, illinois"
+
+Index 31: SQL Output: SELECT surface FROM table_name_82 WHERE score = 'w/o', Real Output: SELECT surface FROM table_name_82 WHERE score = "w/o"
+
+Index 32: SQL Output: SELECT date_made FROM table_name_46 WHERE notes = '45/48 renumbered 15/16', Real Output: SELECT date_made FROM table_name_46 WHERE notes = "45/48 renumbered 15/16; two sold to sl&ncr"
+
+Index 33: SQL Output: SELECT written_by FROM table_23799653_1 WHERE directed_by = 'Karen Gaviola', Real Output: SELECT written_by FROM table_23799653_1 WHERE directed_by = "Karen Gaviola"
+
+Index 34: SQL Output: SELECT swim__15km_ FROM table_17085947_32 WHERE athlete = 'Daniela Ryf', Real Output: SELECT swim__15km_ FROM table_17085947_32 WHERE athlete = "Daniela Ryf"
+
+Index 35: SQL Output: SELECT place FROM table_name_23 WHERE score < '71' AND player = 'Des Smyth', Real Output: SELECT place FROM table_name_23 WHERE score < 71 AND player = "des smyth"
+
+Index 36: SQL Output: SELECT previous_club FROM table_name_48 WHERE date_of_birth = '1993-10-22', Real Output: SELECT previous_club FROM table_name_48 WHERE date_of_birth = "october 22, 1993"
+
+Index 37: SQL Output: SELECT english_day_name_meaning FROM table_2624098_1 WHERE old_english_day_name = 'sæturnesdæg', Real Output: SELECT english_day_name_meaning FROM table_2624098_1 WHERE old_english_day_name = "Sæturnesdæg"
+
+Index 38: SQL Output: SELECT opponent FROM table_name_26 WHERE outcome = 'winner' AND date = '5 november 2011', Real Output: SELECT opponent FROM table_name_26 WHERE outcome = "winner" AND date = "5 november 2011"
+
+Index 39: SQL Output: SELECT pick__number FROM table_14209245_9 WHERE round = '2', Real Output: SELECT pick__number FROM table_14209245_9 WHERE round = 2
+
+Index 40: SQL Output: SELECT opponent FROM table_21007615_1 WHERE sun_devils_points = '41', Real Output: SELECT COUNT(opponent) FROM table_21007615_1 WHERE sun_devils_points = 41
+
+Index 41: SQL Output: SELECT lead FROM table_name_15 WHERE nation = 'switzerland', Real Output: SELECT lead FROM table_name_15 WHERE nation = "switzerland"
+
+Index 42: SQL Output: SELECT grid FROM table_name_74 WHERE constructor = 'Maserati' AND driver = 'Oscar Alfredo Gálvez', Real Output: SELECT grid FROM table_name_74 WHERE constructor = "maserati" AND driver = "oscar alfredo gálvez"
+
+Index 43: SQL Output: SELECT composition FROM table_11464746_1 WHERE house_name = 'Benue House', Real Output: SELECT composition FROM table_11464746_1 WHERE house_name = "Benue"
+
+Index 44: SQL Output: SELECT * FROM table_name_22 WHERE points < 12 AND goals_against < 50 AND goal_difference > 11 AND played < 30, Real Output: SELECT MIN(points) FROM table_name_22 WHERE losses < 12 AND goals_against < 50 AND goal_difference > 11 AND played < 30
+
+Index 45: SQL Output: SELECT derby_county FROM table_15201666_3 WHERE derby_county >= 3, Real Output: SELECT MIN(derby_county) AS Goals FROM table_15201666_3
+
+Index 46: SQL Output: SELECT customer_name FROM customers WHERE customer_id IN (SELECT customer_id FROM mailshot_customers GROUP BY customer_id ORDER BY COUNT(*) DESC LIMIT 10);, Real Output: SELECT T2.customer_name FROM mailshot_customers AS T1 JOIN customers AS T2 ON T1.customer_id = T2.customer_id GROUP BY T1.customer_id ORDER BY COUNT(*) DESC LIMIT 1
+
+Index 47: SQL Output: SELECT date FROM table_name_91 WHERE result = 'L' AND record = '7-9', Real Output: SELECT date FROM table_name_91 WHERE result = "loss" AND record = "7-9"
+
+Index 48: SQL Output: SELECT COUNT(*) FROM table_20079931_4 WHERE round = '2007-09-09' AND pole_position = 'Roger Eriksson', Real Output: SELECT COUNT(round) FROM table_20079931_4 WHERE circuit_location = "Karlskoga Motorstadion" AND pole_position = "Roger Eriksson"
+
+Index 49: SQL Output: SELECT leading_scorer FROM table_name_59 WHERE score = '89–102', Real Output: SELECT leading_scorer FROM table_name_59 WHERE score = "89–102"
+
+Index 50: SQL Output: SELECT * FROM table_21091162_1 WHERE black_knights_points = '17', Real Output: SELECT COUNT(record) FROM table_21091162_1 WHERE black_knights_points = 17
+
+Index 51: SQL Output: SELECT played, goals_against, wins FROM table_name_51 WHERE played < 34 AND goals_against < 34 AND wins < 13, Real Output: SELECT SUM(played) FROM table_name_51 WHERE goals_against < 34 AND wins < 13
+
+Index 52: SQL Output: SELECT civil_parish FROM table_30120633_1 WHERE townland = 'Ballymurphy North', Real Output: SELECT civil_parish FROM table_30120633_1 WHERE townland = "Ballymurphy North"
+
+Index 53: SQL Output: SELECT opponent FROM table_name_17 WHERE location = 'sec tournament', Real Output: SELECT opponent FROM table_name_17 WHERE location = "sec tournament"
+
+Index 54: SQL Output: SELECT installation_date FROM table_21821014_1 WHERE location = 'El Paso, Texas', Real Output: SELECT installation_date FROM table_21821014_1 WHERE location = "El Paso, Texas"
+
+Index 55: SQL Output: SELECT race_time FROM table_2241259_1 WHERE driver = 'kevin harvick', Real Output: SELECT COUNT(race_time) FROM table_2241259_1 WHERE driver = "Kevin Harvick"
+
+Index 56: SQL Output: SELECT virtues FROM table_name_48 WHERE psycho_social_crisis = 'intimacy vs. isolation crisis', Real Output: SELECT virtues FROM table_name_48 WHERE psycho_social_crisis = "intimacy vs. isolation"
+
+Index 57: SQL Output: SELECT player FROM table_name_90 WHERE position = 'C' AND school_club_team = 'Washington State', Real Output: SELECT player FROM table_name_90 WHERE position = "center" AND school_club_team = "washington state"
+
+Index 58: SQL Output: SELECT MIN(attendance) FROM table_name_30 WHERE round > 18 AND home = 'linköpings hc' AND date = '2017-11-10', Real Output: SELECT MIN(attendance) FROM table_name_30 WHERE home = "linköpings hc" AND date = "monday, november 10" AND round > 18
+
+Index 59: SQL Output: SELECT position FROM table_name_59 WHERE throws = 'r' AND dob = '12 february 1983', Real Output: SELECT position FROM table_name_59 WHERE throws = "r" AND dob = "12 february 1983"
+
+Index 60: SQL Output: SELECT SUM(rating) FROM table_name_33 WHERE weekly_rank___number_ = 10 AND share < 11, Real Output: SELECT SUM(rating) FROM table_name_33 WHERE weekly_rank___number_ = "10" AND share < 11
+
+Index 61: SQL Output: SELECT school_year FROM table_name_52 WHERE class_aA = 'AA', Real Output: SELECT class_aA FROM table_name_52 WHERE school_year = "1994-95"
+
+Index 62: SQL Output: SELECT to_par FROM table_name_5 WHERE country = 'Argentina' AND place = '8', Real Output: SELECT to_par FROM table_name_5 WHERE place = "t8" AND country = "argentina"
+
+Index 63: SQL Output: SELECT MIN(vertical) FROM table_272313_1 WHERE aspect_ratio = '16:9' AND scanning = 'interlaced', Real Output: SELECT MIN(vertical) FROM table_272313_1 WHERE aspect_ratio = "16:9" AND scanning = "interlaced"
+
+Index 64: SQL Output: SELECT score FROM table_name_13 WHERE tie_no = 15, Real Output: SELECT score FROM table_name_13 WHERE tie_no = "15"
+
+Index 65: SQL Output: SELECT time FROM table_name_91 WHERE set_2 = '25–21' AND date = '29 may', Real Output: SELECT time FROM table_name_91 WHERE set_2 = "25–21" AND date = "29 may"
+
+Index 66: SQL Output: SELECT week FROM table_name_27 WHERE date = '1967-12-14', Real Output: SELECT week FROM table_name_27 WHERE date = "december 14, 1967"
+
+Index 67: SQL Output: SELECT races FROM table_name_36 WHERE poles = 'test driver' AND team_name = 'Lucky Strike Honda Racing f1 team', Real Output: SELECT races FROM table_name_36 WHERE poles = "test driver" AND team_name = "lucky strike honda racing f1 team"
+
+Index 68: SQL Output: SELECT series FROM table_name_39 WHERE editor = 'Dargaud' AND albums = '27', Real Output: SELECT series FROM table_name_39 WHERE editor = "dargaud" AND albums = "27"
+
+Index 70: SQL Output: SELECT MIN(no_in_series) FROM table_2618102_1 WHERE directed_by = 'james quinn', Real Output: SELECT MIN(no_in_series) FROM table_2618102_1 WHERE directed_by = "James Quinn"
+
+Index 71: SQL Output: SELECT position FROM table_name_23 WHERE competition = 'Tokyo Marathon', Real Output: SELECT position FROM table_name_23 WHERE competition = "tokyo marathon"
+
+Index 72: SQL Output: SELECT manufacturers.name, products.name, products.price FROM manufacturers, products WHERE manufacturers.code = products.manufacturer ORDER BY products.price DESC;, Real Output: SELECT T1.Name, MAX(T1.Price), T2.name FROM products AS T1 JOIN Manufacturers AS T2 ON T1.manufacturer = T2.code GROUP BY T2.name
+
+Index 73: SQL Output: SELECT miles__km_ FROM table_28178756_1 WHERE year = '2010', Real Output: SELECT miles__km_ FROM table_28178756_1 WHERE year = 2010
+
+Index 74: SQL Output: SELECT COUNT(*) FROM table_29446183_2 WHERE third_place = 'Otsuka Pharmaceuticals', Real Output: SELECT COUNT(season) FROM table_29446183_2 WHERE third_place = "Otsuka Pharmaceuticals"
+
+Index 75: SQL Output: SELECT date FROM table_name_64 WHERE home = 'Toronto', Real Output: SELECT date FROM table_name_64 WHERE home = "toronto"
+
+Index 76: SQL Output: SELECT final_score FROM table_name_46 WHERE week = '3', Real Output: SELECT final_score FROM table_name_46 WHERE week = 3
+
+Index 77: SQL Output: SELECT leading_scorer FROM table_name_8 WHERE date = 'April 7', Real Output: SELECT leading_scorer FROM table_name_8 WHERE date = "april 7"
+
+Index 78: SQL Output: SELECT COUNT(lost) FROM table_name_61 WHERE highest_ranking = 'Highest Ranking of – –', Real Output: SELECT COUNT(lost) FROM table_name_61 WHERE highest_ranking = "– –"
+
+Index 79: SQL Output: SELECT lanier FROM table_name_60 WHERE cardwell = '20%', Real Output: SELECT lanier FROM table_name_60 WHERE cardwell = "20%"
+
+Index 80: SQL Output: SELECT formula FROM table_23548160_1 WHERE driver = 'Stirling Moss', Real Output: SELECT formula FROM table_23548160_1 WHERE driver = "Stirling Moss"
+
+Index 81: SQL Output: SELECT leading_scorer FROM table_name_30 WHERE date = '2018-02-26', Real Output: SELECT leading_scorer FROM table_name_30 WHERE date = "february 26"
+
+Index 82: SQL Output: SELECT * FROM table_name_69 WHERE date = '1930-01-11', Real Output: SELECT distance FROM table_name_69 WHERE date = "1930-01-11"
+
+Index 83: SQL Output: SELECT new_points FROM table_1973321_5 WHERE player = 'steffi graf', Real Output: SELECT MIN(new_points) FROM table_1973321_5 WHERE player = "Steffi Graf"
+
+Index 84: SQL Output: SELECT score FROM table_name_54 WHERE competition = 'Friendly' AND result = '7-2', Real Output: SELECT score FROM table_name_54 WHERE competition = "friendly" AND result = "7-2"
+
+Index 85: SQL Output: SELECT * FROM table_name_62 WHERE parishes = 4, Real Output: SELECT MIN(parishes) FROM table_name_62 WHERE pastoral_region = "merrimack" AND cemeteries < 4
+
+Index 86: SQL Output: SELECT outcome FROM table_name_53 WHERE date = '1978-08-20', Real Output: SELECT outcome FROM table_name_53 WHERE date = "august 20, 1978"
+
+Index 87: SQL Output: SELECT * FROM table_name_10 WHERE display_size__in_ = 10, Real Output: SELECT MIN(display_size__in_) FROM table_name_10 WHERE model = "versapro vy10f/bh-l"
+
+Index 88: SQL Output: SELECT game_site FROM table_26401898_2 WHERE final_score = '26–42', Real Output: SELECT game_site FROM table_26401898_2 WHERE final_score = "L 26–42"
+
+Index 89: SQL Output: SELECT game FROM table_name_85 WHERE game = 'Game 85', Real Output: SELECT game FROM table_name_85 WHERE location_attendance = "the forum" AND series = "0-1"
+
+Index 90: SQL Output: SELECT group_stage FROM table_1059743_2 WHERE points = '886.6' ORDER BY group_stage ASC LIMIT 1, Real Output: SELECT MIN(group_stage) FROM table_1059743_2 WHERE points = "886.6"
+
+Index 91: SQL Output: SELECT country FROM table_name_17 WHERE place = 'T6' AND score = '138' AND player = 'Niclas Fasth', Real Output: SELECT country FROM table_name_17 WHERE place = "t6" AND score = 69 - 69 = 138 AND player = "niclas fasth"
+
+Index 92: SQL Output: SELECT place FROM table_name_60 WHERE score = '211', Real Output: SELECT place FROM table_name_60 WHERE score = 70 - 72 - 69 = 211
+
+Index 93: SQL Output: SELECT record FROM table_16678052_2 WHERE opponent = 'Phoenix Cardinals', Real Output: SELECT record FROM table_16678052_2 WHERE opponent = "Phoenix Cardinals"
+
+Index 94: SQL Output: SELECT actor_actress FROM table_25831483_1 WHERE first_appearance = '3 june 2007', Real Output: SELECT actor_actress FROM table_25831483_1 WHERE first_appearance = "3 June 2007"
+
+Index 96: SQL Output: SELECT MIN(bonus_pts) FROM table_name_36 WHERE rides < 15, Real Output: SELECT MIN(bonus_pts) FROM table_name_36 WHERE rider = "bob jameson" AND rides < 15
+
+Index 98: SQL Output: SELECT wins FROM table_name_55 WHERE tournament = 'PGA Championship' AND events > 10, Real Output: SELECT COUNT(wins) FROM table_name_55 WHERE tournament = "pga championship" AND events > 10
+
+Index 100: SQL Output: SELECT points_won FROM table_name_14 WHERE year = '1996', Real Output: SELECT MAX(points_won) FROM table_name_14 WHERE year = "1996"
+
+Index 101: SQL Output: SELECT goals FROM table_name_17 WHERE seasons >= '1996' AND seasons <= '2001' AND order > 939, Real Output: SELECT MIN(goals) FROM table_name_17 WHERE seasons = "1996 – 2001" AND order > 939
+
+Index 102: SQL Output: SELECT score FROM table_name_76 WHERE tie_no = 23, Real Output: SELECT score FROM table_name_76 WHERE tie_no = "23"
+
+Index 103: SQL Output: SELECT power__kw_ FROM table_19215259_1 WHERE location = 'cebu', Real Output: SELECT power__kw_ FROM table_19215259_1 WHERE location = "Cebu"
+
+Index 104: SQL Output: SELECT first_elected FROM table_2668352_11 WHERE incumbent = 'jacob markell', Real Output: SELECT first_elected FROM table_2668352_11 WHERE incumbent = "Jacob Markell"
+
+Index 105: SQL Output: SELECT MIN(stage) FROM table_15088557_1 WHERE winner = 'Sergei Smetanine', Real Output: SELECT MIN(stage) FROM table_15088557_1 WHERE winner = "Sergei Smetanine"
+
+Index 106: SQL Output: SELECT denomination FROM table_12284476_8 WHERE year = '2008' AND reverse = 'football', Real Output: SELECT denomination FROM table_12284476_8 WHERE year = 2008 AND reverse = "Football"
+
+Index 107: SQL Output: SELECT * FROM table_name_12 WHERE yards = (SELECT MAX(yards) FROM table_name_12 WHERE average = '9.5'), Real Output: SELECT MAX(yards) FROM table_name_12 WHERE average = 9.5
+
+Index 108: SQL Output: SELECT date FROM table_name_72 WHERE outcome = "Winner" AND surface = "Grass", Real Output: SELECT date FROM table_name_72 WHERE outcome = "winner" AND surface = "grass"
+
+Index 109: SQL Output: SELECT COUNT(DISTINCT directed_by) FROM table_22347090_6 WHERE us_viewers__million_ = '1.59', Real Output: SELECT COUNT(directed_by) FROM table_22347090_6 WHERE us_viewers__million_ = "1.59"
+
+Index 110: SQL Output: SELECT overall FROM table_name_8 WHERE college = 'College of Southern Mississippi' AND round < '6' ORDER BY overall DESC LIMIT 1;, Real Output: SELECT MAX(overall) FROM table_name_8 WHERE college = "southern mississippi" AND round < 6
+
+Index 111: SQL Output: SELECT COUNT(*) FROM table_name_70 WHERE wins > 3, Real Output: SELECT SUM(earnings___) AS $__ FROM table_name_70 WHERE wins > 3
+
+Index 112: SQL Output: SELECT other_b FROM table_name_96 WHERE fa_cup = '3', Real Output: SELECT other_b FROM table_name_96 WHERE fa_cup = "3 (17)"
+
+Index 113: SQL Output: SELECT score FROM table_name_24 WHERE date = '2017-05-26', Real Output: SELECT score FROM table_name_24 WHERE date = "may 26"
+
+Index 114: SQL Output: SELECT COUNT(*) FROM table_20867295_2 WHERE winner = 'az' AND third_place = 'feyenoord', Real Output: SELECT COUNT(winner) FROM table_20867295_2 WHERE third_place = "Feyenoord" AND runner_up = "AZ"
+
+Index 115: SQL Output: SELECT position FROM table_name_88 WHERE lot < 14 AND goal_difference = '+1' AND drawn > 15, Real Output: SELECT SUM(position) FROM table_name_88 WHERE lost < 14 AND goal_difference = "+1" AND drawn > 15
+
+Index 116: SQL Output: SELECT time FROM table_name_57 WHERE opponent = 'Shinya Aoki', Real Output: SELECT time FROM table_name_57 WHERE opponent = "shinya aoki"
+
+Index 117: SQL Output: SELECT season FROM table_name_10 WHERE wins = 29 AND finish = 3, Real Output: SELECT season FROM table_name_10 WHERE wins = "29" AND finish = "3rd"
+
+Index 118: SQL Output: SELECT original_air_date FROM table_23705843_1 WHERE ratings__millions_ = '1.92', Real Output: SELECT original_air_date FROM table_23705843_1 WHERE ratings__millions_ = "1.92"
+
+Index 119: SQL Output: SELECT place FROM table_name_46 WHERE score='211' AND country='United States', Real Output: SELECT place FROM table_name_46 WHERE country = "united states" AND score = 72 - 70 - 69 = 211
+
+Index 120: SQL Output: SELECT COUNT(*) FROM table_1984697_53, Real Output: SELECT COUNT(website) FROM table_1984697_53 WHERE size = 1939
+
+Index 121: SQL Output: SELECT type FROM table_name_79 WHERE quantity = '140', Real Output: SELECT type FROM table_name_79 WHERE quantity = "140"
+
+Index 122: SQL Output: SELECT * FROM table_name_12 WHERE team__number1 = 'hemofarm', Real Output: SELECT 1 AS st_leg FROM table_name_12 WHERE team__number1 = "hemofarm"
+
+Index 123: SQL Output: SELECT home_team, score FROM table_name_13 WHERE venue = 'Junction Oval', Real Output: SELECT home_team AS score FROM table_name_13 WHERE venue = "junction oval"
+
+Index 124: SQL Output: SELECT directed_by FROM table_15584067_7 WHERE no_in_series = '114', Real Output: SELECT directed_by FROM table_15584067_7 WHERE no_in_series = "114"
+
+Index 125: SQL Output: SELECT high_assists FROM table_27723526_12 WHERE score = '103–104 (ot)', Real Output: SELECT high_assists FROM table_27723526_12 WHERE score = "L 103–104 (OT)"
+
+Index 126: SQL Output: SELECT first_elected FROM table_1342256_11 WHERE incumbent = 'Stephen Pace', Real Output: SELECT MIN(first_elected) FROM table_1342256_11 WHERE incumbent = "Stephen Pace"
+
+Index 127: SQL Output: SELECT model FROM table_name_60 WHERE fleet_series = 's410-s434', Real Output: SELECT model FROM table_name_60 WHERE fleet_series = "s410-s434"
+
+Index 128: SQL Output: SELECT eliminated FROM table_29692554_2 WHERE time = '22:50', Real Output: SELECT eliminated FROM table_29692554_2 WHERE time = "22:50"
+
+Index 129: SQL Output: SELECT state FROM table_1762887_1 WHERE county = 'lake', Real Output: SELECT state FROM table_1762887_1 WHERE county = "Lake county"
+
+Index 130: SQL Output: SELECT home_team FROM table_name_28 WHERE home_team = 'melbourne', Real Output: SELECT home_team FROM table_name_28 WHERE away_team = "melbourne"
+
+Index 131: SQL Output: SELECT * FROM table_27369069_1 WHERE soccer_stadium = 'Moncton Stadium', Real Output: SELECT university FROM table_27369069_1 WHERE soccer_stadium = "Moncton Stadium"
+
+Index 132: SQL Output: SELECT class FROM table_1745843_6 WHERE part_1 = 'lesan', Real Output: SELECT class FROM table_1745843_6 WHERE part_1 = "lesan"
+
+Index 133: SQL Output: SELECT height_in_ft FROM table_name_78 WHERE years_for_rockets = '2005-06', Real Output: SELECT height_in_ft FROM table_name_78 WHERE years_for_rockets = "2005-06"
+
+Index 134: SQL Output: SELECT venue FROM table_name_18 WHERE year = '1966' AND winner = 'Gary Cowan', Real Output: SELECT venue FROM table_name_18 WHERE winner = "gary cowan" AND year = "1966"
+
+Index 135: SQL Output: SELECT week_3 FROM table_name_11 WHERE week_2 = 'Heather Christensen', Real Output: SELECT week_3 FROM table_name_11 WHERE week_2 = "heather christensen"
+
+Index 136: SQL Output: SELECT * FROM table_name_15 WHERE week_7_oct_12 = 'week 11 nov 9', Real Output: SELECT week_7_oct_12 FROM table_name_15 WHERE week_11_nov_9 = "week 11 nov 9"
+
+Index 137: SQL Output: SELECT (firefox / (firefox + safari)) * 100 FROM table_name_66, Real Output: SELECT firefox FROM table_name_66 WHERE safari = "15.40%"
+
+Index 138: SQL Output: SELECT customer_id, customer_first_name FROM Customers WHERE customer_id NOT IN (SELECT customer_id FROM Customers_cards);, Real Output: SELECT customer_id, customer_first_name FROM Customers EXCEPT SELECT T1.customer_id, T2.customer_first_name FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE card_type_code = "Credit"
+
+Index 139: SQL Output: SELECT callsign FROM table_name_42 WHERE analog = '19', Real Output: SELECT callsign FROM table_name_42 WHERE analog = "19"
+
+Index 140: SQL Output: SELECT instrument FROM Instruments WHERE songid = 'Badlands' AND bandmateid = 'Heilo';, Real Output: SELECT T4.instrument FROM Performance AS T1 JOIN Band AS T2 ON T1.bandmate = T2.id JOIN Songs AS T3 ON T3.SongId = T1.SongId JOIN Instruments AS T4 ON T4.songid = T3.songid AND T4.bandmateid = T2.id WHERE T2.lastname = "Heilo" AND T3.title = "Badlands"
+
+Index 141: SQL Output: SELECT venue FROM table_name_6 WHERE date = '2004-05-30', Real Output: SELECT venue FROM table_name_6 WHERE date = "30 may 2004"
+
+Index 142: SQL Output: SELECT * FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = '2006-06-01', Real Output: SELECT location FROM table_name_40 WHERE design_flow__lpm_ < 1900 AND construction_start = "2006 june"
+
+Index 143: SQL Output: SELECT japanese_voice_actor FROM table_name_28 WHERE mecha = 'airplane', Real Output: SELECT japanese_voice_actor FROM table_name_28 WHERE mecha = "airplane"
+
+Index 144: SQL Output: SELECT venue FROM table_name_19 WHERE home_team = 'South Melbourne', Real Output: SELECT venue FROM table_name_19 WHERE home_team = "south melbourne"
+
+Index 145: SQL Output: SELECT single FROM table_18710512_3 WHERE date = '2008' AND other_details = '4000', Real Output: SELECT single FROM table_18710512_3 WHERE date = 2008 AND other_details = "4000 copies"
+
+Index 146: SQL Output: SELECT role FROM table_name_61 WHERE theatre = 'globe' AND music = 'jerome kern', Real Output: SELECT role FROM table_name_61 WHERE theatre = "globe" AND music = "jerome kern"
+
+Index 147: SQL Output: SELECT champion FROM table_name_52 WHERE runner_up = 'christopher miles', Real Output: SELECT champion FROM table_name_52 WHERE runner_up = "christopher miles"
+
+Index 148: SQL Output: SELECT SUM(year) FROM table_name_40 WHERE weight__kg_ = '857', Real Output: SELECT SUM(year) FROM table_name_40 WHERE weight__kg_ = "857"
+
+Index 149: SQL Output: SELECT production_code FROM table_24938621_3 WHERE written_by = 'Cathryn Humphris', Real Output: SELECT production_code FROM table_24938621_3 WHERE written_by = "Cathryn Humphris"
+
+Index 150: SQL Output: SELECT SUM(against) FROM table_name_39 WHERE date = '15/10/1999', Real Output: SELECT SUM(against) FROM table_name_39 WHERE date = "15/10/1999"
+
+Index 151: SQL Output: SELECT high_rebounds FROM table_name_14 WHERE location_attendance = "Time Warner Cable Arena 10,848", Real Output: SELECT high_rebounds FROM table_name_14 WHERE location_attendance = "time warner cable arena 10,848"
+
+Index 152: SQL Output: SELECT COUNT(sprints_classification) FROM table_26257223_13 WHERE winner = 'Joaquin Rodriguez', Real Output: SELECT COUNT(sprints_classification) FROM table_26257223_13 WHERE winner = "Joaquin Rodriguez"
+
+Index 153: SQL Output: SELECT incarceration_rate_male FROM table_25042332_31 WHERE region = 'maule', Real Output: SELECT MAX(incarceration_rate_male) FROM table_25042332_31 WHERE region = "Maule"
+
+Index 154: SQL Output: Alessandro Petacchi, Real Output: SELECT mountains_classification FROM table_28538368_2 WHERE general_classification = "Alberto Contador Kanstantsin Sivtsov" AND points_classification = "Alessandro Petacchi" AND winner = "Mark Cavendish"
+
+Index 155: SQL Output: SELECT SUM(CAST(points AS INT)) FROM table_17675675_2, Real Output: SELECT COUNT(try_bonus) FROM table_17675675_2 WHERE points = "51"
+
+Index 156: SQL Output: SELECT original_air_date FROM table_27969432_3 WHERE directed_by = 'fred toye', Real Output: SELECT original_air_date FROM table_27969432_3 WHERE directed_by = "Fred Toye"
+
+Index 157: SQL Output: SELECT * FROM table_132_1 WHERE north_carolina = 'colorado', Real Output: SELECT 1321 AS _percentage FROM table_15051_4 WHERE north_carolina = "Colorado"
+
+Index 158: SQL Output: SELECT nationality FROM table_2679061_9 WHERE pick__number = '168', Real Output: SELECT nationality FROM table_2679061_9 WHERE pick__number = 168
+
+Index 159: SQL Output: SELECT score FROM table_name_32 WHERE decision = 'Smith' AND visitor = 'Colorado', Real Output: SELECT score FROM table_name_32 WHERE decision = "smith" AND visitor = "colorado"
+
+Index 160: SQL Output: SELECT year FROM table_name_34 WHERE pts > 0, Real Output: SELECT AVG(year) FROM table_name_34 WHERE pts > 0 AND entrant = "ecurie bleue"
+
+Index 162: SQL Output: SELECT sspec_number FROM table_name_75 WHERE socket = 'standard power', Real Output: SELECT sspec_number FROM table_name_75 WHERE socket = "standard power"
+
+Index 163: SQL Output: SELECT * FROM table_name_99 WHERE record = 'detroit mtl. maroons', Real Output: SELECT record FROM table_name_99 WHERE home = "detroit" AND visitor = "mtl. maroons"
+
+Index 164: SQL Output: SELECT venue FROM table_name_6 WHERE result = '2–2', Real Output: SELECT venue FROM table_name_6 WHERE result = "2–2 (d)"
+
+Index 166: SQL Output: SELECT MAX(crowd) FROM table_name_36 WHERE venue = 'junction oval', Real Output: SELECT MAX(crowd) FROM table_name_36 WHERE venue = "junction oval"
+
+Index 167: SQL Output: SELECT date FROM table_name_71 WHERE attendance = '54,626', Real Output: SELECT date FROM table_name_71 WHERE attendance = "54,626"
+
+Index 168: SQL Output: SELECT written_by FROM table_20967430_2 WHERE prod_code = '4g07', Real Output: SELECT written_by FROM table_20967430_2 WHERE prod_code = "4G07"
+
+Index 169: SQL Output: SELECT project_management FROM table_name_9 WHERE project_management IS NOT NULL AND project_management != '' AND project_management != 'No' AND project_management != 'no' AND project_management != 'n/a' AND project_management != 'N/A' AND project_management != 'NA' AND project_management != 'na' AND project_management != 'N/A' AND project_management != 'NA' AND project_management != 'n, Real Output: SELECT project_management FROM table_name_9 WHERE blogs = "no" AND xml_forms_management_and_workflow = "no" AND enterprise_search = "no" AND social_software = "no"
+
+Index 170: SQL Output: SELECT res FROM table_name_49 WHERE competition = 'friendly', Real Output: SELECT res FROM table_name_49 WHERE competition = "friendly match"
+
+Index 171: SQL Output: SELECT * FROM table_name_62 WHERE average < 3 AND total_points < 433 AND rank_by_average < 2, Real Output: SELECT MAX(average) FROM table_name_62 WHERE place < 3 AND total_points < 433 AND rank_by_average < 2
+
+Index 172: SQL Output: SELECT city FROM table_name_23 WHERE date = '1976-05-19', Real Output: SELECT city FROM table_name_23 WHERE date = "may 19, 1976"
+
+Index 173: SQL Output: SELECT socket FROM table_name_67 WHERE order_part_number = 'TMDTL68HAX5DM', Real Output: SELECT socket FROM table_name_67 WHERE order_part_number = "tmdtl68hax5dm"
+
+Index 174: SQL Output: SELECT * FROM table_name_13 WHERE event = 'Event' AND record = '3-0', Real Output: SELECT event FROM table_name_13 WHERE record = "3-0"
+
+Index 175: SQL Output: INSERT INTO table_name_65 VALUES ('2017-2018', '1r', '7-1'), Real Output: SELECT season FROM table_name_65 WHERE round = "1r" AND away_result = "7–1"
+
+Index 176: SQL Output: SELECT SUM(total) FROM table_name_8 WHERE rank = '5' AND silver > '0', Real Output: SELECT SUM(total) FROM table_name_8 WHERE rank = "5" AND silver > 0
+
+Index 178: SQL Output: SELECT result FROM table_14966537_1 WHERE date = '1970-10-04', Real Output: SELECT result FROM table_14966537_1 WHERE date = "October 4, 1970"
+
+Index 179: SQL Output: SELECT * FROM table_name_27 WHERE years > 23 AND decile > 5, Real Output: SELECT years FROM table_name_27 WHERE roll > 23 AND decile > 5
+
+Index 180: SQL Output: SELECT * FROM table_name_86 WHERE attendance = 'L' AND week = '10' AND result = '12-15', Real Output: SELECT attendance FROM table_name_86 WHERE week < 10 AND result = "l 12-15"
+
+Index 181: SQL Output: SELECT year_of_release FROM table_name_71 ORDER BY year_of_release DESC LIMIT 1, Real Output: SELECT MAX(year_of_release) FROM table_name_71 WHERE title = "greatest hits"
+
+Index 182: SQL Output: SELECT SUM(qual) FROM table_name_57 WHERE grid = '24', Real Output: SELECT SUM(qual) FROM table_name_57 WHERE grid = 24
+
+Index 184: SQL Output: SELECT * FROM INVESTORS WHERE INVESTOR_ID IN (SELECT INVESTOR_ID FROM TRANSACTIONS WHERE SHARE_COUNT > 100);, Real Output: SELECT T1.Investor_details FROM INVESTORS AS T1 JOIN TRANSACTIONS AS T2 ON T1.investor_id = T2.investor_id WHERE T2.share_count > 100
+
+Index 185: SQL Output: SELECT MIN(weekly_rank) FROM table_11178271_1 WHERE air_date = '2007-11-26', Real Output: SELECT MIN(weekly_rank) FROM table_11178271_1 WHERE air_date = "November 26, 2007"
+
+Index 186: SQL Output: SELECT COUNT(laps) FROM table_name_14 WHERE team = 'Primagaz Competition', Real Output: SELECT laps FROM table_name_14 WHERE team = "primagaz competition"
+
+Index 187: SQL Output: SELECT circuit FROM table_26686908_2 WHERE date = '25-03-2020', Real Output: SELECT circuit FROM table_26686908_2 WHERE date = "25–28 March"
+
+Index 188: SQL Output: SELECT nominating_festival FROM table_name_80 WHERE director_s_ = 'Iao Lethem', Real Output: SELECT nominating_festival FROM table_name_80 WHERE director_s_ = "iao lethem"
+
+Index 189: SQL Output: SELECT time_retired FROM table_name_44 WHERE manufacturer = 'Honda' AND grid = '8', Real Output: SELECT time_retired FROM table_name_44 WHERE manufacturer = "honda" AND grid = "8"
+
+Index 190: SQL Output: SELECT country FROM table_name_61 WHERE time = '8:03.61', Real Output: SELECT country FROM table_name_61 WHERE time = "8:03.61"
+
+Index 191: SQL Output: SELECT * FROM table_name_2 WHERE location_attendance = 'Location/Attendance' AND score = '4-5 (OT)', Real Output: SELECT location_attendance FROM table_name_2 WHERE score = "4-5 (ot)"
+
+Index 192: SQL Output: SELECT record FROM table_14945881_1 WHERE attendance = '44023', Real Output: SELECT COUNT(record) FROM table_14945881_1 WHERE attendance = 44023
+
+Index 193: SQL Output: SELECT pick FROM table_name_44 WHERE player = 'Mike Ford' AND round = '228', Real Output: SELECT MAX(pick) FROM table_name_44 WHERE player = "mike ford" AND round > 228
+
+Index 194: SQL Output: SELECT score__number1 FROM table_17282875_2 WHERE team__number2 = 'botafogo', Real Output: SELECT COUNT(1 AS st_leg) FROM table_17282875_2 WHERE team__number2 = "Botafogo"
+
+Index 195: SQL Output: SELECT candidates FROM table_1342013_41 WHERE incumbent = 'james patrick sutton', Real Output: SELECT candidates FROM table_1342013_41 WHERE incumbent = "James Patrick Sutton"
+
+Index 196: SQL Output: SELECT bronze FROM table_name_52 WHERE year = '1998', Real Output: SELECT bronze FROM table_name_52 WHERE year = 1998
+
+Index 197: SQL Output: SELECT COUNT(wins) FROM table_1012730_1 WHERE year = '1983', Real Output: SELECT MIN(wins) FROM table_1012730_1 WHERE year = 1983
+
+Index 198: SQL Output: INSERT INTO table_26757_4 VALUES ('slavic', 'polish'), Real Output: SELECT proto_slavic FROM table_26757_4 WHERE polish = "gniazdo"
+
+Index 199: SQL Output: SELECT COUNT(attendance) FROM table_name_67 WHERE away_team = 'middlesbrough', Real Output: SELECT COUNT(attendance) FROM table_name_67 WHERE away_team = "middlesbrough"
+
+Index 200: SQL Output: SELECT lead_pitch_mm FROM table_name_28 WHERE body_width_mm > 10.16, Real Output: SELECT SUM(lead_pitch_mm) FROM table_name_28 WHERE body_width_mm > 10.16
+
+Index 201: SQL Output: SELECT gdp_2012_millions_of_euro FROM table_name_51 WHERE population_in_millions < '1.3' AND gdp__nominal__per_capita_2012_euro = '20700', Real Output: SELECT gdp_2012_millions_of_euro FROM table_name_51 WHERE population_in_millions < 1.3 AND gdp__nominal__per_capita_2012_euro = "20,700(p)"
+
+Index 202: SQL Output: SELECT studio FROM table_name_77 WHERE year = '1943', Real Output: SELECT studio FROM table_name_77 WHERE year = 1943 AND title = "the hard way"
+
+Index 203: SQL Output: SELECT pick FROM table_name_32 WHERE player = 'curt bennett' AND nationality = 'canada' AND draft < '1976' AND round < '2', Real Output: SELECT COUNT(pick) FROM table_name_32 WHERE nationality = "canada" AND draft < 1976 AND player = "curt bennett" AND round < 2
+
+Index 204: SQL Output: SELECT goals FROM table_name_13 WHERE caps > 8 AND player = 'Stein Huysegems', Real Output: SELECT goals FROM table_name_13 WHERE caps > 8 AND player = "stein huysegems"
+
+Index 205: SQL Output: SELECT hdtv FROM table_name_50 WHERE content = 'general television', Real Output: SELECT hdtv FROM table_name_50 WHERE content = "general television"
+
+Index 206: SQL Output: SELECT SUM(wins) FROM table_name_82 WHERE points = '26' AND rank < '27', Real Output: SELECT SUM(wins) FROM table_name_82 WHERE points = 26 AND rank < 27
+
+Index 207: SQL Output: SELECT position FROM table_name_31 WHERE cfl_team = 'toronto', Real Output: SELECT position FROM table_name_31 WHERE cfl_team = "toronto"
+
+Index 208: SQL Output: SELECT SUM(rank) FROM table_name_15 WHERE years BETWEEN '1996' AND '2012' AND apps > '340', Real Output: SELECT SUM(rank) FROM table_name_15 WHERE years = "1996–2012" AND apps > 340
+
+Index 209: SQL Output: SELECT lost FROM table_name_32 WHERE team = 'corinthians' AND against > 26, Real Output: SELECT SUM(lost) FROM table_name_32 WHERE team = "corinthians" AND against > 26
+
+Index 210: SQL Output: SELECT population FROM table_name_38 WHERE name_of_city = 'Chimbote', Real Output: SELECT SUM(population) FROM table_name_38 WHERE name_of_city = "chimbote"
+
+Index 211: SQL Output: SELECT COUNT(*) FROM table_11391954_3 WHERE Half = 'Half Marathon' AND country = 'Moldova', Real Output: SELECT COUNT(Half) AS marathon__womens_ FROM table_11391954_3 WHERE country = "Moldova"
+
+Index 212: SQL Output: SELECT year FROM table_name_26 ORDER BY year DESC LIMIT 1, Real Output: SELECT MAX(year) FROM table_name_26 WHERE entrant = "fisa"
+
+Index 213: SQL Output: SELECT result_games FROM table_21436373_11 WHERE attendance = '52521', Real Output: SELECT result_games FROM table_21436373_11 WHERE attendance = 52521
+
+Index 214: SQL Output: SELECT * FROM table_name_48 WHERE tournament = '2011', Real Output: SELECT 2011 FROM table_name_48 WHERE tournament = "tournaments played"
+
+Index 215: SQL Output: SELECT MIN(crowd) FROM table_name_93 WHERE home_team = 'Footscray', Real Output: SELECT MIN(crowd) FROM table_name_93 WHERE home_team = "footscray"
+
+Index 216: SQL Output: SELECT opponent FROM table_name_35 WHERE date = 'July 7', Real Output: SELECT opponent FROM table_name_35 WHERE date = "july 7"
+
+Index 217: SQL Output: SELECT COUNT(*) FROM table_27011761_2 WHERE departure = '17:30', Real Output: SELECT COUNT(train_no) FROM table_27011761_2 WHERE departure = "17:30"
+
+Index 218: SQL Output: SELECT country FROM table_11884814_3 WHERE swimsuit = '9.67', Real Output: SELECT country FROM table_11884814_3 WHERE swimsuit = "9.67"
+
+Index 219: SQL Output: SELECT COUNT(*) FROM table_13328239_4 WHERE score = '16-52', Real Output: SELECT COUNT(round) FROM table_13328239_4 WHERE score = "16-52"
+
+Index 220: SQL Output: SELECT votes FROM table_name_6 WHERE place = '9', Real Output: SELECT votes FROM table_name_6 WHERE place = "9"
+
+Index 221: SQL Output: SELECT dob FROM table_name_25 WHERE dob = '1987-01-01' AND first = 'torey' AND throws = 'r' AND position = 'c', Real Output: SELECT dob FROM table_name_25 WHERE throws = "r" AND position = "c" AND first = "torey"
+
+Index 222: SQL Output: SELECT COUNT(*) FROM table_28498999_6 WHERE player = 'charley hoffman', Real Output: SELECT COUNT(reset_points) FROM table_28498999_6 WHERE player = "Charley Hoffman"
+
+Index 223: SQL Output: SELECT artist FROM table_name_50 WHERE place = '3' AND percentage = '38.60%', Real Output: SELECT artist FROM table_name_50 WHERE place < 3 AND percentage = "38.60%"
+
+Index 224: SQL Output: SELECT * FROM table_12094609_1 WHERE state = 'south dakota', Real Output: SELECT preliminaries FROM table_12094609_1 WHERE state = "South Dakota"
+
+Index 225: SQL Output: SELECT game_site FROM table_name_64 WHERE attendance = '39,889', Real Output: SELECT game_site FROM table_name_64 WHERE attendance = "39,889"
+
+Index 226: SQL Output: SELECT place FROM table_name_89 WHERE to_par = '-10' AND score = '200', Real Output: SELECT place FROM table_name_89 WHERE to_par = "–10" AND score = 67 - 67 - 66 = 200
+
+Index 227: SQL Output: SELECT AVG(games) FROM table_name_99 WHERE player = 'Nick Rimando', Real Output: SELECT AVG(games) FROM table_name_99 WHERE player = "nick rimando"
+
+Index 228: SQL Output: SELECT decile FROM table_name_63 WHERE roll = '428', Real Output: SELECT MIN(decile) FROM table_name_63 WHERE roll = 428
+
+Index 229: SQL Output: SELECT SUM(draws) FROM table_name_39 WHERE draws < 10 AND draws < 2 AND draws > 13, Real Output: SELECT COUNT(draws) FROM table_name_39 WHERE losses < 10 AND wins = 13 AND byes < 2
+
+Index 230: SQL Output: SELECT country FROM table_name_27 WHERE time = '7:28.66' AND rank < 3, Real Output: SELECT country FROM table_name_27 WHERE rank < 3 AND time = "7:28.66"
+
+Index 231: SQL Output: SELECT winner FROM table_28853064_15 WHERE stage = 'Stage 1' AND team_classification = 'EPM-Une' AND mountains_classification = 'Oscar Solis', Real Output: SELECT stage FROM table_28853064_15 WHERE team_classification = "EPM-UNE" AND mountains_classification = "Oscar Solis" AND winner = "Jaime Vergara"
+
+Index 232: SQL Output: SELECT previous_season_2007_2008 FROM table_19526911_1 WHERE website = 'www.novavolley.narod.ru', Real Output: SELECT previous_season_2007_2008 FROM table_19526911_1 WHERE website = "www.novavolley.narod.ru"
+
+Index 233: SQL Output: SELECT median_income___intl FROM table_25042332_16 WHERE below_60_percentage_of_median_income = '24.4%', Real Output: SELECT MIN(median_income___intl) AS $__ FROM table_25042332_16 WHERE below_60_percentage_of_median_income = "24.4%"
+
+Index 234: SQL Output: SELECT * FROM table_name_1 WHERE week_14_nov_30 = '5-1', Real Output: SELECT week_14_nov_30 FROM table_name_1 WHERE week_6_oct_5 = "michigan state (5-1)"
+
+Index 235: SQL Output: SELECT arizona FROM table_name_83 WHERE texas = 'humphrey' AND colorado = 'nixon' AND nevada = 'nixon', Real Output: SELECT arizona FROM table_name_83 WHERE colorado = "nixon" AND nevada = "nixon" AND texas = "humphrey"
+
+Index 236: SQL Output: SELECT change_over_previous_year_as_a_whole FROM table_171748_3 WHERE change_over_same_quarter_the_previous_year = '2.8%', Real Output: SELECT change_over_previous_year_as_a_whole FROM table_171748_3 WHERE change_over_same_quarter_the_previous_year = "Up 2.8%"
+
+Index 237: SQL Output: SELECT * FROM table_name_92 WHERE engine = 'Brabham' AND chassis = 'bt37', Real Output: SELECT engine FROM table_name_92 WHERE year = 1973 AND chassis = "brabham bt37"
+
+Index 238: SQL Output: SELECT AVG(rank) FROM table_name_80 WHERE total > 4, Real Output: SELECT AVG(rank) FROM table_name_80 WHERE total > 4 AND nation = "great britain"
+
+Index 239: SQL Output: SELECT origin FROM table_name_15 WHERE train_no = '15929/30', Real Output: SELECT origin FROM table_name_15 WHERE train_no = "15929/30"
+
+Index 240: SQL Output: SELECT date FROM table_name_43 WHERE score = '4-1' AND venue = 'Pro Player Stadium', Real Output: SELECT date FROM table_name_43 WHERE venue = "pro player stadium" AND score = "4-1"
+
+Index 241: SQL Output: SELECT spacecraft FROM table_name_17 WHERE launched = 'mariner 4', Real Output: SELECT launched FROM table_name_17 WHERE spacecraft = "mariner 4"
+
+Index 242: SQL Output: SELECT * FROM table_25058269_1 WHERE season = '2005–06' ORDER BY season LIMIT 1 OFFSET 2, Real Output: SELECT 3 AS rd_place FROM table_25058269_1 WHERE season = "2005–06"
+
+Index 243: SQL Output: SELECT AVG(drawn) FROM table_name_79 WHERE lost > 21 AND goals_for < 36, Real Output: SELECT AVG(drawn) FROM table_name_79 WHERE goals_for < 36 AND lost > 21
+
+Index 244: SQL Output: SELECT outcome FROM table_name_52 WHERE score = '3-6, 2-6', Real Output: SELECT outcome FROM table_name_52 WHERE score = "3-6, 2-6"
+
+Index 245: SQL Output: SELECT MAX(week) FROM table_name_67 WHERE opponent = 'Buffalo Bills', Real Output: SELECT MAX(week) FROM table_name_67 WHERE opponent = "buffalo bills"
+
+Index 246: SQL Output: SELECT away_team FROM table_name_39 WHERE venue = 'Punt Road Oval', Real Output: SELECT away_team FROM table_name_39 WHERE venue = "punt road oval"
+
+Index 247: SQL Output: SELECT MIN(overall) FROM table_name_44 WHERE college = 'College of Baylor', Real Output: SELECT MIN(overall) FROM table_name_44 WHERE college = "baylor"
+
+Index 248: SQL Output: SELECT man_of_the_match FROM table_17120964_7 WHERE result = 'L', Real Output: SELECT man_of_the_match FROM table_17120964_7 WHERE result = "Lost 2-4"
+
+Index 249: SQL Output: SELECT nationality FROM table_name_17 WHERE round < 2 AND pick = '24', Real Output: SELECT nationality FROM table_name_17 WHERE round < 2 AND pick = 24
+
+Index 250: SQL Output: SELECT AVG(week) FROM table_name_78 WHERE opponent = 'Denver Broncos', Real Output: SELECT AVG(week) FROM table_name_78 WHERE opponent = "denver broncos"
+
+Index 251: SQL Output: SELECT away_team FROM table_name_23 WHERE tie_no = '37', Real Output: SELECT away_team FROM table_name_23 WHERE tie_no = "37"
+
+Index 252: SQL Output: SELECT competition, head_to_head FROM table_20251343_4 WHERE competition = 'australia', Real Output: SELECT competition FROM table_20251343_4 WHERE head_to_head = "Australia 13, New Zealand 40, Drawn 3"
+
+Index 253: SQL Output: SELECT opponent FROM table_name_44 WHERE score = '92-111', Real Output: SELECT opponent FROM table_name_44 WHERE score = "92-111"
+
+Index 255: SQL Output: SELECT series FROM table_name_20 WHERE title_rank = 'Various', Real Output: SELECT series FROM table_name_20 WHERE title_rank = "various"
+
+Index 256: SQL Output: SELECT * FROM table_20217811_1 WHERE national = 'Name the national for rimutaka', Real Output: SELECT national FROM table_20217811_1 WHERE electorate = "Rimutaka"
+
+Index 257: SQL Output: SELECT COUNT(attendance) FROM table_name_86 WHERE opponent = 'Tonbridge Angels', Real Output: SELECT attendance FROM table_name_86 WHERE opponent = "tonbridge angels"
+
+Index 258: SQL Output: SELECT SUM(value__) FROM table_name_3 WHERE revenue__$m_ < 307 AND team = 'Valencia' AND rank < 19, Real Output: SELECT SUM(value__) AS $m_ FROM table_name_3 WHERE revenue__$m_ < 307 AND team = "valencia" AND rank < 19
+
+Index 259: SQL Output: SELECT years FROM table_29743928_4 WHERE name = 'chris konopka', Real Output: SELECT years FROM table_29743928_4 WHERE name = "Chris Konopka Category:Articles with hCards"
+
+Index 260: SQL Output: SELECT record FROM table_17288825_8 WHERE score BETWEEN '93' AND '104', Real Output: SELECT record FROM table_17288825_8 WHERE score = "L 93–104 (OT)"
+
+Index 261: SQL Output: SELECT name FROM products WHERE Manufacturer NOT IN (SELECT name FROM manufacturers WHERE code = 'Sony');, Real Output: SELECT COUNT(DISTINCT name) FROM products WHERE NOT name IN (SELECT T1.name FROM products AS T1 JOIN manufacturers AS T2 ON T1.Manufacturer = T2.code WHERE T2.name = 'Sony')
+
+Index 262: SQL Output: SELECT season FROM table_name_31 WHERE average = '37.5', Real Output: SELECT season FROM table_name_31 WHERE average = 37.5
+
+Index 263: SQL Output: SELECT MAX(rank) FROM review, Real Output: SELECT MIN(rank) FROM review
+
+Index 264: SQL Output: SELECT career_win_loss FROM table_name_65 WHERE tournament = 'Australian Open' AND career_win_loss = 'Q1', Real Output: SELECT career_win_loss FROM table_name_65 WHERE 2008 = "q1" AND tournament = "australian open"
+
+Index 265: SQL Output: SELECT home_team FROM table_name_42 WHERE tie_no = '42', Real Output: SELECT tie_no FROM table_name_42 WHERE home_team = "crystal palace"
+
+Index 266: SQL Output: SELECT SUM(enrollment) FROM table_name_21 WHERE school = 'Lanesville', Real Output: SELECT AVG(enrollment) FROM table_name_21 WHERE school = "lanesville"
+
+Index 267: SQL Output: SELECT opponent FROM table_name_75 WHERE round = 'q2' AND season = '2005–06', Real Output: SELECT opponent FROM table_name_75 WHERE round = "q2" AND season = "2005–06"
+
+Index 268: SQL Output: SELECT competition FROM table_name_72 WHERE date = '6 december 2011', Real Output: SELECT competition FROM table_name_72 WHERE date = "6 december 2011"
+
+Index 269: SQL Output: SELECT score FROM table_name_64 WHERE country = 'South Africa', Real Output: SELECT score FROM table_name_64 WHERE country = "south africa"
+
+Index 270: SQL Output: SELECT COUNT(*) FROM table_2665085_1 WHERE park = 'Zippin Pippin', Real Output: SELECT COUNT(park) FROM table_2665085_1 WHERE name = "Zippin Pippin"
+
+Index 271: SQL Output: SELECT silver FROM table_name_62 WHERE total < 6 AND bronze < 0, Real Output: SELECT COUNT(silver) FROM table_name_62 WHERE total < 6 AND bronze < 0
+
+Index 272: SQL Output: SELECT no_in_season FROM table_19422702_1 WHERE production_code = '816' ORDER BY no_in_season DESC LIMIT 1, Real Output: SELECT MAX(no_in_season) FROM table_19422702_1 WHERE production_code = 816
+
+Index 273: SQL Output: SELECT AVG(grid) FROM table_name_7 WHERE laps < 24 AND bike = "Honda CBR1000RR" AND rider = "Jason Pridmore", Real Output: SELECT AVG(grid) FROM table_name_7 WHERE laps < 24 AND bike = "honda cbr1000rr" AND rider = "jason pridmore"
+
+Index 274: SQL Output: SELECT class FROM table_name_36 WHERE year = '1968', Real Output: SELECT class FROM table_name_36 WHERE year = 1968
+
+Index 275: SQL Output: SELECT * FROM table_name_51 WHERE competition = '1980' AND location = 'Jerusalem' AND score = '0:5', Real Output: SELECT competition FROM table_name_51 WHERE year > 1980 AND score = "0:5" AND location = "jerusalem"
+
+Index 276: SQL Output: SELECT winner FROM table_name_60 WHERE score = '6–7(4)', Real Output: SELECT winner FROM table_name_60 WHERE score = "6–7(4), 7–6(3), [11–9]"
+
+Index 277: SQL Output: SELECT COUNT(DISTINCT nationality) FROM table_1013129_3 WHERE nhl_team = 'New Jersey Devils', Real Output: SELECT COUNT(nationality) FROM table_1013129_3 WHERE nhl_team = "New Jersey Devils"
+
+Index 278: SQL Output: SELECT name FROM table_name_28 WHERE nationality = 'Great Britain' AND lane = '5', Real Output: SELECT name FROM table_name_28 WHERE nationality = "great britain" AND lane = 5
+
+Index 279: SQL Output: SELECT time FROM table_name_79 WHERE race = 'Kentucky Derby', Real Output: SELECT time FROM table_name_79 WHERE race = "kentucky derby"
+
+Index 280: SQL Output: SELECT high_assists FROM table_17323092_7 WHERE team = 'Minnesota', Real Output: SELECT high_assists FROM table_17323092_7 WHERE team = "@ Minnesota"
+
+Index 281: SQL Output: SELECT labour_panel FROM table_name_43 WHERE labour_panel = (SELECT MAX(labour_panel) FROM table_name_43 WHERE total < 60 AND cultural_and_educational_panel > 1 AND university_of_dublin > 0), Real Output: SELECT MAX(labour_panel) FROM table_name_43 WHERE cultural_and_educational_panel > 1 AND university_of_dublin > 0 AND total < 60
+
+Index 282: SQL Output: SELECT inegi_code FROM table_name_17 WHERE population_density___km_2__ < 81.4 AND human_development_index__2000_ < 0.6593, Real Output: SELECT AVG(inegi_code) FROM table_name_17 WHERE population_density___km_2__ < 81.4 AND human_development_index__2000_ = 0.6593
+
+Index 283: SQL Output: SELECT * FROM table_name_64 WHERE surface = '15 february 1988', Real Output: SELECT surface FROM table_name_64 WHERE date = "15 february 1988"
+
+Index 284: SQL Output: SELECT no_in_series FROM table_19401346_1 WHERE us_viewers__millions_ = '9.35', Real Output: SELECT MIN(no_in_series) FROM table_19401346_1 WHERE us_viewers__millions_ = "9.35"
+
+Index 285: SQL Output: SELECT COUNT(high_school_principal) FROM table_25037577_1 WHERE year IN ('2000', '2001'), Real Output: SELECT high_school_principal FROM table_25037577_1 WHERE year = "2000-2001"
+
+Index 286: SQL Output: SELECT * FROM table_name_58 WHERE akira = 'Milano' AND milano_collection_at = '10:29', Real Output: SELECT akira FROM table_name_58 WHERE milano_collection_at = "milano (10:29)"
+
+Index 287: SQL Output: SELECT * FROM table_name_83 WHERE Id = '1998', Real Output: SELECT 2003 FROM table_name_83 WHERE 1998 = "atp masters series"
+
+Index 288: SQL Output: SELECT club FROM table_name_18 WHERE losing_bonus = '1', Real Output: SELECT club FROM table_name_18 WHERE losing_bonus = "1"
+
+Index 289: SQL Output: SELECT new_conference FROM table_name_28 WHERE team_nickname = 'Gauchos', Real Output: SELECT new_conference FROM table_name_28 WHERE team_nickname = "gauchos"
+
+Index 290: SQL Output: SELECT fastest_lap FROM table_11056278_3 WHERE race_name = 'Tenneco Automotive Grand Prix of Detroit', Real Output: SELECT fastest_lap FROM table_11056278_3 WHERE race_name = "Tenneco Automotive Grand Prix of Detroit"
+
+Index 291: SQL Output: SELECT SUM(goals_against) FROM table_name_22 WHERE position > '14' AND played < '30', Real Output: SELECT SUM(goals_against) FROM table_name_22 WHERE position > 14 AND played < 30
+
+Index 292: SQL Output: SELECT opponent FROM table_name_51 WHERE loss = '0-2', Real Output: SELECT opponent FROM table_name_51 WHERE loss = "glynn (0-2)"
+
+Index 293: SQL Output: SELECT COUNT(bronze) FROM table_name_83 WHERE bronze = 'bronze' AND total < 1 AND rank = '2' AND nation = 'West Germany', Real Output: SELECT COUNT(bronze) FROM table_name_83 WHERE rank = 2 AND nation = "west germany" AND total < 1
+
+Index 295: SQL Output: SELECT * FROM College ORDER BY enr ASC, Real Output: SELECT * FROM College ORDER BY enr
+
+Index 296: SQL Output: SELECT position FROM table_23585197_3 WHERE songwriter_s_ = 'adam sandahl', Real Output: SELECT position FROM table_23585197_3 WHERE songwriter_s_ = "Adam Sandahl"
+
+Index 297: SQL Output: SELECT result FROM table_name_89 WHERE year < 2005 AND award = 'robert' AND category = 'best actress', Real Output: SELECT result FROM table_name_89 WHERE category = "best actress" AND year < 2005 AND award = "robert award"
+
+Index 298: SQL Output: SELECT MIN(crowd) FROM table_name_61 WHERE away_team = 'North Melbourne', Real Output: SELECT MIN(crowd) FROM table_name_61 WHERE away_team = "north melbourne"
+
+Index 299: SQL Output: SELECT * FROM table_name_66 WHERE old_english = 'd', Real Output: SELECT dutch FROM table_name_66 WHERE old_english = "/d/"
+
+Index 300: SQL Output: SELECT method FROM table_name_63 WHERE record = '3-2', Real Output: SELECT method FROM table_name_63 WHERE record = "3-2"
+
+Index 301: SQL Output: SELECT year FROM table_name_90 WHERE type_of_vehicle = 'open wheel' AND racing_series = 'formula one' AND nation_of_citizenship = 'Germany', Real Output: SELECT year FROM table_name_90 WHERE type_of_vehicle = "open wheel" AND racing_series = "formula one" AND nation_of_citizenship = "germany"
+
+Index 302: SQL Output: SELECT winner FROM table_name_52 WHERE trofeo_fast_team = 'Asics-c.g.a.' AND mountains_classification = 'Mariano Piccoli', Real Output: SELECT winner FROM table_name_52 WHERE trofeo_fast_team = "asics-c.g.a." AND mountains_classification = "mariano piccoli"
+
+Index 303: SQL Output: SELECT events FROM table_name_30 WHERE events < 0 AND top_10 = 'Less than 0', Real Output: SELECT MIN(events) FROM table_name_30 WHERE tournament = "the open championship" AND top_10 < 0
+
+Index 304: SQL Output: SELECT defensive FROM table_name_97 WHERE rookie = 'Craig Point' AND week = '6', Real Output: SELECT defensive FROM table_name_97 WHERE rookie = "craig point" AND week = 6
+
+Index 305: SQL Output: SELECT SUM(field_goals__5_points_) FROM table_14342367_15, Real Output: SELECT MIN(field_goals__5_points_) FROM table_14342367_15
+
+Index 306: SQL Output: SELECT * FROM table_name_51 WHERE year > '2006' AND points = '60', Real Output: SELECT engine FROM table_name_51 WHERE year > 2006 AND points = "60"
+
+Index 307: SQL Output: SELECT * FROM table_name_35 WHERE largest_city = 'Ardabil' ORDER BY largest_city DESC LIMIT 3 OFFSET 2, Real Output: SELECT 3 AS rd_largest FROM table_name_35 WHERE largest_city = "ardabil"
+
+Index 308: SQL Output: SELECT date FROM table_name_84 WHERE score = '5-2' AND loss = 'Greinke (1-2)', Real Output: SELECT date FROM table_name_84 WHERE score = "5-2" AND loss = "greinke (1-2)"
+
+Index 309: SQL Output: SELECT COUNT(final_losses) FROM table_17751942_4 WHERE Semi = 2 AND team = 'Kitchener Rangers', Real Output: SELECT MAX(Semi) - final_losses FROM table_17751942_4 WHERE team = "Kitchener Rangers"
+
+Index 310: SQL Output: SELECT nationality FROM table_15621965_1 WHERE no = '9', Real Output: SELECT nationality FROM table_15621965_1 WHERE no = 9
+
+Index 311: SQL Output: SELECT date_of_appointment FROM table_24231638_3 WHERE team = 'osasuna', Real Output: SELECT date_of_appointment FROM table_24231638_3 WHERE team = "Osasuna"
+
+Index 312: SQL Output: SELECT issue FROM table_name_75 WHERE spoofed_title = 'Ho-Hum land', Real Output: SELECT SUM(issue) FROM table_name_75 WHERE spoofed_title = "ho-hum land"
+
+Index 313: SQL Output: SELECT COUNT(*) FROM table_17416221_1 WHERE province = 'Northern Cape', Real Output: SELECT COUNT(provincial_capital) FROM table_17416221_1 WHERE province = "Northern Cape"
+
+Index 314: SQL Output: SELECT races__starts_ FROM table_24937583_1 WHERE points__dropped_points_ = '18', Real Output: SELECT races__starts_ FROM table_24937583_1 WHERE points__dropped_points_ = "18"
+
+Index 315: SQL Output: SELECT team_1 FROM table_name_81 WHERE team_2 = 'avigliano', Real Output: SELECT team_1 FROM table_name_81 WHERE team_2 = "avigliano (basilicata)"
+
+Index 316: SQL Output: SELECT player FROM table_name_10 WHERE position = 'guard' AND round < 11 AND pick < 152, Real Output: SELECT player FROM table_name_10 WHERE round < 11 AND pick < 152 AND position = "guard"
+
+Index 317: SQL Output: SELECT home_team FROM table_name_26 WHERE game = 'game 1' AND road_team = 'Los Angeles', Real Output: SELECT home_team FROM table_name_26 WHERE road_team = "los angeles" AND game = "game 1"
+
+Index 318: SQL Output: SELECT winning_constructor FROM table_name_24 WHERE name = 'Grand Prix Du Salon', Real Output: SELECT winning_constructor FROM table_name_24 WHERE name = "grand prix du salon"
+
+Index 319: SQL Output: SELECT democratic_seat_plurality FROM table_name_94 WHERE percentage_democrats = '29%', Real Output: SELECT democratic_seat_plurality FROM table_name_94 WHERE percentage_democrats = "29%"
+
+Index 320: SQL Output: SELECT horse FROM table_19624708_1 WHERE owner = 'r. a. Scott', Real Output: SELECT horse FROM table_19624708_1 WHERE owner = "R. A. Scott"
+
+Index 321: SQL Output: SELECT draw FROM table_name_43 WHERE televote_points = '8', Real Output: SELECT COUNT(draw) FROM table_name_43 WHERE televote_points = "8"
+
+Index 322: SQL Output: INSERT INTO table_name_86 VALUES ('win', 'Mark Hunt'), Real Output: SELECT res FROM table_name_86 WHERE opponent = "mark hunt"
+
+Index 323: SQL Output: SELECT cuts_made FROM table_name_62 WHERE cuts_made > 0 AND top_10 > 4 AND top_5 = 1, Real Output: SELECT SUM(cuts_made) FROM table_name_62 WHERE wins < 1 AND top_5 = 1 AND top_10 > 4
+
+Index 324: SQL Output: SELECT DISTINCT Team FROM player ORDER BY Team, Real Output: SELECT Team FROM player ORDER BY Team
+
+Index 325: SQL Output: SELECT MAX(week) FROM table_12305325_4 WHERE eliminated IN ('kate', 'anton'), Real Output: SELECT MAX(week) FROM table_12305325_4 WHERE eliminated = "Kate and Anton"
+
+Index 326: SQL Output: SELECT gpu FROM table_name_31 WHERE application = 'cushaw', Real Output: SELECT gpu‡ FROM table_name_31 WHERE application = "cushaw"
+
+Index 327: SQL Output: SELECT year FROM table_name_11 WHERE label = 'cryptogramophon', Real Output: SELECT year FROM table_name_11 WHERE label = "cryptogramophon"
+
+Index 328: SQL Output: SELECT muzzle_velocity FROM table_16010376_1 WHERE cartridge = '375 Remington Ultra Magnum', Real Output: SELECT muzzle_velocity FROM table_16010376_1 WHERE cartridge = ".375 Remington Ultra Magnum"
+
+Index 329: SQL Output: SELECT length FROM table_name_22 WHERE class = 'GT' AND circuit = 'Portland International Raceway', Real Output: SELECT length FROM table_name_22 WHERE class = "gt" AND circuit = "portland international raceway"
+
+Index 330: SQL Output: SELECT name FROM table_name_47 WHERE total_point < 30 AND bonus > 4 AND catch_taken > 3 AND only_point > 1, Real Output: SELECT name FROM table_name_47 WHERE only_point > 1 AND catch_taken > 3 AND bonus > 4 AND total_point < 30
+
+Index 331: SQL Output: SELECT opponent FROM table_17120964_5 WHERE date = '2017-12-09', Real Output: SELECT opponent FROM table_17120964_5 WHERE date = "4th"
+
+Index 332: SQL Output: SELECT MIN(pick) FROM table_name_35 WHERE position = 'OF' AND team = 'Chicago White Sox', Real Output: SELECT MIN(pick) FROM table_name_35 WHERE position = "of" AND team = "chicago white sox"
+
+Index 333: SQL Output: SELECT spokespersons FROM table_184803_4 WHERE country = 'luxembourg', Real Output: SELECT spokespersons FROM table_184803_4 WHERE country = "Luxembourg"
+
+Index 334: SQL Output: SELECT injured FROM table_name_98 WHERE date = "09.15 Sep. 15", Real Output: SELECT injured FROM table_name_98 WHERE date = "09.15 sep. 15"
+
+Index 335: SQL Output: SELECT mls_team FROM table_name_69 WHERE pick__number = '31', Real Output: SELECT mls_team FROM table_name_69 WHERE pick__number = 31
+
+Index 336: SQL Output: SELECT production_code FROM table_23242950_1 WHERE us_viewers__millions__ = '7.49', Real Output: SELECT production_code FROM table_23242950_1 WHERE us_viewers__millions_ = "7.49"
+
+Index 337: SQL Output: SELECT det_pre_amp FROM table_name_56 WHERE _number_tubes = '4' AND rectifier = 'x', Real Output: SELECT det_pre_amp FROM table_name_56 WHERE _number_tubes = "4" AND rectifier = "x"
+
+Index 338: SQL Output: SELECT date FROM table_27712180_13 WHERE game = '3', Real Output: SELECT date FROM table_27712180_13 WHERE game = 3
+
+Index 339: SQL Output: SELECT candidates FROM table_1342393_17 WHERE incumbent = 'james o'connor', Real Output: SELECT candidates FROM table_1342393_17 WHERE incumbent = "James O'Connor"
+
+Index 340: SQL Output: SELECT * FROM table_13741576_4 WHERE drawn = 'Name the drawn for llandaff rfc', Real Output: SELECT drawn FROM table_13741576_4 WHERE club = "Llandaff RFC"
+
+Index 341: SQL Output: SELECT model FROM table_name_16 WHERE status = 'operating', Real Output: SELECT model FROM table_name_16 WHERE status = "operating" AND name = "thor's hammer"
+
+Index 342: SQL Output: SELECT party FROM table_name_3 WHERE minister = 'Parker Moloney', Real Output: SELECT party FROM table_name_3 WHERE minister = "parker moloney" AND title = "minister for markets"
+
+Index 343: SQL Output: SELECT date_from FROM table_name_30 WHERE name = 'Theo Robinson', Real Output: SELECT date_from FROM table_name_30 WHERE date_to = "end of season" AND name = "theo robinson"
+
+Index 344: SQL Output: SELECT AVG(duration) FROM files WHERE formats LIKE '%mp3%' AND resolution < '800';, Real Output: SELECT AVG(T1.duration) FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T1.formats = "mp3" AND T2.resolution < 800
+
+Index 345: SQL Output: SELECT date FROM table_name_3 WHERE home_team = 'north melbourne', Real Output: SELECT date FROM table_name_3 WHERE home_team = "north melbourne"
+
+Index 346: SQL Output: SELECT year FROM table_name_52 WHERE distance = '1,870.23', Real Output: SELECT year FROM table_name_52 WHERE distance = "1,870.23 km"
+
+Index 347: SQL Output: SELECT position FROM table_12962773_10 WHERE height = '2.12', Real Output: SELECT position FROM table_12962773_10 WHERE height = "2.12"
+
+Index 348: SQL Output: SELECT leading_scorer FROM table_name_54 WHERE date = 'April 9', Real Output: SELECT leading_scorer FROM table_name_54 WHERE date = "april 9"
+
+Index 349: SQL Output: SELECT * FROM table_name_69 WHERE election = 69 AND _number_of_seats_won = 0 AND _number_of_candidates_nominated > 7 AND _percentage_of_popular_vote < 2.75, Real Output: SELECT MIN(election) FROM table_name_69 WHERE _number_of_candidates_nominated > 7 AND _percentage_of_popular_vote = "2.75%" AND _number_of_seats_won < 0
+
+Index 350: SQL Output: SELECT COUNT(DISTINCT director) FROM table_26385848_1 WHERE film_title = 'Eldra', Real Output: SELECT COUNT(director) FROM table_26385848_1 WHERE film_title = "Eldra"
+
+Index 351: SQL Output: SELECT COUNT(*) FROM Templates WHERE template_type_code = 'CV', Real Output: SELECT COUNT(*) FROM Templates WHERE template_type_code = "CV"
+
+Index 352: SQL Output: SELECT date FROM table_name_20 WHERE home_team = 'Collingwood', Real Output: SELECT date FROM table_name_20 WHERE home_team = "collingwood"
+
+Index 353: SQL Output: SELECT tournament FROM table_name_34 WHERE tournament = 'LQ 2007', Real Output: SELECT tournament FROM table_name_34 WHERE 2007 = "lq"
+
+Index 354: SQL Output: SELECT location FROM table_10568553_1 WHERE roads_intersected = 'Route 24', Real Output: SELECT location FROM table_10568553_1 WHERE roads_intersected = "Route 24"
+
+Index 355: SQL Output: SELECT policy_type_code FROM policies WHERE customer_id = 'Dayana Robel', Real Output: SELECT policy_type_code FROM policies AS t1 JOIN customers AS t2 ON t1.customer_id = t2.customer_id WHERE t2.customer_details = "Dayana Robel"
+
+Index 356: SQL Output: SELECT AVG(age) FROM student WHERE stuid IN (SELECT stuid FROM lives_in WHERE dormid IN (SELECT dormid FROM dorm WHERE student_capacity = (SELECT MAX(student_capacity) FROM dorm)));, Real Output: SELECT AVG(T1.age) FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid = T2.stuid JOIN dorm AS T3 ON T3.dormid = T2.dormid WHERE T3.student_capacity = (SELECT MAX(student_capacity) FROM dorm)
+
+Index 357: SQL Output: SELECT * FROM table_name_57 WHERE name = 'Terence Morris', Real Output: SELECT games FROM table_name_57 WHERE name = "terence morris"
+
+Index 358: SQL Output: SELECT COUNT(*) FROM table_1969634_1 WHERE institution = 'southern new hampshire university', Real Output: SELECT COUNT(enrollment) FROM table_1969634_1 WHERE institution = "Southern New Hampshire University"
+
+Index 360: SQL Output: SELECT artist_2 FROM table_29264319_1 WHERE artist_1 = 'Sparfunk & D-Code', Real Output: SELECT artist_2 FROM table_29264319_1 WHERE artist_1 = "Sparfunk & D-Code"
+
+Index 361: SQL Output: SELECT arrival FROM table_14688744_2 WHERE no = '14', Real Output: SELECT arrival FROM table_14688744_2 WHERE no = 14
+
+Index 362: SQL Output: SELECT year FROM table_name_36 WHERE first = 'Antonio Pompa-Baldi' ORDER BY year ASC LIMIT 1, Real Output: SELECT COUNT(year) FROM table_name_36 WHERE first = "antonio pompa-baldi italy"
+
+Index 363: SQL Output: SELECT COUNT(date) FROM table_10725629_2 WHERE circuit = 'Michigan International Speedway', Real Output: SELECT COUNT(date) FROM table_10725629_2 WHERE circuit = "Michigan International Speedway"
+
+Index 364: SQL Output: SELECT team FROM table_name_30 WHERE birthplace = 'northfield, minnesota', Real Output: SELECT team FROM table_name_30 WHERE birthplace = "northfield, minnesota"
+
+Index 365: SQL Output: SELECT address FROM member WHERE Membership_card != 'black', Real Output: SELECT address FROM member EXCEPT SELECT address FROM member WHERE Membership_card = 'Black'
+
+Index 366: SQL Output: SELECT money___£__ FROM table_name_56 WHERE player = 'pádraig harrington', Real Output: SELECT money___£__ FROM table_name_56 WHERE player = "pádraig harrington"
+
+Index 367: SQL Output: SELECT * FROM table_name_60 WHERE gold > 3 AND rank = 'total' AND silver > 8, Real Output: SELECT AVG(gold) FROM table_name_60 WHERE "total" > 3 AND rank = "total" AND silver > 8
+
+Index 368: SQL Output: SELECT school_club_team FROM table_name_38 WHERE pick = '9', Real Output: SELECT school_club_team FROM table_name_38 WHERE pick = "9 (via hamilton)"
+
+Index 369: SQL Output: SELECT location FROM table_name_69 WHERE type = 'trophy', Real Output: SELECT location FROM table_name_69 WHERE type = "club trophy"
+
+Index 370: SQL Output: SELECT second FROM table_name_96 WHERE third = 'Caroline Reed' LIMIT 1 OFFSET 1, Real Output: SELECT second FROM table_name_96 WHERE third = "caroline reed"
+
+Index 371: SQL Output: SELECT date FROM table_name_72 WHERE opponent = 'dominikovic', Real Output: SELECT date FROM table_name_72 WHERE opponent = "evie dominikovic"
+
+Index 372: SQL Output: SELECT original_air_date FROM table_21304131_2 WHERE no_in_series = '65', Real Output: SELECT original_air_date FROM table_21304131_2 WHERE no_in_series = 65
+
+Index 373: SQL Output: SELECT * FROM table_13512105_3 WHERE fastest_lap = '6', Real Output: SELECT COUNT(fastest_lap) FROM table_13512105_3 WHERE rnd = 6
+
+Index 374: SQL Output: SELECT season FROM table_name_68 WHERE north = 'esc holzkirchen' AND south = 'esv buchloe west' AND west = 'ehc bayreuth', Real Output: SELECT season FROM table_name_68 WHERE south = "esc holzkirchen" AND west = "esv buchloe" AND north = "ehc bayreuth"
+
+Index 375: SQL Output: SELECT competition FROM table_name_95 WHERE score = '3–1', Real Output: SELECT competition FROM table_name_95 WHERE score = "3–1"
+
+Index 376: SQL Output: SELECT won FROM table_14070062_4 WHERE points_for = '490', Real Output: SELECT COUNT(won) FROM table_14070062_4 WHERE points_for = "490"
+
+Index 377: SQL Output: SELECT player FROM table_name_99 WHERE to_par = -6, Real Output: SELECT player FROM table_name_99 WHERE to_par = "–6"
+
+Index 378: SQL Output: SELECT score FROM table_name_23 WHERE home_team = 'Millwall', Real Output: SELECT score FROM table_name_23 WHERE tie_no = "replay" AND home_team = "millwall"
+
+Index 380: SQL Output: SELECT date FROM table_name_98 WHERE game = '2', Real Output: SELECT date FROM table_name_98 WHERE game = "game 2"
+
+Index 381: SQL Output: SELECT * FROM table_name_98 WHERE result = 'tko', Real Output: SELECT result FROM table_name_98 WHERE method = "tko (low kicks)"
+
+Index 382: SQL Output: SELECT high_rebounds, team FROM table_27902171_9 WHERE team = 'Minnesota Timberwolves', Real Output: SELECT high_rebounds FROM table_27902171_9 WHERE team = "Minnesota Timberwolves"
+
+Index 383: SQL Output: SELECT position FROM table_name_7 WHERE school_country = 'USA', Real Output: SELECT position FROM table_name_7 WHERE school_country = "temple"
+
+Index 384: SQL Output: SELECT crew FROM table_name_4 WHERE duration = '12 minutes', Real Output: SELECT crew FROM table_name_4 WHERE duration = "12 minutes"
+
+Index 385: SQL Output: SELECT opponent FROM table_23346983_1 WHERE record = '5-1', Real Output: SELECT opponent FROM table_23346983_1 WHERE record = "5-1"
+
+Index 386: SQL Output: SELECT * FROM table_name_38 WHERE date = '23 september 1961' AND pilot = 'b.v. zemskov', Real Output: SELECT record_description FROM table_name_38 WHERE date = "23 september 1961" AND pilot = "b.v. zemskov"
+
+Index 387: SQL Output: SELECT draw FROM table_name_49 WHERE place < 6 AND place > 38, Real Output: SELECT SUM(draw) FROM table_name_49 WHERE place > 6 AND votes > 38
+
+Index 388: SQL Output: SELECT pick FROM table_2886617_3 WHERE player = 'marko makinen', Real Output: SELECT pick FROM table_2886617_3 WHERE player = "Marko Makinen"
+
+Index 390: SQL Output: SELECT * FROM table_name_90 WHERE position = 'Position' AND birthdate = '1981-06-30', Real Output: SELECT position FROM table_name_90 WHERE birthdate = "june 30, 1981"
+
+Index 391: SQL Output: SELECT COUNT(*) FROM table_20928682_1 WHERE record = '1-0-0', Real Output: SELECT COUNT(opponents) FROM table_20928682_1 WHERE record = "1-0-0"
+
+Index 392: SQL Output: SELECT MAX(caps) FROM table_name_54 WHERE player = 'Bruce Djite', Real Output: SELECT MAX(caps) FROM table_name_54 WHERE player = "bruce djite"
+
+Index 393: SQL Output: SELECT * FROM table_name_39 WHERE dual_archimedean_solid = 'truncated icosahedron' AND vertices > 32, Real Output: SELECT AVG(faces) FROM table_name_39 WHERE dual_archimedean_solid = "truncated icosahedron" AND vertices > 32
+
+Index 394: SQL Output: SELECT name FROM table_27487310_5 WHERE host_s_ IS NULL, Real Output: SELECT name FROM table_27487310_5 WHERE host_s_ = "unknown"
+
+Index 395: SQL Output: SELECT * FROM table_2941963_1 WHERE remittances_2010 = '19.73', Real Output: SELECT COUNT(remittances_2010) FROM table_2941963_1 WHERE remittances_2009 = "19.73"
+
+Index 396: SQL Output: SELECT number_, _name FROM table_name_1 WHERE date = '1964', Real Output: SELECT number_ & _name FROM table_name_1 WHERE date = "1964"
+
+Index 397: SQL Output: SELECT class_es_ FROM table_name_70 WHERE circuit = 'Mazda Raceway Laguna Seca', Real Output: SELECT class_es_ FROM table_name_70 WHERE circuit = "mazda raceway laguna seca"
+
+Index 398: SQL Output: SELECT tv_time FROM table_name_29 WHERE date = 'June 9', Real Output: SELECT tv_time FROM table_name_29 WHERE date = "june 9"
+
+Index 400: SQL Output: SELECT name FROM table_name_92 WHERE time = '8:10.1', Real Output: SELECT name FROM table_name_92 WHERE time = "8:10.1"
+
+Index 401: SQL Output: SELECT stu_fname FROM student WHERE stu_num IN (SELECT stu_num FROM enroll WHERE class_code IN (SELECT class_code FROM class WHERE crs_code IN (SELECT crs_code FROM course WHERE dept_code IN (SELECT dept_code FROM department WHERE dept_name IN ('Accounting', 'Computer Info. Systems')))));, Real Output: SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num JOIN CLASS AS T3 ON T2.class_code = T3.class_code JOIN course AS T4 ON T3.crs_code = T4.crs_code JOIN department AS T5 ON T5.dept_code = T4.dept_code WHERE T5.dept_name = 'Accounting' INTERSECT SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num = T2.stu_num JOIN CLASS AS T3 ON T2.class_code = T3.class_code JOIN course AS T4 ON T3.crs_code = T4.crs_code JOIN department AS T5 ON T5.dept_code = T4.dept_code WHERE T5.dept_name = 'Computer Info. Systems'
+
+Index 402: SQL Output: SELECT date FROM table_name_64 WHERE runner_s__up = 'Judy Rankin', Real Output: SELECT date FROM table_name_64 WHERE runner_s__up = "judy rankin"
+
+Index 403: SQL Output: SELECT MAX(score), SUM(score) FROM table_name_56 WHERE year > 1998, Real Output: SELECT MAX(round_4) FROM table_name_56 WHERE score = 284 AND year > 1998
+
+Index 404: SQL Output: SELECT vocal_percussionist FROM table_28715942_6 WHERE original_artist = 'The Coral', Real Output: SELECT vocal_percussionist FROM table_28715942_6 WHERE original_artist = "The Coral"
+
+Index 405: SQL Output: SELECT country FROM table_name_83 WHERE bie_recognised = 'no' AND year_s_ = 2014, Real Output: SELECT country FROM table_name_83 WHERE bie_recognised = "no" AND year_s_ = "2014"
+
+Index 406: SQL Output: SELECT MIN(attendance) FROM table_name_10 WHERE time = '3:15', Real Output: SELECT MIN(attendance) FROM table_name_10 WHERE time = "3:15"
+
+Index 407: SQL Output: SELECT name, height_feet FROM building WHERE building_id IN (SELECT building_id FROM institution WHERE founded > 1880);, Real Output: SELECT T1.name, T1.height_feet FROM building AS T1 JOIN institution AS T2 ON T1.building_id = T2.building_id WHERE T2.founded > 1880 GROUP BY T1.building_id HAVING COUNT(*) >= 2
+
+Index 408: SQL Output: SELECT socket FROM table_name_55 WHERE model_number = 'e680t', Real Output: SELECT socket FROM table_name_55 WHERE model_number = "atom e680t"
+
+Index 409: SQL Output: SELECT country FROM table_name_97 WHERE label = 'Debemur Morti prod.', Real Output: SELECT country FROM table_name_97 WHERE label = "debemur morti prod."
+
+Index 410: SQL Output: SELECT division_southwest FROM table_name_4 WHERE division_north = 'Madžari Solidarnost', Real Output: SELECT division_southwest FROM table_name_4 WHERE division_north = "madžari solidarnost"
+
+Index 411: SQL Output: SELECT * FROM table_name_14 WHERE Id = '191,183', Real Output: SELECT 2007 FROM table_name_14 WHERE 2011 = "191,183"
+
+Index 413: SQL Output: SELECT original_air_date FROM table_17356106_1 WHERE series__number = '256', Real Output: SELECT original_air_date FROM table_17356106_1 WHERE series__number = 256
+
+Index 414: SQL Output: SELECT time_retired, laps, grid FROM table_name_51 WHERE laps > 2 AND laps < 81, Real Output: SELECT time_retired FROM table_name_51 WHERE laps = 80 AND grid > 2
+
+Index 415: SQL Output: SELECT * FROM table_name_15 WHERE disorder = 'ornithine transcarbamylase deficiency', Real Output: SELECT measurements FROM table_name_15 WHERE disorder = "ornithine transcarbamylase deficiency"
+
+Index 416: SQL Output: SELECT yam_ FROM table_name_48 WHERE y_ = '0' AND soybean__green__ = '0' AND potato_ = '0.01', Real Output: SELECT yam_[y_] FROM table_name_48 WHERE soybean__green__[f_] = "0" AND potato_[d_] = "0.01"
+
+Index 417: SQL Output: SELECT MIN(height__m_) FROM table_name_26 WHERE prominence__m_ = '2349', Real Output: SELECT MIN(height__m_) FROM table_name_26 WHERE prominence__m_ = 2 OFFSET 349
+
+Index 418: SQL Output: SELECT date FROM table_name_54 WHERE attendance = '78,431', Real Output: SELECT date FROM table_name_54 WHERE attendance = "78,431"
+
+Index 419: SQL Output: SELECT dimensions FROM table_298883_5 WHERE obverse = 'kim il-sung' AND date_of_issue = '1992', Real Output: SELECT dimensions FROM table_298883_5 WHERE obverse = "Kim Il-sung" AND date_of_issue = "1992"
+
+Index 420: SQL Output: SELECT distance_medellín_downtown___km__ FROM table_name_86 WHERE municipalities = 'Envigado', Real Output: SELECT distance_medellín_downtown___km__ FROM table_name_86 WHERE municipalities = "envigado"
+
+Index 421: SQL Output: SELECT iata FROM table_name_85 WHERE city = 'Nanjing', Real Output: SELECT iata FROM table_name_85 WHERE city = "nanjing"
+
+Index 422: SQL Output: SELECT channel FROM table_182410_10 WHERE digital_terrestrial_channel = '10', Real Output: SELECT channel FROM table_182410_10 WHERE digital_terrestrial_channel = "10"
+
+Index 423: SQL Output: SELECT * FROM table_name_81 WHERE team_1 = 'Team 1' AND team_2 = 'Sporting CP', Real Output: SELECT team_1 FROM table_name_81 WHERE team_2 = "sporting cp"
+
+Index 424: SQL Output: SELECT date FROM table_name_15 WHERE away = 'high park demons', Real Output: SELECT date FROM table_name_15 WHERE away = "high park demons"
+
+Index 425: SQL Output: SELECT city FROM table_name_37 WHERE name = 'Universidad de Santiago de Compostela', Real Output: SELECT city FROM table_name_37 WHERE name = "universidad de santiago de compostela"
+
+Index 426: SQL Output: SELECT total__000s_ FROM table_name_20 WHERE year = '1996', Real Output: SELECT SUM(total__000s_) FROM table_name_20 WHERE year = "1996"
+
+Index 427: SQL Output: SELECT high_points FROM table_name_22 WHERE series = '4-2' ORDER BY high_points DESC LIMIT 1, Real Output: SELECT high_points FROM table_name_22 WHERE series = "4-2"
+
+Index 428: SQL Output: SELECT MIN(voted_yes) FROM table_120778_2 WHERE percent_no = '68.2', Real Output: SELECT MIN(voted_yes) FROM table_120778_2 WHERE percent_no = "68.2"
+
+Index 429: SQL Output: SELECT high_points FROM table_15869204_8 WHERE game = '68', Real Output: SELECT high_points FROM table_15869204_8 WHERE game = 68
+
+Index 430: SQL Output: SELECT COUNT(*) FROM table_2562572_2 WHERE city___municipality = 'Srbobran', Real Output: SELECT COUNT(city___municipality) FROM table_2562572_2 WHERE urban_settlement = "Srbobran"
+
+Index 431: SQL Output: SELECT Name FROM manager ORDER BY Age LIMIT 1, Real Output: SELECT Name FROM manager ORDER BY Age DESC LIMIT 1
+
+Index 432: SQL Output: SELECT circuit FROM table_name_16 WHERE championship = '2001', Real Output: SELECT circuit FROM table_name_16 WHERE championship = "2001 nascar winston cup series"
+
+Index 433: SQL Output: SELECT * FROM table_name_44 WHERE format = 'Première Chaîne', Real Output: SELECT format FROM table_name_44 WHERE branding = "première chaîne"
+
+Index 434: SQL Output: SELECT opponents_in_the_final FROM table_name_19 WHERE date = '2003-01-05' AND surface = 'hard', Real Output: SELECT opponents_in_the_final FROM table_name_19 WHERE surface = "hard" AND date = "january 5, 2003"
+
+Index 436: SQL Output: SELECT order FROM table_name_89 WHERE built = '5/69-6/69', Real Output: SELECT SUM(order) FROM table_name_89 WHERE built = "5/69-6/69"
+
+Index 437: SQL Output: SELECT tied, pct, lost FROM table_name_8 WHERE tied = (SELECT MAX(tied) FROM table_name_8 WHERE tied < 551) AND pct < '0.5593', Real Output: SELECT MAX(tied) FROM table_name_8 WHERE pct < 0.5593 AND lost = 551
+
+Index 438: SQL Output: SELECT programming FROM table_name_62 WHERE video = 'audio only', Real Output: SELECT programming FROM table_name_62 WHERE video = "audio only"
+
+Index 439: SQL Output: SELECT * FROM table_name_67 WHERE location = 'London' AND competition = 'Group Stage' AND lineup = 'Start' AND date = '2000-09-17', Real Output: SELECT location FROM table_name_67 WHERE competition = "group stage" AND lineup = "start" AND date = "2000-09-17"
+
+Index 440: SQL Output: SELECT college FROM table_25085059_1 WHERE cfl_team = 'Toronto Argonauts', Real Output: SELECT college FROM table_25085059_1 WHERE cfl_team = "Toronto Argonauts"
+
+Index 441: SQL Output: SELECT total_games FROM table_name_68 WHERE total_games < 488 AND pct < 0.7014 AND team = 'Nebraska' AND conference = 'Big Ten', Real Output: SELECT SUM(total_games) FROM table_name_68 WHERE conference = "big ten" AND lost < 488 AND team = "nebraska" AND pct < 0.7014
+
+Index 442: SQL Output: SELECT MIN(pick__number) FROM table_name_98 WHERE college = "Jackson State", Real Output: SELECT MIN(pick__number) FROM table_name_98 WHERE college = "jackson state"
+
+Index 443: SQL Output: SELECT COUNT(*) FROM table_14342210_13 WHERE class = 'Class' AND player = 'Everett Sweeley', Real Output: SELECT COUNT(class) FROM table_14342210_13 WHERE player = "Everett Sweeley"
+
+Index 444: SQL Output: SELECT AVG(finish) FROM table_name_89 WHERE start = '24' AND year > '1987', Real Output: SELECT AVG(finish) FROM table_name_89 WHERE start = 24 AND year > 1987
+
+Index 445: SQL Output: SELECT title FROM table_name_62 WHERE presentation_of_credentials = 'april 10, 1907', Real Output: SELECT title FROM table_name_62 WHERE presentation_of_credentials = "april 10, 1907"
+
+Index 446: SQL Output: SELECT time, react, athlete FROM table_name_76 WHERE react > 0.187, Real Output: SELECT time FROM table_name_76 WHERE react > 0.187 AND athlete = "paul hession"
+
+Index 447: SQL Output: SELECT indonesia_super_series_2008 FROM table_2544694_3 WHERE runner_up = '7800.00', Real Output: SELECT indonesia_super_series_2008 FROM table_2544694_3 WHERE runner_up = "Semi-Finalist" AND 780000 = "6420.00"
+
+Index 448: SQL Output: SELECT date FROM table_name_84 WHERE game = '1', Real Output: SELECT date FROM table_name_84 WHERE game = 1
+
+Index 449: SQL Output: SELECT viewers__in_millions_ FROM table_2102945_1 WHERE run_time = '24:31', Real Output: SELECT viewers__in_millions_ FROM table_2102945_1 WHERE run_time = "24:31"
+
+Index 450: SQL Output: SELECT webcast FROM table_name_5 WHERE website = '•' AND frequency = '103.3', Real Output: SELECT webcast FROM table_name_5 WHERE website = "•" AND frequency = 103.3
+
+Index 451: SQL Output: SELECT date FROM table_name_48 WHERE decision = 'myre', Real Output: SELECT date FROM table_name_48 WHERE decision = "myre"
+
+Index 452: SQL Output: SELECT * FROM table_name_1 WHERE construction_completed = '2016-09-29' AND cerclis_id = 'ard092916188', Real Output: SELECT construction_completed FROM table_name_1 WHERE cerclis_id = "ard092916188"
+
+Index 453: SQL Output: SELECT status FROM table_1341522_41 WHERE incumbent = 'william f. goodling', Real Output: SELECT status FROM table_1341522_41 WHERE incumbent = "William F. Goodling"
+
+Index 454: SQL Output: SELECT score FROM table_name_48 WHERE home = 'New York Rangers' AND record = '8–27–5', Real Output: SELECT score FROM table_name_48 WHERE home = "new york rangers" AND record = "8–27–5"
+
+Index 455: SQL Output: SELECT laid_down FROM table_1014206_2 WHERE laid_down = '1965-10-29', Real Output: SELECT laid_down FROM table_1014206_2 WHERE commissioned = "October 29, 1965"
+
+Index 456: SQL Output: SELECT cfl_team FROM table_28059992_1 WHERE pick__number = '1', Real Output: SELECT cfl_team FROM table_28059992_1 WHERE pick__number = 1
+
+Index 457: SQL Output: SELECT player FROM table_name_93 WHERE score = '283', Real Output: SELECT player FROM table_name_93 WHERE place = "t9" AND score = 70 - 74 - 69 - 70 = 283
+
+Index 458: SQL Output: SELECT margin_of_victory FROM table_name_65 WHERE winning_score = '68-67-69-65', Real Output: SELECT margin_of_victory FROM table_name_65 WHERE winning_score = 68 - 67 - 69 - 65 = 269
+
+Index 459: SQL Output: SELECT home FROM table_name_77 WHERE record = '7–5–2', Real Output: SELECT home FROM table_name_77 WHERE record = "7–5–2"
+
+Index 460: SQL Output: SELECT director FROM table_name_54 WHERE role = 'John Travers', Real Output: SELECT director FROM table_name_54 WHERE role = "john travers"
+
+Index 461: SQL Output: SELECT time FROM table_name_10 WHERE country = 'france' AND notes = 'fb', Real Output: SELECT time FROM table_name_10 WHERE notes = "fb" AND country = "france"
+
+Index 462: SQL Output: SELECT * FROM table_name_28 WHERE bore_ = '4' AND stroke_ = '4' AND carburetor = '4-barrel' AND vin_code = 'A', Real Output: SELECT bore_ & _stroke FROM table_name_28 WHERE carburetor = "4-barrel" AND vin_code = "a"
+
+Index 463: SQL Output: SELECT SUM(time) FROM table_name_17 WHERE lane = '1' AND rank < '8', Real Output: SELECT SUM(time) FROM table_name_17 WHERE lane = 1 AND rank < 8
+
+Index 464: SQL Output: SELECT district FROM table_name_95 WHERE result = 'Re-elected' AND first_elected = '1898', Real Output: SELECT district FROM table_name_95 WHERE result = "re-elected" AND first_elected = 1898
+
+Index 465: SQL Output: SELECT _percentage_2001 FROM table_1939405_2 WHERE _percentage_2011 = '0.2%', Real Output: SELECT _percentage_2001 FROM table_1939405_2 WHERE _percentage_2011 = "0.2%"
+
+Index 466: SQL Output: SELECT location_attendance, score FROM table_name_62 WHERE score = '89–86 (ot)', Real Output: SELECT location_attendance FROM table_name_62 WHERE score = "w 89–86 (ot)"
+
+Index 467: SQL Output: SELECT money___$__ FROM table_name_30 WHERE player = 'Lawson Little', Real Output: SELECT money___$__ FROM table_name_30 WHERE player = "lawson little"
+
+Index 468: SQL Output: SELECT year FROM table_name_59 WHERE wins = 2, Real Output: SELECT year FROM table_name_59 WHERE wins = "2"
+
+Index 469: SQL Output: SELECT popular_votes FROM table_name_94 WHERE candidate = 'candice sjostrom', Real Output: SELECT AVG(popular_votes) FROM table_name_94 WHERE candidate = "candice sjostrom"
+
+Index 470: SQL Output: SELECT country FROM table_name_52 WHERE play = 'The Libation Bearers' AND base = 'Mecklenburg', Real Output: SELECT country FROM table_name_52 WHERE base = "mecklenburg" AND play = "the libation bearers"
+
+Index 471: SQL Output: SELECT score FROM table_name_21 WHERE date = '2017-04-27', Real Output: SELECT score FROM table_name_21 WHERE date = "april 27"
+
+Index 472: SQL Output: SELECT land___sqmi__ FROM table_name_79 WHERE water__sqmi_ < 0.04 AND longitude = -96.794706, Real Output: SELECT MIN(land___sqmi__) FROM table_name_79 WHERE water__sqmi_ < 0.04 AND longitude = -96.794706
+
+Index 473: SQL Output: SELECT COUNT(*) FROM table_178381_1 WHERE location_of_the_church = 'Askrova' AND year_built = '1957' AND church_name = 'Askrova Bedehuskapell', Real Output: SELECT COUNT(location_of_the_church) FROM table_178381_1 WHERE year_built = "1957" AND church_name = "Askrova bedehuskapell"
+
+Index 474: SQL Output: SELECT episode FROM table_name_82 WHERE performer_3 = '3', Real Output: SELECT performer_3 FROM table_name_82 WHERE episode = 9
+
+Index 475: SQL Output: SELECT tv_time FROM table_name_66 WHERE road_team = 'Phoenix' AND date = 'June 18', Real Output: SELECT tv_time FROM table_name_66 WHERE road_team = "phoenix" AND date = "june 18"
+
+Index 476: SQL Output: SELECT time FROM table_name_17 WHERE home_team = 'HKSSF', Real Output: SELECT time FROM table_name_17 WHERE home_team = "hkssf"
+
+Index 477: SQL Output: SELECT * FROM table_17311783_9 WHERE high_points = '100' AND team = 'cleveland', Real Output: SELECT high_points FROM table_17311783_9 WHERE team = "Cleveland"
+
+Index 478: SQL Output: SELECT Party FROM election WHERE Party_ID NOT IN (SELECT Party_ID FROM party);, Real Output: SELECT Party FROM party WHERE NOT Party_ID IN (SELECT Party FROM election)
+
+Index 479: SQL Output: SELECT tenure FROM table_name_23 WHERE name = 'Gary David Saunders', Real Output: SELECT tenure FROM table_name_23 WHERE name = "gary david saunders"
+
+Index 480: SQL Output: SELECT year FROM table_name_93 WHERE winning_team = 'Europe' AND usa_captain = 'Kathy Whitworth' ORDER BY year DESC LIMIT 1, Real Output: SELECT MAX(year) FROM table_name_93 WHERE winning_team = "europe" AND usa_captain = "kathy whitworth"
+
+Index 481: SQL Output: SELECT year FROM table_name_41 WHERE producer = 'viva' AND title = 'magkapatid', Real Output: SELECT year FROM table_name_41 WHERE producer = "viva films" AND title = "magkapatid"
+
+Index 482: SQL Output: SELECT game FROM table_11959669_6 WHERE location_attendance = 'pepsi center 19,894', Real Output: SELECT MAX(game) FROM table_11959669_6 WHERE location_attendance = "Pepsi Center 19,894"
+
+Index 483: SQL Output: SELECT region FROM table_name_29 WHERE date = '2006-02-01', Real Output: SELECT region FROM table_name_29 WHERE date = "february 2006"
+
+Index 484: SQL Output: SELECT home_team FROM table_name_42 WHERE venue = 'arden street oval', Real Output: SELECT home_team AS score FROM table_name_42 WHERE venue = "arden street oval"
+
+Index 485: SQL Output: SELECT company FROM table_20174050_23 WHERE author = 'sarah sarah pinborough', Real Output: SELECT company FROM table_20174050_23 WHERE author = "Pinborough, Sarah Sarah Pinborough"
+
+Index 486: SQL Output: SELECT surface FROM table_name_67 WHERE opponent = 'Estrella Cabeza Candela', Real Output: SELECT surface FROM table_name_67 WHERE opponent = "estrella cabeza candela"
+
+Index 487: SQL Output: SELECT dismissals FROM table_19769948_26 WHERE innings = '191', Real Output: SELECT COUNT(dismissals) FROM table_19769948_26 WHERE innings = 191
+
+Index 488: SQL Output: SELECT * FROM table_name_78 WHERE class = 'gts', Real Output: SELECT circuit FROM table_name_78 WHERE class = "gts"
+
+Index 489: SQL Output: SELECT enlisted FROM table_23508196_5 WHERE type_of_unit = 'troop carrier group', Real Output: SELECT enlisted FROM table_23508196_5 WHERE type_of_unit = "Troop carrier group"
+
+Index 490: SQL Output: SELECT score FROM table_name_73 WHERE date = '3 March 1988' AND venue = 'estadio nacional', Real Output: SELECT score FROM table_name_73 WHERE venue = "estadio nacional" AND date = "3 march 1988"
+
+Index 491: SQL Output: SELECT nationality FROM table_2679061_2 WHERE player = 'randy heath', Real Output: SELECT nationality FROM table_2679061_2 WHERE player = "Randy Heath"
+
+Index 492: SQL Output: SELECT visitor FROM table_name_35 WHERE home = 'phoenix', Real Output: SELECT visitor FROM table_name_35 WHERE home = "phoenix"
+
+Index 493: SQL Output: SELECT counties_represented FROM table_14009909_1 WHERE first_elected = '2006', Real Output: SELECT counties_represented FROM table_14009909_1 WHERE first_elected = 2006
+
+Index 494: SQL Output: SELECT player FROM table_name_12 WHERE CAST(sets AS INT) < 5 AND event = 'Wimbledon', Real Output: SELECT player FROM table_name_12 WHERE sets < 5 AND event = "2005 wimbledon"
+
+Index 495: SQL Output: SELECT * FROM table_name_49 WHERE engine_configuration_ = '0-100km/h' AND engine_type = 'b5252 fs', Real Output: SELECT engine_configuration_ & _notes_0_100km_h FROM table_name_49 WHERE engine_type = "b5252 fs"
+
+Index 496: SQL Output: SELECT name FROM swimmer WHERE id IN (SELECT swimmer_id FROM record GROUP BY swimmer_id HAVING COUNT(*) >= 2), Real Output: SELECT t1.name FROM swimmer AS t1 JOIN record AS t2 ON t1.id = t2.swimmer_id GROUP BY t2.swimmer_id HAVING COUNT(*) >= 2
+
+Index 497: SQL Output: SELECT number FROM table_25401874_1 WHERE assists = 10, Real Output: SELECT COUNT(number) FROM table_25401874_1 WHERE assists = 10
+
+Index 498: SQL Output: SELECT la_crescenta__montrose FROM table_name_25 WHERE pasadena = '10%', Real Output: SELECT la_crescenta__montrose FROM table_name_25 WHERE pasadena = "10%"
+
+Index 499: SQL Output: SELECT home_team, score FROM table_name_96 WHERE venue = 'Junction Oval', Real Output: SELECT home_team AS score FROM table_name_96 WHERE venue = "junction oval"
+
+Index 500: SQL Output: SELECT _percentage_same_sex_marriages FROM table_19614212_1 WHERE year = '2011', Real Output: SELECT _percentage_same_sex_marriages FROM table_19614212_1 WHERE year = "2011"
+
+Index 501: SQL Output: SELECT home_team FROM table_name_77 WHERE score = '0–1' AND away_team = 'tottenham hotspur', Real Output: SELECT home_team FROM table_name_77 WHERE score = "0–1" AND away_team = "tottenham hotspur"
+
+Index 502: SQL Output: SELECT total FROM table_19312274_2 WHERE last_current_driver_s_ = 'narain karthikeyan', Real Output: SELECT COUNT(total) FROM table_19312274_2 WHERE last_current_driver_s_ = "Narain Karthikeyan ( 2010 )"
+
+Index 503: SQL Output: SELECT play_by_play FROM table_name_56 WHERE year < 1998 AND network = 'Fox', Real Output: SELECT play_by_play FROM table_name_56 WHERE year < 1998 AND network = "fox"
+
+Index 504: SQL Output: SELECT player FROM table_name_12 WHERE school_club_team = 'montana', Real Output: SELECT player FROM table_name_12 WHERE school_club_team = "montana"
+
+Index 505: SQL Output: SELECT SUM(CAST(july AS DECIMAL)) FROM table_name_12 WHERE CAST(july AS DECIMAL) < 8.05 AND CAST(october AS DECIMAL) > 4.46 AND CAST(december AS DECIMAL) > 6.79, Real Output: SELECT COUNT(july) FROM table_name_12 WHERE october < 8.05 AND december > 4.46 AND november > 6.79
+
+Index 506: SQL Output: SELECT wrestler FROM table_name_6 WHERE elimination = '7', Real Output: SELECT wrestler FROM table_name_6 WHERE elimination = "7"
+
+Index 507: SQL Output: SELECT date_of_vacancy FROM table_name_54 WHERE date_of_appointment = '1 january 2009', Real Output: SELECT date_of_vacancy FROM table_name_54 WHERE date_of_appointment = "1 january 2009"
+
+Index 508: SQL Output: SELECT league FROM table_name_59 WHERE playoffs = 'No' AND the_year > '2008', Real Output: SELECT league FROM table_name_59 WHERE playoffs = "did not qualify" AND the_year > 2008
+
+Index 509: SQL Output: SELECT result FROM table_name_61 WHERE date = '2008-12-23', Real Output: SELECT result FROM table_name_61 WHERE date = "2008-12-23"
+
+Index 510: SQL Output: SELECT finish FROM table_name_71 WHERE rank = '31', Real Output: SELECT finish FROM table_name_71 WHERE rank = "31"
+
+Index 511: SQL Output: SELECT 2010 FROM table_name_93 WHERE tournament = 'Miami Masters', Real Output: SELECT 2010 FROM table_name_93 WHERE 2012 = "2r" AND tournament = "miami masters"
+
+Index 512: SQL Output: SELECT * FROM table_name_43 WHERE date = 'june 8', Real Output: SELECT loss FROM table_name_43 WHERE date = "june 8"
+
+Index 513: SQL Output: SELECT home_team FROM table_name_94 WHERE away_team = 'Richmond', Real Output: SELECT away_team AS score FROM table_name_94 WHERE home_team = "richmond"
+
+Index 514: SQL Output: SELECT player FROM table_name_62 WHERE (UEfa_cup < 6 AND fa_cup > 33 AND premier_league > 5), Real Output: SELECT player FROM table_name_62 WHERE fa_cup < 6 AND premier_league = 33 AND UEfa_cup > 5
+
+Index 515: SQL Output: SELECT * FROM table_name_80 WHERE difference = 3 AND played < 10, Real Output: SELECT AVG(points) FROM table_name_80 WHERE difference = "3" AND played < 10
+
+Index 516: SQL Output: SELECT final_score FROM table_name_53 WHERE week = '14', Real Output: SELECT final_score FROM table_name_53 WHERE week = 14
+
+Index 517: SQL Output: SELECT position FROM table_2850912_12 WHERE player = 'allister brown', Real Output: SELECT position FROM table_2850912_12 WHERE player = "Allister Brown"
+
+Index 518: SQL Output: SELECT team FROM table_name_71 WHERE points = '4' AND chassis = 'march 82/83c', Real Output: SELECT team FROM table_name_71 WHERE points = 4 AND chassis = "march 82/83c"
+
+Index 519: SQL Output: SELECT home_venue FROM table_name_95 WHERE team = 'Bengaluru FC', Real Output: SELECT home_venue FROM table_name_95 WHERE team = "bengaluru fc"
+
+Index 520: SQL Output: SELECT * FROM table_17625749_3 WHERE points = '2' AND losing_bonus = '642', Real Output: SELECT COUNT(points) FROM table_17625749_3 WHERE losing_bonus = "2" AND points_for = "642"
+
+Index 521: SQL Output: SELECT latitude FROM table_18600760_19 WHERE water__sqmi_ = 0.288, Real Output: SELECT latitude FROM table_18600760_19 WHERE water__sqmi_ = "0.288"
+
+Index 522: SQL Output: SELECT match_report FROM table_name_29 WHERE opponents = 'stirling albion' AND venue = 'forthbank stadium', Real Output: SELECT match_report FROM table_name_29 WHERE opponents = "stirling albion" AND venue = "forthbank stadium"
+
+Index 523: SQL Output: SELECT points FROM table_10160447_1 WHERE driver = 'rusty wallace', Real Output: SELECT points FROM table_10160447_1 WHERE driver = "Rusty Wallace"
+
+Index 524: SQL Output: SELECT customer_name FROM customers WHERE customer_id IN (SELECT customer_id FROM mailshot_customers WHERE customer_id IN (SELECT customer_id FROM mailshot_customers WHERE outcome_code = 'Order'));, Real Output: SELECT T2.customer_name FROM mailshot_customers AS T1 JOIN customers AS T2 ON T1.customer_id = T2.customer_id WHERE outcome_code = 'Order' GROUP BY T1.customer_id HAVING COUNT(*) >= 2
+
+Index 525: SQL Output: SELECT patient FROM Prescribes WHERE Medication != 'Procrastin-X';, Real Output: SELECT COUNT(*) FROM patient WHERE NOT SSN IN (SELECT T1.patient FROM Prescribes AS T1 JOIN Medication AS T2 ON T1.Medication = T2.Code WHERE T2.name = 'Procrastin-X')
+
+Index 526: SQL Output: SELECT dept_store_id, store_name FROM department_stores WHERE dept_store_id IN (SELECT dept_store_id FROM departments WHERE department_name = 'marketing' OR department_name = 'managing');, Real Output: SELECT T2.dept_store_id, T2.store_name FROM departments AS T1 JOIN department_stores AS T2 ON T1.dept_store_id = T2.dept_store_id WHERE T1.department_name = "marketing" INTERSECT SELECT T2.dept_store_id, T2.store_name FROM departments AS T1 JOIN department_stores AS T2 ON T1.dept_store_id = T2.dept_store_id WHERE T1.department_name = "managing"
+
+Index 527: SQL Output: SELECT COUNT(DISTINCT team__number1) FROM table_16795394_3 WHERE team__number2 = 'San Lorenzo', Real Output: SELECT COUNT(team__number1) FROM table_16795394_3 WHERE team__number2 = "San Lorenzo"
+
+Index 528: SQL Output: SELECT first_pref_votes FROM table_name_91 WHERE leader = 'n/a' AND party = 'Independent', Real Output: SELECT first_pref_votes FROM table_name_91 WHERE leader = "n/a" AND party = "independent"
+
+Index 529: SQL Output: SELECT match FROM table_name_13 WHERE match = 'Start Gniezno', Real Output: SELECT match FROM table_name_13 WHERE team = "start gniezno"
+
+Index 530: SQL Output: SELECT attendance FROM table_name_47 WHERE opponent = 'Houston Oilers', Real Output: SELECT attendance FROM table_name_47 WHERE opponent = "houston oilers"
+
+Index 531: SQL Output: SELECT * FROM table_name_19 WHERE constructor = 'Ferrari' AND driver = 'pedro diniz' AND grid > 1 AND laps < 62, Real Output: SELECT constructor FROM table_name_19 WHERE laps < 62 AND time_retired = "gearbox" AND grid > 1 AND driver = "pedro diniz"
+
+Index 532: SQL Output: SELECT position FROM table_name_88 WHERE years_in_toronto = '1996-97', Real Output: SELECT position FROM table_name_88 WHERE years_in_toronto = "1996-97"
+
+Index 533: SQL Output: SELECT * FROM table_17323092_7 WHERE date = 'February 10', Real Output: SELECT high_points FROM table_17323092_7 WHERE date = "February 10"
+
+Index 534: SQL Output: SELECT foreign_players__max_2_ FROM table_19526911_1 WHERE town = 'Moscow', Real Output: SELECT foreign_players__max_2_ FROM table_19526911_1 WHERE town = "Moscow"
+
+Index 535: SQL Output: SELECT player FROM table_name_36 WHERE to_par < 5 AND score = 142, Real Output: SELECT player FROM table_name_36 WHERE to_par < 5 AND score = 70 - 72 = 142
+
+Index 536: SQL Output: SELECT popular_vote, year, liberal_leader, seats_won FROM table_name_32 WHERE popular_vote = 32 AND year = '1921' AND liberal_leader = 'king' AND seats_won > 116;, Real Output: SELECT AVG(popular_vote) FROM table_name_32 WHERE liberal_leader = "king" AND seats_won > 116 AND year = "1921"
+
+Index 537: SQL Output: SELECT MIN(november) FROM table_name_67 WHERE record = '15-7-1', Real Output: SELECT MIN(november) FROM table_name_67 WHERE record = "15-7-1"
+
+Index 538: SQL Output: SELECT frequency FROM table_18536769_1 WHERE owner = 'vista radio', Real Output: SELECT frequency FROM table_18536769_1 WHERE owner = "Vista Radio"
+
+Index 539: SQL Output: SELECT song_title FROM table_name_78 WHERE chart_peak = '1' AND track = '20', Real Output: SELECT song_title FROM table_name_78 WHERE chart_peak = "#1" AND track = 20
+
+Index 540: SQL Output: SELECT high_points FROM table_27312918_5 WHERE game = '5' ORDER BY high_points DESC LIMIT 1, Real Output: SELECT high_points FROM table_27312918_5 WHERE game = 5
+
+Index 541: SQL Output: SELECT text_symbol FROM table_name_42 WHERE border = 'red', Real Output: SELECT text_symbol FROM table_name_42 WHERE border = "red"
+
+Index 542: SQL Output: SELECT score FROM table_name_87 WHERE attendance = '32,036', Real Output: SELECT score FROM table_name_87 WHERE attendance = "32,036"
+
+Index 543: SQL Output: SELECT nation, gold FROM table_name_31 WHERE bronze > 7 ORDER BY gold DESC LIMIT 1, Real Output: SELECT MAX(gold) FROM table_name_31 WHERE nation = "canada" AND bronze > 7
+
+Index 544: SQL Output: SELECT score FROM table_17104539_12 WHERE date = '2017-09-09', Real Output: SELECT score FROM table_17104539_12 WHERE date = "September 9"
+
+Index 545: SQL Output: SELECT leading_scorer FROM table_name_40 WHERE date = '2008-03-22' AND visitor = 'Magic', Real Output: SELECT leading_scorer FROM table_name_40 WHERE visitor = "magic" AND date = "march 22, 2008"
+
+Index 546: SQL Output: SELECT venue FROM table_name_48 WHERE competition = 'Friendly' AND goal >= 2, Real Output: SELECT venue FROM table_name_48 WHERE competition = "friendly" AND goal > 2
+
+Index 547: SQL Output: SELECT MAX(low_temperature), AVG(precipitation) FROM weekly_weather WHERE station_id = 'Amersham', Real Output: SELECT MAX(t1.low_temperature), AVG(t1.precipitation) FROM weekly_weather AS t1 JOIN station AS t2 ON t1.station_id = t2.id WHERE t2.network_name = "Amersham"
+
+Index 548: SQL Output: SELECT service_id, service_details, MAX(service_id) FROM Services, Residents_Services WHERE Residents_Services.service_id = Services.service_id GROUP BY service_id, service_details;, Real Output: SELECT T1.service_id, T1.service_details, COUNT(*) FROM Services AS T1 JOIN Residents_Services AS T2 ON T1.service_id = T2.service_id GROUP BY T1.service_id ORDER BY COUNT(*) DESC LIMIT 1
+
+Index 549: SQL Output: SELECT height__m_ FROM table_name_66 WHERE city = 'Frankfurt' AND height__ft_ = '850', Real Output: SELECT height__m_ FROM table_name_66 WHERE city = "frankfurt" AND height__ft_ = 850
+
+Index 550: SQL Output: SELECT win_draw_lose FROM table_name_71 WHERE team = 'Derby County', Real Output: SELECT win_draw_lose FROM table_name_71 WHERE venue = "home" AND team = "derby county"
+
+Index 552: SQL Output: SELECT week FROM table_name_53 WHERE result = 'l 16–12' ORDER BY week DESC LIMIT 1, Real Output: SELECT MAX(week) FROM table_name_53 WHERE result = "l 16–12"
+
+Index 553: SQL Output: SELECT successful_defenses FROM table_name_89 WHERE successful_defenses = '126' AND days_held = '3', Real Output: SELECT successful_defenses FROM table_name_89 WHERE days_held = 126 AND reigns = "3"
+
+Index 554: SQL Output: SELECT driver FROM table_name_59 WHERE grid = '9', Real Output: SELECT driver FROM table_name_59 WHERE grid = 9
+
+Index 555: SQL Output: SELECT AVG(total) FROM table_name_8 WHERE bronze < 1 AND gold = 0 AND nation = 'Switzerland' AND bronze = 2, Real Output: SELECT AVG(total) FROM table_name_8 WHERE silver < 1 AND gold = 0 AND nation = "switzerland" AND bronze < 2
+
+Index 556: SQL Output: SELECT * FROM table_1676073_12 WHERE drawn = '11' AND points_for = '748', Real Output: SELECT drawn FROM table_1676073_12 WHERE lost = "11" AND points_for = "748"
+
+Index 557: SQL Output: SELECT height__m_ FROM table_23670057_1 WHERE no = '7', Real Output: SELECT height__m_ FROM table_23670057_1 WHERE no = 7
+
+Index 558: SQL Output: SELECT score FROM table_name_94 WHERE competition = 'Super League XII' AND date = '15/04/07', Real Output: SELECT score FROM table_name_94 WHERE competition = "super league xii" AND date = "15/04/07"
+
+Index 559: SQL Output: SELECT * FROM table_name_51 WHERE time_retired = '+23.080', Real Output: SELECT laps FROM table_name_51 WHERE time_retired = "+23.080"
+
+Index 560: SQL Output: SELECT SUM(points) FROM table_name_67 WHERE lost = '0' AND games > '8', Real Output: SELECT SUM(points) FROM table_name_67 WHERE lost = 0 AND games > 8
+
+Index 561: SQL Output: SELECT SUM(kono) FROM table_name_38 WHERE bonthe > 21238, Real Output: SELECT SUM(kono) FROM table_name_38 WHERE bonthe > 21 OFFSET 238
+
+Index 562: SQL Output: INSERT INTO table_name_84 VALUES ('What example for did- is shown for a Consonant final stem of -ø?', 'ø'), Real Output: SELECT example AS :_did_ FROM table_name_84 WHERE consonant_final_stem = "-ø"
+
+Index 563: SQL Output: SELECT studio FROM table_name_74 WHERE role = 'john scott', Real Output: SELECT studio FROM table_name_74 WHERE role = "john scott"
+
+Index 564: SQL Output: SELECT YEAR FROM perpetrator ORDER BY YEAR DESC LIMIT 1, Real Output: SELECT MAX(YEAR) FROM perpetrator
+
+Index 565: SQL Output: SELECT COUNT(DISTINCT written_by) FROM table_23255941_1 WHERE directed_by = 'Charles Haid', Real Output: SELECT COUNT(written_by) FROM table_23255941_1 WHERE directed_by = "Charles Haid"
+
+Index 566: SQL Output: SELECT running FROM table_12407546_2 WHERE athlete = 'Marlene Sanchez', Real Output: SELECT running FROM table_12407546_2 WHERE athlete = "Marlene Sanchez"
+
+Index 567: SQL Output: SELECT chassis_code FROM table_name_63 WHERE model = '200d' AND power = 'ps' AND power_kw = 4200, Real Output: SELECT chassis_code FROM table_name_63 WHERE power = "ps (kw; hp) @ 4200" AND model = "200d"
+
+Index 568: SQL Output: SELECT genre FROM table_name_49 WHERE developer = 'Microvision', Real Output: SELECT genre FROM table_name_49 WHERE developer = "microvision"
+
+Index 569: SQL Output: SELECT rating FROM table_25391981_20 WHERE episode = 'Week 6, Part 1', Real Output: SELECT rating / SHARE(18 AS –49) FROM table_25391981_20 WHERE episode = "Week 6, Part 1"
+
+Index 571: SQL Output: SELECT no FROM table_26202847_6 WHERE outcome = 'Winner' AND surface = 'Hard', Real Output: SELECT no FROM table_26202847_6 WHERE outcome = "Winner" AND surface = "Hard (i)"
+
+Index 572: SQL Output: SELECT frequency FROM table_134987_3 WHERE format = 'fm', Real Output: SELECT frequency FROM table_134987_3 WHERE format = "Christian KAWZ-FM translator"
+
+Index 573: SQL Output: SELECT school FROM table_name_43 WHERE size < 674 AND county = 19 AND mascot = 'rangers', Real Output: SELECT school FROM table_name_43 WHERE size < 674 AND county = "19 dubois" AND mascot = "rangers"
+
+Index 574: SQL Output: SELECT partner FROM table_name_94 WHERE surface = 'Hard' AND score = '6–3, 7–6(0)', Real Output: SELECT partner FROM table_name_94 WHERE surface = "hard" AND score = "6–3, 7–6(0)"
+
+Index 575: SQL Output: SELECT SUM(murder_and_non_negligent_manslaughter) FROM table_name_86 WHERE larceny_theft = '3,693.9' AND burglary > '1,027.0', Real Output: SELECT SUM(murder_and_non_negligent_manslaughter) FROM table_name_86 WHERE larceny_theft = "3,693.9" AND burglary > 1 OFFSET 027.0
+
+Index 576: SQL Output: SELECT SUM(time) FROM table_name_4 WHERE nationality = 'British', Real Output: SELECT COUNT(time) FROM table_name_4 WHERE nationality = "great britain"
+
+Index 577: SQL Output: SELECT title, film_id, description FROM film WHERE film_id IN (SELECT film_id FROM film_actor GROUP BY film_id ORDER BY COUNT(*) DESC LIMIT 1), Real Output: SELECT T2.title, T2.film_id, T2.description FROM film_actor AS T1 JOIN film AS T2 ON T1.film_id = T2.film_id GROUP BY T2.film_id ORDER BY COUNT(*) DESC LIMIT 1
+
+Index 578: SQL Output: SELECT rank FROM table_name_60 WHERE name = 'Jeremiah Massey' AND games < 20, Real Output: SELECT MIN(rank) FROM table_name_60 WHERE name = "jeremiah massey" AND games < 20
+
+Index 579: SQL Output: SELECT cuts_made FROM table_name_47 WHERE cuts_made > 8 AND top_10 < 10 AND wins > 0, Real Output: SELECT MAX(cuts_made) FROM table_name_47 WHERE top_10 < 8 AND wins > 0
+
+Index 580: SQL Output: SELECT * FROM table_name_53 WHERE losses > 5 AND position = 12, Real Output: SELECT team FROM table_name_53 WHERE losses > 5 AND position = 12
+
+Index 583: SQL Output: SELECT category FROM table_1430913_1 WHERE name_of_place = 'hemkunt sahib', Real Output: SELECT category FROM table_1430913_1 WHERE name_of_place = "Hemkunt Sahib"
+
+Index 584: SQL Output: SELECT COUNT(candidates) FROM table_1342198_38 WHERE district = 'pennsylvania 21', Real Output: SELECT COUNT(candidates) FROM table_1342198_38 WHERE district = "Pennsylvania 21"
+
+Index 585: SQL Output: SELECT name FROM physician WHERE name IN (SELECT physician FROM affiliated_with WHERE department = 'Surgery') AND name IN (SELECT physician FROM affiliated_with WHERE department = 'Psychiatry');, Real Output: SELECT T1.name FROM physician AS T1 JOIN affiliated_with AS T2 ON T1.EmployeeID = T2.physician JOIN department AS T3 ON T2.department = T3.DepartmentID WHERE T3.name = 'Surgery' INTERSECT SELECT T1.name FROM physician AS T1 JOIN affiliated_with AS T2 ON T1.EmployeeID = T2.physician JOIN department AS T3 ON T2.department = T3.DepartmentID WHERE T3.name = 'Psychiatry'
+
+Index 586: SQL Output: SELECT polyunsaturated_fat FROM table_name_39 WHERE total_fat = '100g' AND saturated_fat = '7g', Real Output: SELECT polyunsaturated_fat FROM table_name_39 WHERE total_fat = "100g" AND saturated_fat = "7g"
+
+Index 587: SQL Output: SELECT venue FROM table_name_95 WHERE opposing_teams = 'Scotland', Real Output: SELECT venue FROM table_name_95 WHERE opposing_teams = "scotland"
+
+Index 588: SQL Output: SELECT high_points FROM table_27755603_10 WHERE team = 'Washington', Real Output: SELECT high_points FROM table_27755603_10 WHERE team = "Washington"
+
+Index 589: SQL Output: SELECT years_as_tallest FROM table_name_14 WHERE floors = '24', Real Output: SELECT years_as_tallest FROM table_name_14 WHERE floors = 24
+
+Index 590: SQL Output: SELECT surface FROM table_name_23 WHERE score_in_final IN ('3-6', '6-3', '6-2'), Real Output: SELECT surface FROM table_name_23 WHERE score_in_final = "3-6, 6-3, 6-2"
+
+Index 591: SQL Output: SELECT format, region, date FROM table_name_67 WHERE date = '2008-07-22', Real Output: SELECT format FROM table_name_67 WHERE region = "worldwide" AND date = "july 22, 2008"
+
+Index 592: SQL Output: SELECT * FROM table_11449311_2 WHERE record = '2-13', Real Output: SELECT result FROM table_11449311_2 WHERE record = "2-13"
+
+Index 593: SQL Output: SELECT time_retired FROM table_name_2 WHERE grid = '8', Real Output: SELECT time_retired FROM table_name_2 WHERE grid = "8"
+
+Index 594: SQL Output: SELECT COUNT(*) FROM table_25042332_33 WHERE life_expectancy_at_birth__2001_2002_ = '75.9', Real Output: SELECT COUNT(hdi) FROM table_25042332_33 WHERE life_expectancy_at_birth__2001_2002_ = "75.9"
+
+Index 595: SQL Output: SELECT opponent FROM table_name_19 WHERE tv_time = 'Bye', Real Output: SELECT opponent FROM table_name_19 WHERE tv_time = "bye"
+
+Index 596: SQL Output: SELECT COUNT(cap_s_) FROM table_28286776_52 WHERE club_s_ = 'Doncaster Rovers', Real Output: SELECT COUNT(cap_s_) FROM table_28286776_52 WHERE club_s_ = "Doncaster Rovers"
+
+Index 597: SQL Output: SELECT month, _year FROM table_name_24 WHERE month < '5' AND _year < '1918' AND sunk_by_u_boat < '6893' AND sunk_by_aircraft < '133746' AND german_submarines_lost > '111263', Real Output: SELECT month, _year FROM table_name_24 WHERE german_submarines_lost < 5 AND sunk_by_warship_or_raider < 6893 AND sunk_by_aircraft < 133746 AND sunk_by_u_boat > 111263
+
+Index 598: SQL Output: SELECT venue FROM table_name_80 WHERE away_team = 'fitzroy', Real Output: SELECT venue FROM table_name_80 WHERE away_team = "fitzroy"
+
+Index 599: SQL Output: SELECT leading_scorer_1 FROM table_name_2 WHERE leaguecontested = 'northern premier league premier division' AND fa_cup = '2q', Real Output: SELECT leading_scorer_1 FROM table_name_2 WHERE leaguecontested = "northern premier league premier division" AND fa_cup = "2q"
+
+Index 600: SQL Output: SELECT date_of_appointment FROM table_name_40 WHERE date_of_vacancy = '2008-12-04', Real Output: SELECT date_of_appointment FROM table_name_40 WHERE date_of_vacancy = "4 december 2008"
+
+Index 601: SQL Output: SELECT fatalities FROM table_name_67 WHERE airline = 'spantax' AND registration = 'ec-arz', Real Output: SELECT AVG(fatalities) FROM table_name_67 WHERE airline = "spantax" AND registration = "ec-arz"
+
+Index 602: SQL Output: SELECT COUNT(*) FROM table_17355820_1 WHERE season__number = '19', Real Output: SELECT COUNT(title) FROM table_17355820_1 WHERE season__number = 19
+
+Index 603: SQL Output: SELECT _number FROM table_22904707_1 WHERE no = '52', Real Output: SELECT MIN(_number) FROM table_22904707_1 WHERE no = 52
+
+Index 604: SQL Output: SELECT MAX(loser_rank) FROM matches, Real Output: SELECT MIN(loser_rank) FROM matches
+
+Index 605: SQL Output: SELECT type FROM table_name_21 WHERE name = 'McCormack', Real Output: SELECT type FROM table_name_21 WHERE name = "mccormack"
+
+Index 606: SQL Output: SELECT manner_of_departure FROM table_17275810_7 WHERE manner_of_departure = 'elvio selighini', Real Output: SELECT manner_of_departure FROM table_17275810_7 WHERE replaced_by = "Elvio Selighini"
+
+Index 607: SQL Output: SELECT pick__number FROM table_26996293_2 WHERE college = 'st. francis xavier', Real Output: SELECT pick__number FROM table_26996293_2 WHERE college = "St. Francis Xavier"
+
+Index 608: SQL Output: SELECT title FROM table_26448179_4 WHERE production_code = '305', Real Output: SELECT title FROM table_26448179_4 WHERE production_code = 305
+
+Index 609: SQL Output: SELECT date FROM table_name_51 WHERE game = '2', Real Output: SELECT date FROM table_name_51 WHERE game = 2
+
+Index 610: SQL Output: SELECT date FROM table_name_48 WHERE home = 'Calgary', Real Output: SELECT date FROM table_name_48 WHERE home = "calgary"
+
+Index 611: SQL Output: SELECT SUM(total) FROM table_name_55 WHERE year_s__won = '1985', Real Output: SELECT SUM(total) FROM table_name_55 WHERE year_s__won = "1985"
+
+Index 612: SQL Output: SELECT episode_title FROM table_2655016_4 WHERE nick_prod__number = '342', Real Output: SELECT episode_title FROM table_2655016_4 WHERE nick_prod__number = 342
+
+Index 613: SQL Output: SELECT label FROM table_name_31 WHERE country = 'Spain', Real Output: SELECT label FROM table_name_31 WHERE country = "spain"
+
+Index 614: SQL Output: SELECT namesake FROM table_16768245_2 WHERE longitude = '147.1w', Real Output: SELECT namesake FROM table_16768245_2 WHERE longitude = "147.1W"
+
+Index 615: SQL Output: SELECT * FROM table_name_89 WHERE catalog = '89' AND date = '2002-02-20', Real Output: SELECT catalog FROM table_name_89 WHERE date = "february 20, 2002"
+
+Index 616: SQL Output: SELECT MAX(position) FROM table_18018214_1 WHERE draws = '7', Real Output: SELECT MAX(position) FROM table_18018214_1 WHERE draws = 7
+
+Index 617: SQL Output: SELECT MIN(uncommitted) FROM table_name_16 WHERE total > 16 AND hillary_clinton > 2, Real Output: SELECT MIN(uncommitted) FROM table_name_16 WHERE total > 16 AND hillary_clinton = 2
+
+Index 618: SQL Output: SELECT first_airdate FROM table_name_68 WHERE episodes < 24 AND nielsen_ranking = '38', Real Output: SELECT first_airdate FROM table_name_68 WHERE episodes < 24 AND nielsen_ranking = "#38"
+
+Index 620: SQL Output: SELECT last_title FROM table_name_36 WHERE club = 'quilmes', Real Output: SELECT last_title FROM table_name_36 WHERE club = "quilmes"
+
+Index 621: SQL Output: SELECT COUNT(*) FROM table_26263954_1 WHERE english = 'tea', Real Output: SELECT nihon_shiki FROM table_26263954_1 WHERE english = "tea"
+
+Index 622: SQL Output: SELECT singapore_gross FROM table_name_66 WHERE director = '1991', Real Output: SELECT singapore_gross FROM table_name_66 WHERE director = "1991"
+
+Index 623: SQL Output: SELECT * FROM table_name_74 WHERE attendance = 74 AND arena = 'arrowhead pond of anaheim' AND loss = 'giguere (3–3)';, Real Output: SELECT MAX(attendance) FROM table_name_74 WHERE arena = "arrowhead pond of anaheim" AND loss = "giguere (3–3)"
+
+Index 624: SQL Output: SELECT director FROM table_25800134_3 WHERE airdate = '1959-05-02', Real Output: SELECT director FROM table_25800134_3 WHERE airdate = "May 2, 1959"
+
+Index 625: SQL Output: SELECT total FROM table_name_45 WHERE league_cup < 1 AND fa_cup < 1, Real Output: SELECT SUM(total) FROM table_name_45 WHERE league_cup < 1 AND fa_cup < 1
+
+Index 626: SQL Output: SELECT * FROM table_name_11 WHERE location = 'december 10, 1963', Real Output: SELECT location FROM table_name_11 WHERE date = "december 10, 1963"
+
+Index 627: SQL Output: SELECT penalty FROM table_name_19 WHERE player = 'Jonathan Toews', Real Output: SELECT penalty FROM table_name_19 WHERE player = "jonathan toews"
+
+Index 628: SQL Output: SELECT third FROM table_name_14 WHERE nation = 'scotland', Real Output: SELECT third FROM table_name_14 WHERE nation = "scotland"
+
+Index 629: SQL Output: SELECT rank FROM table_name_41 WHERE bronze = 21 AND silver > 10, Real Output: SELECT COUNT(rank) FROM table_name_41 WHERE bronze = 21 AND silver > 10
+
+Index 630: SQL Output: SELECT MAX(crowd) FROM table_name_10 WHERE away_team = 'north melbourne', Real Output: SELECT MAX(crowd) FROM table_name_10 WHERE away_team = "north melbourne"
+
+Index 631: SQL Output: SELECT match FROM table_name_66 WHERE competition = 'Group Stage' AND date = '2000-09-17', Real Output: SELECT match FROM table_name_66 WHERE competition = "group stage" AND date = "2000-09-17"
+
+Index 632: SQL Output: SELECT rank_number FROM table_name_27 WHERE opponent_number = 'Baylor', Real Output: SELECT rank_number FROM table_name_27 WHERE opponent_number = "at baylor"
+
+Index 634: SQL Output: SELECT station FROM table_name_18 WHERE frequency = '873khz', Real Output: SELECT station FROM table_name_18 WHERE frequency = "873khz"
+
+Index 635: SQL Output: SELECT scored FROM table_name_41 WHERE played < 18, Real Output: SELECT SUM(scored) FROM table_name_41 WHERE played < 18
+
+Index 636: SQL Output: SELECT team FROM table_13464416_5 WHERE game = '20', Real Output: SELECT team FROM table_13464416_5 WHERE game = 20
+
+Index 637: SQL Output: SELECT COUNT(*) FROM table_17256857_1 WHERE driver = 'Vitor Meira', Real Output: SELECT COUNT(grid) FROM table_17256857_1 WHERE driver = "Vitor Meira"
+
+Index 638: SQL Output: SELECT b_score FROM table_name_85 WHERE total = '16.325' AND a_score > '7.3', Real Output: SELECT AVG(b_score) FROM table_name_85 WHERE total = 16.325 AND a_score > 7.3
+
+Index 639: SQL Output: SELECT total_attendance FROM table_name_80 WHERE total_attendance < 4850, Real Output: SELECT total_attendance FROM table_name_80 WHERE average_attendance < 4850 AND sport = "rink hockey"
+
+Index 640: SQL Output: SELECT year FROM table_name_12 WHERE extra = '8' AND result = '3rd', Real Output: SELECT year FROM table_name_12 WHERE extra = 8 AND result = "3rd"
+
+Index 642: SQL Output: SELECT SUM(points) FROM table_14070062_3 WHERE try_bonus = '10', Real Output: SELECT points FROM table_14070062_3 WHERE try_bonus = "10"
+
+Index 643: SQL Output: SELECT enrollment FROM table_name_71 WHERE location = 'Hamilton' ORDER BY enrollment DESC LIMIT 1, Real Output: SELECT MAX(enrollment) FROM table_name_71 WHERE location = "hamilton"
+
+Index 644: SQL Output: SELECT away_team FROM table_name_17 WHERE away_team = 'Melbourne', Real Output: SELECT away_team AS score FROM table_name_17 WHERE away_team = "melbourne"
+
+Index 645: SQL Output: SELECT directed_by FROM table_22181917_2 WHERE us_viewers__millions_ = '6.62', Real Output: SELECT directed_by FROM table_22181917_2 WHERE us_viewers__millions_ = "6.62"
+
+Index 646: SQL Output: SELECT win__percentage, record, apps FROM table_name_39 WHERE win__percentage = 0.5 AND record = '0-2' AND apps > 2, Real Output: SELECT MIN(win__percentage) FROM table_name_39 WHERE record = "0-2" AND apps > 2
+
+Index 647: SQL Output: SELECT name, checking.balance, savings.balance FROM accounts, checking, savings WHERE accounts.custid = checking.custid AND accounts.custid = savings.custid AND savings.balance < checking.balance;, Real Output: SELECT T1.name, T3.balance + T2.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid = T2.custid JOIN savings AS T3 ON T1.custid = T3.custid WHERE T3.balance < T2.balance
+
+Index 648: SQL Output: SELECT malayalam_മലയാളം FROM table_1408397_3 WHERE _number = '10', Real Output: SELECT malayalam_മലയാളം FROM table_1408397_3 WHERE _number = 10
+
+Index 649: SQL Output: SELECT album FROM table_name_20 WHERE album = 'Royal Garden Sound' AND remixed_by = 'Royal Garden Sound' AND version = 'Club Mix', Real Output: SELECT album FROM table_name_20 WHERE remixed_by = "royal garden sound" AND version = "royal g's club mix"
+
+Index 650: SQL Output: SELECT SUM(bronze) FROM table_name_27 WHERE nation = 'Puerto Rico' AND total < 1, Real Output: SELECT SUM(bronze) FROM table_name_27 WHERE nation = "puerto rico" AND total < 1
+
+Index 651: SQL Output: SELECT location FROM table_name_28 WHERE date = '2009-09-05', Real Output: SELECT location FROM table_name_28 WHERE date = "2009-09-05"
+
+Index 652: SQL Output: SELECT club FROM table_name_76 WHERE founded < '1882' AND league = 'premier league';, Real Output: SELECT club FROM table_name_76 WHERE founded < 1882 AND league = "fa premier league"
+
+Index 653: SQL Output: SELECT SUM(revenue__) FROM table_name_35 WHERE debt_as__percentageof_value > 27 AND operating_income_$m_ = 77, Real Output: SELECT SUM(revenue__) AS $m_ FROM table_name_35 WHERE debt_as__percentageof_value > 27 AND operating_income_$m_ = 77
+
+Index 654: SQL Output: SELECT runner_up FROM table_name_14 WHERE score = '4,3' AND winner = 'michael bonallack', Real Output: SELECT runner_up FROM table_name_14 WHERE score = "4 & 3" AND winner = "michael bonallack"
+
+Index 655: SQL Output: SELECT * FROM table_name_13 WHERE copaxone = 'no' AND mitoxantrone = 'no' AND betaseron__beta_1b_ = 'no', Real Output: SELECT copaxone FROM table_name_13 WHERE mitoxantrone = "no" AND betaseron__beta_1b_ = "no"
+
+Index 657: SQL Output: SELECT AVG(_jerk) FROM table_name_94 WHERE bodyweight < 87.5 AND snatch < 95, Real Output: SELECT AVG(clean_) & _jerk FROM table_name_94 WHERE bodyweight = 87.5 AND snatch < 95
+
+Index 658: SQL Output: SELECT grid FROM table_name_80 WHERE driver = 'piercarlo ghinzani' AND laps > 3 ORDER BY grid DESC LIMIT 1;, Real Output: SELECT MAX(grid) FROM table_name_80 WHERE driver = "piercarlo ghinzani" AND laps > 3
+
+Index 659: SQL Output: SELECT translated_title FROM table_name_31 WHERE norwegian_title = 'Steinulven', Real Output: SELECT translated_title FROM table_name_31 WHERE norwegian_title = "steinulven"
+
+Index 660: SQL Output: SELECT webcast FROM table_name_54 WHERE website = 'KTRH.com', Real Output: SELECT webcast FROM table_name_54 WHERE website = "ktrh.com"
+
+Index 661: SQL Output: SELECT opponents FROM table_name_17 WHERE date = '2007-08-04', Real Output: SELECT opponents FROM table_name_17 WHERE date = "4 august 2007"
+
+Index 662: SQL Output: SELECT COUNT(*) FROM songs WHERE songid IN (SELECT songid FROM tracklists WHERE albumid IN (SELECT aid FROM albums));, Real Output: SELECT COUNT(DISTINCT T3.title) FROM albums AS T1 JOIN tracklists AS T2 ON T1.aid = T2.albumid JOIN songs AS T3 ON T2.songid = T3.songid WHERE t1.type = "Studio"
+
+Index 663: SQL Output: SELECT launch_date FROM table_name_92 WHERE odds_of_winning = '1 in 4.44', Real Output: SELECT launch_date FROM table_name_92 WHERE odds_of_winning = "1 in 4.44"
+
+Index 664: SQL Output: SELECT * FROM table_1506619_1 WHERE headquarters = 'Renfrew County Catholic District School Board', Real Output: SELECT headquarters FROM table_1506619_1 WHERE school_board = "Renfrew County Catholic District school_board"
+
+Index 665: SQL Output: SELECT other_black_population FROM table_19149550_7 WHERE black_african_population = '37811', Real Output: SELECT MIN(other_black_population) FROM table_19149550_7 WHERE black_african_population = 37811
+
+Index 666: SQL Output: SELECT winner FROM table_1594772_2 WHERE match_date = '1987-11-05', Real Output: SELECT winner FROM table_1594772_2 WHERE match_date = "Nov 5, 1987"
+
+Index 667: SQL Output: SELECT AVG(goal_difference) FROM table_name_4 WHERE goals_against < 17, Real Output: SELECT AVG(goal_difference) FROM table_name_4 WHERE goals_against = 51 AND losses < 17
+
+Index 668: SQL Output: SELECT season FROM table_1474099_6 WHERE goals = '17' AND runners_up = 'Slavija', Real Output: SELECT season FROM table_1474099_6 WHERE goals = 17 AND runners_up = "Slavija"
+
+Index 669: SQL Output: SELECT winning_driver FROM table_name_33 WHERE winning_constructor = 'mercedes' AND name = 'elgin trophy', Real Output: SELECT winning_driver FROM table_name_33 WHERE winning_constructor = "mercedes" AND name = "elgin trophy"
+
+Index 670: SQL Output: SELECT series, SUM(point_finishes__non_podium_) AS point_finishes__non_podium_
+FROM table_2822193_1
+GROUP BY series
+ORDER BY point_finishes__non_podium_ DESC
+LIMIT 1, Real Output: SELECT MAX(point_finishes__non_podium_) FROM table_2822193_1 WHERE series = "V8Supercar"
+
+Index 671: SQL Output: SELECT round_of_32 FROM table_27294107_11 WHERE round_of_16 = 'drenovak', Real Output: SELECT round_of_32 FROM table_27294107_11 WHERE round_of_16 = "Drenovak ( SRB ) W 20–11"
+
+Index 673: SQL Output: SELECT pole_position FROM table_25773116_2 WHERE location = 'Braselton, Georgia' AND fastest_lap = 'Victor Carbone', Real Output: SELECT pole_position FROM table_25773116_2 WHERE fastest_lap = "Victor Carbone" AND location = "Braselton, Georgia"
+
+Index 674: SQL Output: SELECT size FROM table_name_46 WHERE metal = 'nickel' AND denomination = 'rupee', Real Output: SELECT size FROM table_name_46 WHERE metal = "nickel" AND denomination = "one rupee"
+
+Index 675: SQL Output: SELECT roll FROM table_name_42 WHERE authority = 'state' AND decile = '9', Real Output: SELECT roll FROM table_name_42 WHERE authority = "state" AND decile = 9
+
+Index 676: SQL Output: SELECT grid FROM table_name_17 WHERE car_no = '3', Real Output: SELECT grid FROM table_name_17 WHERE car_no = "3"
+
+Index 677: SQL Output: SELECT DISTINCT Position FROM match_season WHERE Country IN (SELECT Country FROM country WHERE Capital = 'Dublin');, Real Output: SELECT DISTINCT T2.Position FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country WHERE T1.Capital = "Dublin"
+
+Index 678: SQL Output: SELECT in_malayalam FROM table_name_61 WHERE saka_era = 'kartika–agrahayana', Real Output: SELECT in_malayalam FROM table_name_61 WHERE saka_era = "kartika–agrahayana"
+
+Index 679: SQL Output: SELECT AVG(year) FROM table_name_89 WHERE title = 'baka to shōkanjū', Real Output: SELECT AVG(year) FROM table_name_89 WHERE title = "baka to test to shōkanjū"
+
+Index 680: SQL Output: SELECT COUNT(*) FROM table_name_21 WHERE position = '2012' AND rating = 0.92, Real Output: SELECT COUNT(position) FROM table_name_21 WHERE 2012 = "0.92"
+
+Index 681: SQL Output: SELECT year FROM table_name_63 WHERE game = 'Call of Duty 4: Modern Warfare' ORDER BY year DESC LIMIT 1, Real Output: SELECT MAX(year) FROM table_name_63 WHERE game = "call of duty 4: modern warfare"
+
+Index 682: SQL Output: SELECT city_district__stadtteil_ FROM table_10992_3 WHERE foreign_nationals = '5.162', Real Output: SELECT COUNT(city_district__stadtteil_) FROM table_10992_3 WHERE foreign_nationals = "5.162"
+
+Index 683: SQL Output: INSERT INTO table_1745843_5 VALUES ('band', 'banded'), Real Output: SELECT part_3 FROM table_1745843_5 WHERE part_2 = "band"
+
+Index 684: SQL Output: SELECT visitor FROM table_name_94 WHERE date = '1976-12-15', Real Output: SELECT visitor FROM table_name_94 WHERE date = "december 15, 1976"
+
+Index 685: SQL Output: SELECT departure_pune FROM table_29301050_1 WHERE arrival_lonavla = '22:22', Real Output: SELECT departure_pune FROM table_29301050_1 WHERE arrival_lonavla = "22:22"
+
+Index 687: SQL Output: SELECT COUNT(*) FROM table_27303975_3 WHERE catalog_number = 'cal05 / 0091037137357', Real Output: SELECT COUNT(title) FROM table_27303975_3 WHERE catalog_number = "CAL05 / 0091037137357"
+
+Index 688: SQL Output: SELECT SUM(pick) FROM table_name_82 WHERE name = 'DAVID TERRELL' AND round < '7', Real Output: SELECT SUM(pick) FROM table_name_82 WHERE name = "david terrell" AND round < 7
+
+Index 689: SQL Output: SELECT SUM(nationality) FROM table_name_1, Real Output: SELECT name FROM table_name_1 WHERE nationality = "total:"
+
+Index 690: SQL Output: SELECT best_male_artist FROM table_22546460_4 WHERE best_male_mc = 'Bankie Travolta', Real Output: SELECT best_male_artist FROM table_22546460_4 WHERE best_male_mc = "Bankie Travolta"
+
+Index 691: SQL Output: SELECT party FROM table_22757733_4 WHERE runner_up_a = 'a', Real Output: SELECT party AS a FROM table_22757733_4 WHERE runner_up_a = "K. Annamalai"
+
+Index 692: SQL Output: SELECT * FROM table_name_38 WHERE date = '18-11-1990', Real Output: SELECT attendance FROM table_name_38 WHERE date = "november 18, 1990"
+
+Index 693: SQL Output: SELECT * FROM table_169693_1 WHERE age_30_39 = '380' AND age_10_19 = '380', Real Output: SELECT age_30_39 FROM table_169693_1 WHERE age_10_19 = 380
+
+Index 694: SQL Output: SELECT * FROM table_17384764_1 WHERE experience = '20', Real Output: SELECT COUNT(designation) FROM table_17384764_1 WHERE experience = "20 years"
+
+Index 695: SQL Output: SELECT grid FROM table_name_75 WHERE driver = 'Alexander Wurz' AND laps < 25, Real Output: SELECT MAX(grid) FROM table_name_75 WHERE driver = "alexander wurz" AND laps < 25
+
+Index 696: SQL Output: SELECT type FROM table_name_54 WHERE satellite = 'GPS IIIA-2', Real Output: SELECT type FROM table_name_54 WHERE satellite = "gps iiia-2"
+
+Index 697: SQL Output: SELECT tromsø FROM table_19439864_2 WHERE total = '740', Real Output: SELECT MIN(tromsø) FROM table_19439864_2 WHERE total = 740
+
+Index 698: SQL Output: SELECT * FROM table_name_97 WHERE gold < 5 AND bronze = 20, Real Output: SELECT AVG(gold) FROM table_name_97 WHERE rank < 5 AND bronze = 20
+
+Index 699: SQL Output: SELECT studio FROM table_name_95 WHERE director = 'David Fincher', Real Output: SELECT studio FROM table_name_95 WHERE director = "david fincher"
+
+Index 700: SQL Output: SELECT name FROM table_name_29 WHERE round = 'e', Real Output: SELECT name FROM table_name_29 WHERE round = "e"
+
+Index 701: SQL Output: SELECT * FROM table_name_90 WHERE format = 'electropolis' AND date = '2002', Real Output: SELECT format FROM table_name_90 WHERE label = "electropolis" AND date = "2002"
+
+Index 702: SQL Output: SELECT poll_source, COUNT(poll_source) AS count
+FROM candidate
+GROUP BY poll_source
+ORDER BY count DESC
+LIMIT 1, Real Output: SELECT poll_source FROM candidate GROUP BY poll_source ORDER BY COUNT(*) DESC LIMIT 1
+
+Index 703: SQL Output: SELECT * FROM table_name_55 WHERE start = '2017-01-01' AND duration = '6 months 2 days', Real Output: SELECT start FROM table_name_55 WHERE duration = "6 months 2 days"
+
+Index 704: SQL Output: SELECT launched FROM table_24496403_1 WHERE ship = 'Carysfort', Real Output: SELECT launched FROM table_24496403_1 WHERE ship = "Carysfort"
+
+Index 705: SQL Output: SELECT away_team FROM table_name_11 WHERE venue = 'western oval', Real Output: SELECT away_team FROM table_name_11 WHERE venue = "western oval"
+
+Index 706: SQL Output: SELECT championship_game FROM table_name_29 WHERE final_four = 1 AND conference = 'American South', Real Output: SELECT championship_game FROM table_name_29 WHERE final_four = "1" AND conference = "american south"
+
+Index 707: SQL Output: SELECT player FROM table_name_42 WHERE pens = 0 AND start = 12, Real Output: SELECT player FROM table_name_42 WHERE pens = "0" AND start = "12"
+
+Index 709: SQL Output: SELECT away_team FROM table_name_20 WHERE venue = 'Arden Street Oval', Real Output: SELECT away_team FROM table_name_20 WHERE venue = "arden street oval"
+
+Index 710: SQL Output: SELECT record FROM table_name_18 WHERE loss = 'Plesac', Real Output: SELECT record FROM table_name_18 WHERE loss = "plesac (1-5)"
+
+Index 711: SQL Output: SELECT * FROM table_name_29 WHERE venue = 'Challenge Stadium', Real Output: SELECT report FROM table_name_29 WHERE venue = "challenge stadium"
+
+Index 712: SQL Output: SELECT tournament FROM table_name_65 WHERE tournament = 'Wimbledon', Real Output: SELECT 2012 FROM table_name_65 WHERE 2013 = "2r" AND tournament = "wimbledon"
+
+Index 713: SQL Output: SELECT points FROM table_name_38 WHERE drawn < 2 AND played > 8, Real Output: SELECT MIN(points) FROM table_name_38 WHERE drawn < 2 AND played > 8
+
+Index 714: SQL Output: SELECT player FROM table_2850912_6 WHERE pick__number = 6, Real Output: SELECT MAX(pick__number) FROM table_2850912_6 WHERE player = "Greg Strome"
+
+Index 715: SQL Output: SELECT wins FROM table_name_77 WHERE wins < 2 AND events < 19, Real Output: SELECT COUNT(wins) FROM table_name_77 WHERE top_5 < 2 AND events = 19
+
+Index 716: SQL Output: SELECT sex_ratio FROM table_231623_3 WHERE population = '4773138' ORDER BY sex_ratio ASC LIMIT 1, Real Output: SELECT MAX(sex_ratio) FROM table_231623_3 WHERE population = 4773138
+
+Index 717: SQL Output: SELECT Name, IndepYear, SurfaceArea FROM country ORDER BY Population ASC LIMIT 1, Real Output: SELECT Name, SurfaceArea, IndepYear FROM country ORDER BY Population LIMIT 1
+
+Index 718: SQL Output: SELECT years FROM table_name_93 WHERE sport = 'softball', Real Output: SELECT years FROM table_name_93 WHERE total = "1" AND sport = "softball"
+
+Index 719: SQL Output: SELECT date FROM table_name_59 WHERE catalogue__number = 'ptcd-1015-6', Real Output: SELECT date FROM table_name_59 WHERE catalogue__number = "ptcd-1015-6"
+
+Index 720: SQL Output: SELECT * FROM table_name_19 WHERE Id = '1988' AND 1994 = 'A' AND 1987 = '3r', Real Output: SELECT 1988 FROM table_name_19 WHERE 1994 = "a" AND 1987 = "3r"
+
+Index 721: SQL Output: SELECT original_airdate FROM table_24222929_4 WHERE episode_number_production_number = '7 1-07', Real Output: SELECT original_airdate FROM table_24222929_4 WHERE episode_number_production_number = "7 1-07"
+
+Index 722: SQL Output: SELECT drivers FROM table_name_88 WHERE chassis = 'cancelled', Real Output: SELECT drivers FROM table_name_88 WHERE chassis = "season cancelled"
+
+Index 723: SQL Output: SELECT player, number_of_matches, SOURCE FROM injury_accident WHERE injury != 'Knee problem', Real Output: SELECT player, number_of_matches, SOURCE FROM injury_accident WHERE injury <> 'Knee problem'
+
+Index 724: SQL Output: SELECT netflix FROM table_name_53 WHERE segment_c = 'C', Real Output: SELECT netflix FROM table_name_53 WHERE segment_c = "pills"
+
+Index 725: SQL Output: SELECT to_par FROM table_name_15 WHERE year_s__won = '1982', Real Output: SELECT to_par FROM table_name_15 WHERE year_s__won = "1982"
+
+Index 726: SQL Output: SELECT date FROM table_name_73 WHERE week = '8', Real Output: SELECT date FROM table_name_73 WHERE week = 8
+
+Index 727: SQL Output: SELECT year FROM table_name_30 WHERE event = 'Spanish Grand Prix' AND driver = 'Emerson Fittipaldi', Real Output: SELECT year FROM table_name_30 WHERE event = "spanish grand prix" AND driver = "emerson fittipaldi"
+
+Index 728: SQL Output: SELECT title FROM item WHERE i_id IN (SELECT i_id FROM review WHERE rating > (SELECT AVG(rating) FROM review));, Real Output: SELECT T1.title FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id WHERE T2.rating > (SELECT AVG(rating) FROM review)
+
+Index 729: SQL Output: SELECT MAX(round) FROM table_name_92 WHERE school = 'USC', Real Output: SELECT MAX(round) FROM table_name_92 WHERE school = "university of southern california"
+
+Index 730: SQL Output: SELECT score_time FROM table_name_10 WHERE date = 'June 10', Real Output: SELECT score_time FROM table_name_10 WHERE date = "june 10"
+
+Index 731: SQL Output: SELECT opponent FROM table_name_75 WHERE venue = 'toyota stadium', Real Output: SELECT opponent FROM table_name_75 WHERE venue = "toyota stadium"
+
+Index 732: SQL Output: SELECT * FROM table_name_4 WHERE laps < 200 AND start = 11, Real Output: SELECT qual FROM table_name_4 WHERE laps < 200 AND start = "11"
+
+Index 733: SQL Output: SELECT points FROM table_14342480_5 WHERE position = 'halfback' AND starter = 'yes', Real Output: SELECT COUNT(points) FROM table_14342480_5 WHERE position = "Right halfback" AND starter = "yes"
+
+Index 734: SQL Output: SELECT traditional_chinese FROM table_name_14 WHERE traditional_chinese > '国殇', Real Output: SELECT traditional_chinese FROM table_name_14 WHERE standard_order > 9 AND simplified_chinese = "国殇"
+
+Index 735: SQL Output: SELECT * FROM table_28723146_2 WHERE category_wise = '677', Real Output: SELECT category_wise FROM table_28723146_2 WHERE multi_lane = 677
+
+Index 736: SQL Output: SELECT * FROM table_name_52 WHERE time_retired = '+22.687', Real Output: SELECT MIN(grid) FROM table_name_52 WHERE time_retired = "+22.687"
+
+Index 737: SQL Output: SELECT COUNT(*) FROM table_name_13 WHERE position > 8 AND goals_for > 34 AND points = '25' AND draws < 5, Real Output: SELECT COUNT(losses) FROM table_name_13 WHERE position > 8 AND goals_for > 34 AND points = 25 AND draws < 5
+
+Index 738: SQL Output: SELECT player FROM table_name_4 WHERE score = 213, Real Output: SELECT player FROM table_name_4 WHERE score = 74 - 68 - 71 = 213
+
+Index 739: SQL Output: SELECT cause_of_death FROM table_name_37 WHERE name = 'Donald William Schneider', Real Output: SELECT cause_of_death FROM table_name_37 WHERE rank = "detective" AND name = "donald william schneider"
+
+Index 740: SQL Output: SELECT music FROM table_name_63 WHERE uncut_run_time = '95', Real Output: SELECT music FROM table_name_63 WHERE uncut_run_time = "95 minutes"
+
+Index 741: SQL Output: SELECT week FROM table_name_30 WHERE opponent = 'Seattle Seahawks', Real Output: SELECT AVG(week) FROM table_name_30 WHERE opponent = "seattle seahawks"
+
+Index 742: SQL Output: SELECT * FROM table_name_31 WHERE super_g = 'Super G' AND victories = '26' AND country = 'austria', Real Output: SELECT super_g FROM table_name_31 WHERE victories = 26 AND country = "austria"
+
+Index 743: SQL Output: SELECT lost FROM table_15405904_1 WHERE position = '2', Real Output: SELECT MIN(lost) FROM table_15405904_1 WHERE position = 2
+
+Index 744: SQL Output: SELECT COUNT(*) FROM customers WHERE customer_id IN (SELECT customer_id FROM customer_addresses WHERE address_id IN (SELECT address_id FROM addresses WHERE city = 'Lake Geovannyton'));, Real Output: SELECT COUNT(*) FROM customers AS t1 JOIN customer_addresses AS t2 ON t1.customer_id = t2.customer_id JOIN addresses AS t3 ON t2.address_id = t3.address_id WHERE t3.city = "Lake Geovannyton"
+
+Index 745: SQL Output: SELECT stations FROM table_2093995_1 WHERE parking = 'park & ride lot', Real Output: SELECT stations FROM table_2093995_1 WHERE parking = "Park & Ride Lot"
+
+Index 746: SQL Output: SELECT class FROM table_name_13 WHERE call_sign = 'w267an', Real Output: SELECT class FROM table_name_13 WHERE call_sign = "w267an"
+
+Index 747: SQL Output: SELECT record FROM table_name_35 WHERE time = '1:44', Real Output: SELECT record FROM table_name_35 WHERE time = "1:44"
+
+Index 748: SQL Output: SELECT club FROM table_name_98 WHERE shts = '132', Real Output: SELECT club FROM table_name_98 WHERE shts = 132
+
+Index 750: SQL Output: SELECT year FROM table_name_18 WHERE manufacturer = 'Ford' AND year = (SELECT MAX(year) FROM table_name_18 WHERE manufacturer = 'Ford'), Real Output: SELECT MAX(year) FROM table_name_18 WHERE manufacturer = "ford" AND finish < 37
+
+Index 751: SQL Output: SELECT area__km_2__ FROM table_name_60 WHERE common_of = 'collegno' AND population < '50137', Real Output: SELECT COUNT(area__km_2__) FROM table_name_60 WHERE common_of = "collegno" AND population < 50137
+
+Index 752: SQL Output: SELECT MIN(staterooms) FROM table_name_44 WHERE guests > 190 AND length = '443', Real Output: SELECT MIN(staterooms) FROM table_name_44 WHERE comments = "diesel-electric hybrid engines" AND length = "443 feet" AND guests > 190
+
+Index 753: SQL Output: SELECT * FROM table_name_86 WHERE gold = 1 AND total = 1 AND bronze = 1, Real Output: SELECT COUNT(gold) FROM table_name_86 WHERE total = 1 AND bronze = 1
+
+Index 754: SQL Output: SELECT nhl_team FROM table_name_29 WHERE player = 'dave murphy', Real Output: SELECT nhl_team FROM table_name_29 WHERE player = "dave murphy"
+
+Index 755: SQL Output: SELECT model_number FROM table_name_59 WHERE fsb_speed = '400 mhz', Real Output: SELECT model_number FROM table_name_59 WHERE fsb_speed = "400 mhz"
+
+Index 756: SQL Output: SELECT team_name FROM table_name_84 WHERE year > 1956 ORDER BY year ASC LIMIT 1, Real Output: SELECT 1 AS st_place_team FROM table_name_84 WHERE year > 1956
+
+Index 757: SQL Output: SELECT visitor FROM table_name_10 WHERE record = '5–8–4', Real Output: SELECT visitor FROM table_name_10 WHERE record = "5–8–4"
+
+Index 758: SQL Output: INSERT INTO table_name_58 VALUES ('Stein', 'stone'), Real Output: SELECT middle_german___luxemburgish__ FROM table_name_58 WHERE english = "stone"
+
+Index 759: SQL Output: SELECT total FROM table_name_89 WHERE bronze = '5' AND gold < '8', Real Output: SELECT MIN(total) FROM table_name_89 WHERE bronze = 5 AND gold < 8
+
+Index 760: SQL Output: SELECT * FROM table_name_53 WHERE croatia = 'Croatia' AND friendly = 'world cup 2006 qualifier', Real Output: SELECT croatia FROM table_name_53 WHERE friendly = "world cup 2006 qualifier" AND 149 = 152
+
+Index 761: SQL Output: SELECT party FROM table_22754310_1 WHERE constituency = 'sriperumbudur', Real Output: SELECT party AS a FROM table_22754310_1 WHERE constituency = "Sriperumbudur"
+
+Index 762: SQL Output: SELECT max_speed__mph_ FROM table_221315_3 WHERE usaf_space_flights = 1 AND total_flights = 34, Real Output: SELECT COUNT(max_speed__mph_) FROM table_221315_3 WHERE usaf_space_flights = 1 AND total_flights = 34
+
+Index 763: SQL Output: SELECT SUM(money___), player, place, country FROM table_name_49 WHERE place = 't2' AND country = 'United States' AND player = 'Leo Diegel', Real Output: SELECT COUNT(money___) AS $__ FROM table_name_49 WHERE place = "t2" AND country = "united states" AND player = "leo diegel"
+
+Index 764: SQL Output: SELECT fcc_info FROM table_name_67 WHERE erp_w = '100', Real Output: SELECT fcc_info FROM table_name_67 WHERE erp_w = "100 watts"
+
+Index 765: SQL Output: SELECT time FROM table_name_38 WHERE score BETWEEN '80' AND '34', Real Output: SELECT time FROM table_name_38 WHERE score = "80-34"
+
+Index 766: SQL Output: SELECT SUM(clubs_remaining) FROM table_1281200_1, Real Output: SELECT COUNT(clubs_remaining) FROM table_1281200_1 WHERE new_entries_this_round = "8"
+
+Index 767: SQL Output: SELECT COUNT(silver) FROM table_name_43 WHERE silver > 2 AND nation = 'South Korea', Real Output: SELECT MAX(silver) FROM table_name_43 WHERE nation = "south korea" AND gold > 2
+
+Index 768: SQL Output: SELECT venue FROM table_name_80 WHERE result = 'AUS' AND venue = '229', Real Output: SELECT venue FROM table_name_80 WHERE result = "aus by 229 runs"
+
+Index 769: SQL Output: SELECT district FROM table_name_44 WHERE iucn = 'iii' AND est = '1998', Real Output: SELECT district FROM table_name_44 WHERE iucn = "iii" AND est = 1998
+
+Index 770: SQL Output: INSERT INTO table_name_40 VALUES ('soccer', 'canada', '2004'), Real Output: SELECT sport FROM table_name_40 WHERE country = "canada" AND year = 2004
+
+Index 771: SQL Output: SELECT local_networked FROM table_name_38 WHERE ad_freq = 'N/A', Real Output: SELECT local_networked FROM table_name_38 WHERE ad_freq = "n/a"
+
+Index 772: SQL Output: SELECT COUNT(score) FROM table_11621873_1 WHERE tournament = 'Northville Long Island Classic', Real Output: SELECT COUNT(score) FROM table_11621873_1 WHERE tournament = "Northville Long Island Classic"
+
+Index 773: SQL Output: SELECT rhel_release_date FROM table_1500146_1 WHERE scientific_linux_release = '3.0.4', Real Output: SELECT rhel_release_date FROM table_1500146_1 WHERE scientific_linux_release = "3.0.4"
+
+Index 774: SQL Output: SELECT * FROM table_name_45 WHERE loss = '48-50', Real Output: SELECT loss FROM table_name_45 WHERE record = "48-50"
+
+Index 775: SQL Output: SELECT AVG(founded) FROM table_name_13, Real Output: SELECT AVG(founded) FROM table_name_13 WHERE suburb_town = "vineyard"
+
+Index 776: SQL Output: SELECT * FROM table_name_75 WHERE athlete = 'inger miller', Real Output: SELECT result FROM table_name_75 WHERE athlete = "inger miller"
+
+Index 777: SQL Output: SELECT district FROM table_2417390_4 WHERE date_successor_seated = '1878-03-28', Real Output: SELECT district FROM table_2417390_4 WHERE date_successor_seated = "March 28, 1878"
+
+Index 778: SQL Output: SELECT * FROM table_name_38 WHERE minoru = 'koji kanemoto', Real Output: SELECT minoru FROM table_name_38 WHERE block_a = "koji kanemoto"
+
+Index 779: SQL Output: SELECT silver FROM table_name_5 WHERE bronze = 0 AND rank < 2, Real Output: SELECT SUM(silver) FROM table_name_5 WHERE bronze = 0 AND rank < 2
+
+Index 780: SQL Output: SELECT evening_gown FROM table_16323766_3 WHERE interview = '9', Real Output: SELECT evening_gown FROM table_16323766_3 WHERE interview = "7.600 (9)"
+
+Index 781: SQL Output: SELECT COUNT(ties) FROM table_name_3 WHERE ties > 0 AND tenure BETWEEN '2001-2011' AND lost > 16, Real Output: SELECT COUNT(ties) FROM table_name_3 WHERE win__percentage > 0 AND tenure = "2001-2011" AND lost > 16
+
+Index 782: SQL Output: SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE stuid IN (SELECT stuid FROM participates_in WHERE, Real Output: SELECT T1.stuid FROM participates_in AS T1 JOIN activity AS T2 ON T2.actid = T2.actid WHERE T2.activity_name = 'Canoeing' INTERSECT SELECT T1.stuid FROM participates_in AS T1 JOIN activity AS T2 ON T2.actid = T2.actid WHERE T2.activity_name = 'Kayaking'
+
+Index 783: SQL Output: SELECT region FROM table_25042332_22 WHERE primary__6_13_years_ = '94.40', Real Output: SELECT region FROM table_25042332_22 WHERE primary__6_13_years_ = "94.40"
+
+Index 784: SQL Output: SELECT COUNT(*) FROM table_25831483_1 WHERE actor_actress = 'larry lamb', Real Output: SELECT COUNT(character) FROM table_25831483_1 WHERE actor_actress = "Larry Lamb"
+
+Index 785: SQL Output: SELECT * FROM table_name_57 WHERE engine_s_ = 'Ford' AND year = '1966' AND points = '42', Real Output: SELECT engine_s_ FROM table_name_57 WHERE year = 1966 AND points = "42"
+
+Index 786: SQL Output: SELECT * FROM table_name_87 WHERE to_par = 'johanna' AND player = 'head', Real Output: SELECT to_par FROM table_name_87 WHERE player = "johanna head"
+
+Index 787: SQL Output: SELECT paper_type FROM table_name_51 WHERE illustration = 'martin dee, ubc public affairs', Real Output: SELECT paper_type FROM table_name_51 WHERE illustration = "martin dee, ubc public affairs"
+
+Index 788: SQL Output: SELECT rank FROM table_name_51 WHERE class = '250cc' AND year = '1983', Real Output: SELECT rank FROM table_name_51 WHERE class = "250cc" AND year = 1983
+
+Index 789: SQL Output: SELECT gdp__ppp__per_capita___intl_$___2011 FROM table_26313243_1 WHERE country = 'haiti', Real Output: SELECT gdp__ppp__per_capita___intl_$___2011 FROM table_26313243_1 WHERE country = "Haiti"
+
+Index 790: SQL Output: SELECT * FROM table_name_78 WHERE class = 'b', Real Output: SELECT frequency FROM table_name_78 WHERE class = "b"
+
+Index 791: SQL Output: SELECT saturday_day_seven FROM table_1277350_7 WHERE thursday_day_five = 'ሐሙስ hamus', Real Output: SELECT saturday_day_seven FROM table_1277350_7 WHERE thursday_day_five = "ሐሙስ hamus"
+
+Index 792: SQL Output: SELECT Accelerate FROM CARS_DATA WHERE Id = 'amc hornet sportabout', Real Output: SELECT T1.Accelerate FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id = T2.MakeId WHERE T2.Make = 'amc hornet sportabout (sw)'
+
+Index 793: SQL Output: SELECT co_drivers FROM table_name_62 WHERE laps > 377 AND pos = '1', Real Output: SELECT co_drivers FROM table_name_62 WHERE laps > 377 AND pos = "1st"
+
+Index 794: SQL Output: SELECT lifespan FROM table_name_56 WHERE imperial = '7ft 8 in' AND nationality = 'fiji', Real Output: SELECT lifespan FROM table_name_56 WHERE imperial = "7ft 8 in" AND nationality = "fiji"
+
+Index 795: SQL Output: SELECT population FROM table_name_5 WHERE former_local_authority = 'Cockermouth Rural District', Real Output: SELECT COUNT(population) FROM table_name_5 WHERE former_local_authority = "cockermouth rural district" AND name = "plumbland"
+
+Index 796: SQL Output: SELECT home_team FROM table_name_21 WHERE away_team = 'lincoln city', Real Output: SELECT home_team FROM table_name_21 WHERE away_team = "lincoln city"
+
+Index 797: SQL Output: SELECT highest_score FROM table_28547332_4 WHERE average = '9.88', Real Output: SELECT MIN(highest_score) FROM table_28547332_4 WHERE average = "9.88"
+
+Index 798: SQL Output: SELECT region FROM table_name_41 WHERE region = 'Europe' AND format = 'digital' AND date = '19 July 2008', Real Output: SELECT region FROM table_name_41 WHERE format = "digital" AND date = "19 july 2008"
+
+Index 799: SQL Output: SELECT score_final FROM table_name_7 WHERE score_qualifying = '74.075' ORDER BY score_final ASC LIMIT 1, Real Output: SELECT MIN(score_final) FROM table_name_7 WHERE score_qualifying = 74.075
+
+Index 800: SQL Output: SELECT team FROM table_name_20 WHERE goals_for < 64 AND goals_against < 64 AND points_2 = 63, Real Output: SELECT team FROM table_name_20 WHERE goals_against < 64 AND points_2 = 63 AND goals_for = 101
+
+Index 801: SQL Output: SELECT gold FROM table_name_13 WHERE bronze = 'Belgium', Real Output: SELECT gold FROM table_name_13 WHERE bronze = "jules van dyk belgium"
+
+Index 802: SQL Output: SELECT style FROM table_name_50 WHERE first_performance = '15 November 2007', Real Output: SELECT style FROM table_name_50 WHERE first_performance = "15 november 2007"
+
+Index 803: SQL Output: SELECT MIN(samples_taken) FROM table_18943444_1 WHERE product = '蒙牛牌嬰幼兒配方乳粉', Real Output: SELECT MIN(samples_taken) FROM table_18943444_1 WHERE product = "蒙牛牌嬰幼兒配方乳粉"
+
+Index 804: SQL Output: SELECT weekly_rank FROM table_name_8 WHERE official_ratings__millions_ > 5.2, Real Output: SELECT weekly_rank FROM table_name_8 WHERE official_ratings__millions_ > 5.2 AND show = "live final"
+
+Index 805: SQL Output: SELECT agg FROM table_name_25 WHERE agg = '4-3', Real Output: SELECT 1 AS st_leg FROM table_name_25 WHERE agg = "4-3"
+
+Index 806: SQL Output: SELECT position FROM table_24302700_6 WHERE event_6_atlas_stones = '4', Real Output: SELECT position FROM table_24302700_6 WHERE event_6_atlas_stones = "5 (4 in 32.66s)"
+
+Index 807: SQL Output: SELECT COUNT(*) FROM table_18626383_2 WHERE country = 'finland', Real Output: SELECT COUNT(hometown) FROM table_18626383_2 WHERE country = "Finland"
+
+Index 808: SQL Output: SELECT home_team FROM table_name_66 WHERE away_team = 'collingwood', Real Output: SELECT home_team FROM table_name_66 WHERE away_team = "collingwood"
+
+Index 809: SQL Output: SELECT COUNT(Kids) FROM Reservations WHERE CheckIn = '2010-09-21', Real Output: SELECT Kids FROM Reservations WHERE CheckIn = "2010-09-21" AND FirstName = "DAMIEN" AND LastName = "TRACHSEL"
+
+Index 810: SQL Output: SELECT date FROM table_name_69 WHERE location = 'Madrid, Esp', Real Output: SELECT date FROM table_name_69 WHERE location = "madrid, esp"
+
+Index 811: SQL Output: SELECT to_par FROM table_name_18 WHERE score = '281', Real Output: SELECT to_par FROM table_name_18 WHERE score = 70 - 72 - 70 - 69 = 281
+
+Index 812: SQL Output: SELECT party, candidates FROM table_19753079_35 WHERE candidates = 'yvette clarke', Real Output: SELECT party FROM table_19753079_35 WHERE candidates = "Yvette Clarke (D) 90.6% Hugh Carr (R) 9.4%"
+
+Index 813: SQL Output: SELECT position FROM table_name_43 WHERE lost > 16 AND against > 74, Real Output: SELECT SUM(position) FROM table_name_43 WHERE lost > 16 AND against > 74
+
+Index 814: SQL Output: SELECT COUNT(DISTINCT college_junior_club_team) FROM table_2781227_2 WHERE player = 'Lee Sorochan', Real Output: SELECT COUNT(college_junior_club_team) FROM table_2781227_2 WHERE player = "Lee Sorochan"
+
+Index 815: SQL Output: SELECT team FROM table_26914854_3 WHERE date_of_appointment = '2011-03-23', Real Output: SELECT team FROM table_26914854_3 WHERE date_of_appointment = "23 March 2011"
+
+Index 816: SQL Output: SELECT name FROM table_name_35 WHERE time = '3:50.90', Real Output: SELECT name FROM table_name_35 WHERE time = "3:50.90"
+
+Index 817: SQL Output: SELECT * FROM table_24565004_19 WHERE period = 'name', Real Output: SELECT period FROM table_24565004_19 WHERE nationality² = "Uruguay"
+
+Index 818: SQL Output: SELECT lost FROM table_name_15 WHERE team = 'Quetta Zorawar' ORDER BY lost DESC LIMIT 1, Real Output: SELECT MAX(lost) FROM table_name_15 WHERE team = "quetta zorawar"
+
+Index 819: SQL Output: SELECT colonized FROM table_name_92 WHERE state = 'Michigan', Real Output: SELECT colonized FROM table_name_92 WHERE state = "michigan"
+
+Index 820: SQL Output: SELECT AVG(year) FROM table_name_71 WHERE mixed_doubles = 'Nathan Robertson Gail Emms', Real Output: SELECT AVG(year) FROM table_name_71 WHERE mixed_doubles = "nathan robertson gail emms"
+
+Index 822: SQL Output: SELECT the_wørd FROM table_25691838_12 WHERE guest IN ('daniel ellsberg', 'william wegman', 'julie taymor'), Real Output: SELECT the_wørd FROM table_25691838_12 WHERE guest = "Daniel Ellsberg , William Wegman , Julie Taymor"
+
+Index 823: SQL Output: SELECT Final FROM table_name_8 WHERE week_1 = 'Deepak P Rahul' AND week_3 = 'Amit Carol', Real Output: SELECT Final AS week_12 FROM table_name_8 WHERE week_1 = "deepak p rahul" AND week_3 = "amit carol"
+
+Index 824: SQL Output: SELECT fleet FROM table_name_61 WHERE number = 'L4', Real Output: SELECT fleet FROM table_name_61 WHERE number = "l4"
+
+Index 825: SQL Output: SELECT callsign FROM table_name_80 WHERE icao = 'AAR', Real Output: SELECT callsign FROM table_name_80 WHERE icao = "aar"
+
+Index 826: SQL Output: SELECT beatified FROM table_name_12 WHERE place = 'Korea' AND canonised < '1984' ORDER BY beatified ASC LIMIT 1, Real Output: SELECT MIN(beatified) FROM table_name_12 WHERE place = "korea" AND canonised < 1984
+
+Index 827: SQL Output: SELECT hometown FROM table_name_51 WHERE college = 'lsu', Real Output: SELECT hometown FROM table_name_51 WHERE college = "lsu"
+
+Index 828: SQL Output: SELECT current_map FROM table_name_72 WHERE name = 'Beethoven', Real Output: SELECT current_map FROM table_name_72 WHERE name = "beethoven"
+
+Index 830: SQL Output: SELECT AVG(age), SUM(experience) FROM journalist WHERE journalist_id IN (SELECT journalist_id FROM news_report WHERE work_type = 'reporter');, Real Output: SELECT AVG(t1.age), AVG(Years_working), t2.work_type FROM journalist AS t1 JOIN news_report AS t2 ON t1.journalist_id = t2.journalist_id GROUP BY t2.work_type
+
+Index 831: SQL Output: SELECT MIN(fa_cup) FROM table_name_64 WHERE malaysia_cup = 0, Real Output: SELECT MIN(fa_cup) FROM table_name_64 WHERE malaysia_cup < 0
+
+Index 832: SQL Output: SELECT high_points, high_rebounds FROM table_13812785_8 WHERE high_points > 9, Real Output: SELECT high_points FROM table_13812785_8 WHERE high_rebounds = "Charles Oakley (9)"
+
+Index 833: SQL Output: SELECT outcome FROM table_name_3 WHERE score = '4–6, 6–7(3)', Real Output: SELECT outcome FROM table_name_3 WHERE surface = "hard" AND score = "4–6, 6–7(3)"
+
+Index 834: SQL Output: SELECT * FROM table_10707176_2 WHERE report = 'What report was there for the porsche north america?', Real Output: SELECT report FROM table_10707176_2 WHERE winning_team = "Porsche North America"
+
+Index 835: SQL Output: SELECT tie_no FROM table_name_40 WHERE away_team = 'Barnsley', Real Output: SELECT tie_no FROM table_name_40 WHERE away_team = "barnsley"
+
+Index 836: SQL Output: SELECT team FROM table_11960944_4 WHERE high_points = '20', Real Output: SELECT team FROM table_11960944_4 WHERE high_points = "Wallace (20)"
+
+Index 837: SQL Output: SELECT declination___j2000__ FROM table_name_34 WHERE right_ascension___j2000__ = '11h53m41.9s', Real Output: SELECT declination___j2000__ FROM table_name_34 WHERE right_ascension___j2000__ = "11h53m41.9s"
+
+Index 838: SQL Output: SELECT goals_for, points, losses, position FROM table_name_18 WHERE goals_for > 42 AND losses < 15 AND position > 8, Real Output: SELECT MAX(goals_for) FROM table_name_18 WHERE losses < 15 AND position > 8 AND points = "42+4"
+
+Index 839: SQL Output: SELECT city___state FROM table_name_33 WHERE team = 'holden racing' AND winner = 'mark skaife todd kelly', Real Output: SELECT city___state FROM table_name_33 WHERE team = "holden racing team" AND winner = "mark skaife todd kelly"
+
+Index 840: SQL Output: SELECT weight FROM table_name_61 WHERE club = 'Spandau 04' AND height = '5ft 1in', Real Output: SELECT weight FROM table_name_61 WHERE club = "spandau 04" AND height = "m (ft 5in)"
+
+Index 841: SQL Output: SELECT player FROM table_name_54 WHERE position = 'c' AND team = 'New York Knicks', Real Output: SELECT player FROM table_name_54 WHERE team = "new york knicks" AND position = "c"
+
+Index 842: SQL Output: SELECT round FROM table_name_21 WHERE time = '0:39', Real Output: SELECT MIN(round) FROM table_name_21 WHERE time = "0:39"
+
+Index 843: SQL Output: SELECT time___mt__ FROM table_name_13 WHERE opponent = 'kansas city chiefs' AND date = 'nov 11', Real Output: SELECT time___mt__ FROM table_name_13 WHERE opponent = "kansas city chiefs" AND date = "nov 11"
+
+Index 844: SQL Output: SELECT release_date FROM table_name_15 WHERE product = 'Glassfish', Real Output: SELECT release_date FROM table_name_15 WHERE product = "glassfish"
+
+Index 845: SQL Output: SELECT MAX(dismissals) FROM table_19870086_24 WHERE innings = 8, Real Output: SELECT COUNT(dismissals) FROM table_19870086_24 WHERE innings = 8
+
+Index 846: SQL Output: SELECT film_title_used_in_nomination FROM table_name_78 WHERE language = 'spanish' AND country = 'peru', Real Output: SELECT film_title_used_in_nomination FROM table_name_78 WHERE language = "spanish" AND country = "peru"
+
+Index 847: SQL Output: SELECT * FROM table_name_81 WHERE gold = 1 AND bronze = 1 AND rank < 6 AND total < 3, Real Output: SELECT SUM(gold) FROM table_name_81 WHERE bronze = 1 AND rank < 6 AND total < 3
+
+Index 848: SQL Output: SELECT season_no FROM table_21781578_2 WHERE production_code = 'E2110', Real Output: SELECT season_no FROM table_21781578_2 WHERE production_code = "E2110"
+
+Index 849: SQL Output: SELECT height_in_ft FROM table_name_47 WHERE years_for_rockets = '1999-2004', Real Output: SELECT height_in_ft FROM table_name_47 WHERE years_for_rockets = "1999-2004"
+
+Index 850: SQL Output: SELECT grid FROM table_name_86 WHERE laps < 8, Real Output: SELECT COUNT(grid) FROM table_name_86 WHERE driver = "anthony davidson" AND laps < 8
+
+Index 851: SQL Output: SELECT player FROM table_11677100_4 WHERE hometown = 'Spring, Tx', Real Output: SELECT player FROM table_11677100_4 WHERE hometown = "Spring, TX"
+
+Index 852: SQL Output: SELECT age FROM table_22265261_1 WHERE sp = '200/1', Real Output: SELECT COUNT(age) FROM table_22265261_1 WHERE sp = "200/1"
+
+Index 853: SQL Output: SELECT country_with_flag FROM table_298550_1 WHERE population__1_july_2005_est_ = '11346670', Real Output: SELECT country_with_flag FROM table_298550_1 WHERE population__1_july_2005_est_ = 11346670
+
+Index 854: SQL Output: SELECT name FROM table_name_39 WHERE teams = 'fc sète olympique de marseille', Real Output: SELECT name FROM table_name_39 WHERE teams = "fc sète olympique de marseille"
+
+Index 855: SQL Output: SELECT away_team FROM table_name_59 WHERE away_team = 'Carlton', Real Output: SELECT away_team AS score FROM table_name_59 WHERE away_team = "carlton"
+
+Index 856: SQL Output: SELECT japanese_voice_actor FROM table_name_25 WHERE eagle_riders = 'Ollie Keeawani', Real Output: SELECT japanese_voice_actor FROM table_name_25 WHERE eagle_riders = "ollie keeawani"
+
+Index 857: SQL Output: SELECT score FROM table_name_27 WHERE record = '8–11–1', Real Output: SELECT score FROM table_name_27 WHERE record = "8–11–1"
+
+Index 858: SQL Output: SELECT game.id, game.score, game.date FROM game INNER JOIN injury_accident ON game.id = injury_accident.game_id GROUP BY game.id HAVING COUNT(game.id) >= 2, Real Output: SELECT T1.id, T1.score, T1.date FROM game AS T1 JOIN injury_accident AS T2 ON T2.game_id = T1.id GROUP BY T1.id HAVING COUNT(*) >= 2
+
+Index 859: SQL Output: SELECT couple FROM table_name_91 WHERE style = 'Paso Doble' AND results = 'Safe', Real Output: SELECT couple FROM table_name_91 WHERE results = "safe" AND style = "paso doble"
+
+Index 860: SQL Output: SELECT participants, rank, silver FROM table_name_13 WHERE rank = '5' AND silver < 0, Real Output: SELECT MAX(participants) FROM table_name_13 WHERE rank = 5 AND silver < 0
+
+Index 861: SQL Output: SELECT COUNT(gold_medals) FROM table_name_73 WHERE gold_medals < 1 AND ensemble = 'bellbrook HS', Real Output: SELECT COUNT(gold_medals) FROM table_name_73 WHERE ensemble = "bellbrook hs" AND silver_medals < 1
+
+Index 862: SQL Output: SELECT frequency FROM table_name_5 WHERE parent_magazine = 'Dengeki', Real Output: SELECT frequency FROM table_name_5 WHERE parent_magazine = "dengeki girl's style"
+
+Index 863: SQL Output: SELECT year__ceremony_ FROM table_name_69 WHERE original_title = 'Zona Sur', Real Output: SELECT year__ceremony_ FROM table_name_69 WHERE original_title = "zona sur"
+
+Index 864: SQL Output: SELECT dust__or_debris__location__au_ FROM table_2296507_1 WHERE star = 'hd 69830', Real Output: SELECT dust__or_debris__location__au_ FROM table_2296507_1 WHERE star = "HD 69830"
+
+Index 865: SQL Output: SELECT number_of_caps FROM table_11585313_1 WHERE name = 'Hans Blume', Real Output: SELECT COUNT(number_of_caps) FROM table_11585313_1 WHERE name = "Hans Blume"
+
+Index 866: SQL Output: SELECT team FROM table_17693171_1 WHERE points = 20, Real Output: SELECT team FROM table_17693171_1 WHERE points = "20"
+
+Index 868: SQL Output: SELECT revised_hepburn FROM table_26263954_1 WHERE english = 'roman characters', Real Output: SELECT revised_hepburn FROM table_26263954_1 WHERE english = "Roman characters"
+
+Index 869: SQL Output: SELECT SUM(money___$) FROM table_name_13 WHERE score = '73-71-70-73', Real Output: SELECT money___$__ FROM table_name_13 WHERE score = 73 - 71 - 70 - 73 = 287
+
+Index 870: SQL Output: SELECT visitor FROM table_name_69 WHERE record = '24–14–2', Real Output: SELECT visitor FROM table_name_69 WHERE record = "24–14–2"
+
+Index 871: SQL Output: SELECT pole_position FROM table_22765887_1 WHERE date = '1981-08-15', Real Output: SELECT pole_position FROM table_22765887_1 WHERE date = "August 15, 1981"
+
+Index 872: SQL Output: SELECT title FROM table_16581695_3 WHERE written_by = 'Matt Wayne', Real Output: SELECT title FROM table_16581695_3 WHERE written_by = "Matt Wayne"
+
+Index 873: SQL Output: SELECT COUNT(*) FROM table_1604579_2 WHERE country = 'Austria', Real Output: SELECT COUNT(2013 AS _press_freedom_index) FROM table_1604579_2 WHERE country = "Austria"
+
+Index 874: SQL Output: SELECT player FROM table_name_63 WHERE to_par = '12', Real Output: SELECT player FROM table_name_63 WHERE to_par = 12 AND country = "united states"
+
+Index 875: SQL Output: SELECT * FROM table_name_34 WHERE points_difference > 0, Real Output: SELECT points_against FROM table_name_34 WHERE points_difference = "points difference"
+
+Index 876: SQL Output: SELECT poll_source FROM table_name_41 WHERE date = '2007-05-02' AND date = '2007-05-07' AND republican = 'John McCain' AND democrat = 'Hillary Clinton' AND margin_of_error < '4.5', Real Output: SELECT poll_source FROM table_name_41 WHERE democrat = "hillary clinton" AND margin_of_error < 4.5 AND republican = "john mccain" AND date = "may 2-7, 2007"
+
+Index 877: SQL Output: SELECT venue FROM table_name_37 WHERE competition = 'friendly' AND date = '1999-05-26', Real Output: SELECT venue FROM table_name_37 WHERE competition = "friendly" AND date = "26 may 1999"
+
+Index 878: SQL Output: SELECT * FROM table_name_2 WHERE second = '55' ORDER BY total ASC LIMIT 1, Real Output: SELECT MIN(total) FROM table_name_2 WHERE second = 55
+
+Index 879: SQL Output: SELECT surface FROM table_name_41 WHERE opponent = 'fernando verdasco', Real Output: SELECT surface FROM table_name_41 WHERE opponent = "fernando verdasco"
+
+Index 880: SQL Output: SELECT opponent_team FROM table_name_61 WHERE result = '1-2', Real Output: SELECT opponent_team FROM table_name_61 WHERE result = "1-2"
+
+Index 881: SQL Output: SELECT win_percentage FROM table_name_44 WHERE team = '1989-90 Team', Real Output: SELECT win_percentage FROM table_name_44 WHERE team = "1989-90"
+
+Index 882: SQL Output: SELECT school_club_team FROM table_name_98 WHERE position = 'shooting guard' AND years_for_grizzlies = '2000-2001', Real Output: SELECT school_club_team FROM table_name_98 WHERE position = "shooting guard" AND years_for_grizzlies = "2000-2001"
+
+Index 883: SQL Output: SELECT year FROM table_1618358_1 WHERE over_total_tax_revenue__in__percentage_ = '0.65', Real Output: SELECT year FROM table_1618358_1 WHERE over_total_tax_revenue__in__percentage_ = "0.65"
+
+Index 884: SQL Output: SELECT * FROM table_name_9 WHERE losses < 9 AND ballarat_fl = 'Ballarat FL of Lake Wendouree', Real Output: SELECT MIN(losses) FROM table_name_9 WHERE ballarat_fl = "lake wendouree" AND wins < 9
+
+Index 885: SQL Output: SELECT date FROM table_name_17 WHERE school = 'Ferris High School', Real Output: SELECT date FROM table_name_17 WHERE school = "ferris high school"
+
+Index 886: SQL Output: SELECT opponent FROM table_name_71 WHERE round = '2', Real Output: SELECT opponent FROM table_name_71 WHERE round = 2
+
+Index 887: SQL Output: SELECT studio FROM table_11222744_3 WHERE catalog_number = 'cal03 / 0091037137333', Real Output: SELECT COUNT(studio) FROM table_11222744_3 WHERE catalog_number = "CAL03 / 0091037137333"
+
+Index 888: SQL Output: SELECT tries_for, losing_bonus FROM table_name_47, Real Output: SELECT tries_for FROM table_name_47 WHERE losing_bonus = "losing bonus"
+
+Index 890: SQL Output: SELECT * FROM table_name_73 WHERE Id = '2007', Real Output: SELECT 2007 FROM table_name_73 WHERE 2004 = "2r" AND 2010 = "a"
+
+Index 891: SQL Output: SELECT COUNT(wins) FROM table_name_39 WHERE wins > 2 AND draws > 2, Real Output: SELECT SUM(wins) FROM table_name_39 WHERE club = "cobden" AND draws > 2
+
+Index 892: SQL Output: SELECT * FROM table_name_96 WHERE Id = '2003', Real Output: SELECT 2009 FROM table_name_96 WHERE 2003 = "career statistics"
+
+Index 893: SQL Output: SELECT stadium FROM table_name_13 WHERE city = 'kutina', Real Output: SELECT stadium FROM table_name_13 WHERE city = "kutina"
+
+Index 894: SQL Output: SELECT report, pole_position FROM table_name_68 WHERE winning_team = 'Penske Racing', Real Output: SELECT report FROM table_name_68 WHERE winning_team = "penske racing" AND pole_position = "rick mears"
+
+Index 895: SQL Output: SELECT game FROM table_27539535_4 WHERE november = '21', Real Output: SELECT game FROM table_27539535_4 WHERE november = 21
+
+Index 896: SQL Output: SELECT MIN(freight_carried_s_tonne) FROM table_12791809_1 WHERE super_b_capacity_reached_ = 'February 26', Real Output: SELECT MIN(freight_carried_s_tonne) FROM table_12791809_1 WHERE super_b_capacity_reached_[_citation_needed_] = "February 26"
+
+Index 897: SQL Output: SELECT kentucky FROM table_18461045_1 WHERE indiana = 'Brownsburg LL Brownsburg' AND wisconsin = 'Merrill LL Merrill', Real Output: SELECT kentucky FROM table_18461045_1 WHERE indiana = "Brownsburg LL Brownsburg" AND wisconsin = "Merrill LL Merrill"
+
+Index 898: SQL Output: SELECT round FROM table_name_22 WHERE pick > '50' AND player = 'Derek Pagel' ORDER BY round DESC LIMIT 1, Real Output: SELECT MAX(round) FROM table_name_22 WHERE pick > 50 AND player = "derek pagel"
+
+Index 899: SQL Output: SELECT date FROM table_name_90 WHERE record = '17-31', Real Output: SELECT date FROM table_name_90 WHERE record = "17-31"
+
+Index 901: SQL Output: SELECT left_office FROM table_name_1 WHERE inaugurated = "15 March 1930", Real Output: SELECT left_office FROM table_name_1 WHERE inaugurated = "15 march 1930"
+
+Index 902: SQL Output: SELECT * FROM table_name_22 WHERE to_par = 'duffy waldorf' AND country = 'united states', Real Output: SELECT to_par FROM table_name_22 WHERE country = "united states" AND player = "duffy waldorf"
+
+Index 903: SQL Output: SELECT player FROM table_28059992_6 WHERE cfl_team = 'Winnipeg', Real Output: SELECT player FROM table_28059992_6 WHERE cfl_team = "Winnipeg"
+
+Index 904: SQL Output: SELECT compression_ratio FROM table_name_41 WHERE engine = '302-2v Windsor v8', Real Output: SELECT compression_ratio FROM table_name_41 WHERE engine = "302-2v windsor v8"
+
+Index 905: SQL Output: SELECT * FROM table_name_96 WHERE event = '100m' AND year = '1996' AND result = '16', Real Output: SELECT event FROM table_name_96 WHERE year < 2001 AND result = "16th"
+
+Index 907: SQL Output: SELECT loser FROM table_name_32 WHERE result = '35-27', Real Output: SELECT loser FROM table_name_32 WHERE result = "35-27"
+
+Index 909: SQL Output: SELECT * FROM employees WHERE hire_date < 20020621, Real Output: SELECT * FROM employees WHERE hire_date < '2002-06-21'
+
+Index 910: SQL Output: SELECT agg FROM table_name_55 WHERE team_1 = 'Union Douala', Real Output: SELECT agg FROM table_name_55 WHERE team_1 = "union douala"
+
+Index 911: SQL Output: SELECT silver FROM table_name_80 WHERE rank = '1' AND total < '11', Real Output: SELECT SUM(silver) FROM table_name_80 WHERE rank = "1" AND total < 11
+
+Index 912: SQL Output: SELECT MIN(lost) FROM table_name_18 WHERE drawn >= 1, Real Output: SELECT MIN(lost) FROM table_name_18 WHERE drawn > 1
+
+Index 914: SQL Output: SELECT geohash_length FROM table_name_99 WHERE lat_error = '±0.00068' AND lat_bits > '17' ORDER BY geohash_length DESC LIMIT 1, Real Output: SELECT MAX(geohash_length) FROM table_name_99 WHERE lat_error = "±0.00068" AND lat_bits > 17
+
+Index 915: SQL Output: SELECT team__number2 FROM table_21434618_1 WHERE team__number2 = 'poseidon neoi porroi', Real Output: SELECT team__number2 FROM table_21434618_1 WHERE team__number1 = "Poseidon Neoi Porroi"
+
+Index 916: SQL Output: SELECT score FROM table_name_65 WHERE date = '2007-04-23', Real Output: SELECT score FROM table_name_65 WHERE date = "april 23, 2007"
+
+Index 917: SQL Output: SELECT * FROM table_name_23 WHERE wins > 1 AND losses < 1 AND teams = 'rams' AND games > 8, Real Output: SELECT MAX(wins) FROM table_name_23 WHERE losses < 1 AND teams = "rams" AND games > 8
+
+Index 918: SQL Output: SELECT COUNT(ends) FROM table_name_39 WHERE ends = '0' AND nat = 'ita' AND since = '2006', Real Output: SELECT COUNT(ends) FROM table_name_39 WHERE since > 2006 AND nat = "ita" AND goals < 0
+
+Index 919: SQL Output: SELECT to_par FROM table_name_84 WHERE finish = 't56', Real Output: SELECT to_par FROM table_name_84 WHERE finish = "t56"
+
+Index 920: SQL Output: SELECT * FROM table_name_13 WHERE h_a_n = '105♠', Real Output: SELECT h_a_n FROM table_name_13 WHERE score = "105*♠"
+
+Index 921: SQL Output: SELECT SUM(points_for) FROM table_name_91 WHERE club = 'Fall Bay RFC', Real Output: SELECT points_for FROM table_name_91 WHERE club = "fall bay rfc"
+
+Index 922: SQL Output: SELECT surface FROM table_name_42 WHERE outcome = 'runner-up' AND score = 'julia görges polona hercog', Real Output: SELECT surface FROM table_name_42 WHERE outcome = "runner-up" AND score = "julia görges polona hercog"
+
+Index 924: SQL Output: SELECT record FROM table_16295365_1 WHERE school = 'UMBC', Real Output: SELECT record FROM table_16295365_1 WHERE school = "UMBC"
+
+Index 925: SQL Output: SELECT date_sent, hd_designation, signal_power___kw__ FROM table_name_75 WHERE signal_power___kw__ < 126 AND arrival_date = "January 2059" AND hd_designation = "HD193664", Real Output: SELECT date_sent FROM table_name_75 WHERE signal_power___kw__ < 126 AND arrival_date = "january 2059" AND hd_designation = "hd193664"
+
+Index 926: SQL Output: SELECT * FROM table_name_54 WHERE gold = (SELECT MIN(gold) FROM table_name_54 WHERE nation = 'tanzania' AND bronze < 0), Real Output: SELECT MIN(gold) FROM table_name_54 WHERE nation = "tanzania" AND bronze < 0
+
+Index 927: SQL Output: SELECT * FROM table_17525955_2 WHERE rating = '0.9', Real Output: SELECT rating FROM table_17525955_2 WHERE rating / SHARE(18 AS –49) = 0.9 / 4
+
+Index 928: SQL Output: SELECT team FROM table_name_74 WHERE pick > 30 AND college = 'saginaw valley state', Real Output: SELECT team FROM table_name_74 WHERE pick > 30 AND college = "saginaw valley state"
+
+Index 929: SQL Output: SELECT COUNT(DISTINCT product_id) FROM problems, Real Output: SELECT COUNT(*) FROM product AS T1 JOIN problems AS T2 ON T1.product_id = T2.product_id WHERE T1.product_name = "voluptatem"
+
+Index 930: SQL Output: SELECT format FROM table_name_21 WHERE catalog = 'Mobil 1', Real Output: SELECT format FROM table_name_21 WHERE catalog = "mobil 1"
+
+Index 931: SQL Output: SELECT * FROM table_name_41 WHERE wins < 1314, Real Output: SELECT MIN(wins) FROM table_name_41 WHERE against = 1314
+
+Index 932: SQL Output: SELECT tie_no FROM table_name_47 WHERE home_team = 'enfield', Real Output: SELECT tie_no FROM table_name_47 WHERE home_team = "enfield"
+
+Index 933: SQL Output: SELECT * FROM table_name_78 WHERE tamil_தமிழ் = 'பூராடம்', Real Output: SELECT mongolian FROM table_name_78 WHERE tamil_தமிழ் = "pūrāṭam பூராடம்"
+
+Index 934: SQL Output: SELECT away FROM table_name_61 WHERE result = '1-5 aet', Real Output: SELECT away FROM table_name_61 WHERE result = "1-5 aet"
+
+Index 935: SQL Output: SELECT week FROM table_name_57 WHERE game_site = 'giants stadium', Real Output: SELECT week FROM table_name_57 WHERE game_site = "giants stadium"
+
+Index 936: SQL Output: SELECT date FROM table_name_87 WHERE loan_expires = 'end of the season' AND position = 'mf', Real Output: SELECT date FROM table_name_87 WHERE loan_expires = "end of the season" AND position = "mf"
+
+Index 937: SQL Output: SELECT paper_type FROM table_name_11 WHERE first_day_cover_cancellation = 'ottawa' AND first_day_cover_cancellation = 'on', Real Output: SELECT paper_type FROM table_name_11 WHERE first_day_cover_cancellation = "ottawa, on"
+
+Index 938: SQL Output: SELECT song.song_name, song.genre_is, files.duration, files.file_size, files.formats FROM song, files WHERE song.f_id = files.f_id AND song.genre_is = 'pop' ORDER BY song.song_name;, Real Output: SELECT T1.duration, T1.file_size, T1.formats FROM files AS T1 JOIN song AS T2 ON T1.f_id = T2.f_id WHERE T2.genre_is = "pop" ORDER BY T2.song_name
+
+Index 939: SQL Output: SELECT year_started FROM table_name_30 WHERE number_of_cars > 7 AND car__number = 100, Real Output: SELECT MIN(year_started) FROM table_name_30 WHERE number_of_cars > 7 AND car__number = "100"
+
+Index 940: SQL Output: SELECT year FROM table_name_15 WHERE issue_price = '1089.95' AND mintage < '900', Real Output: SELECT SUM(year) FROM table_name_15 WHERE issue_price = "$1089.95" AND mintage < 900
+
+Index 941: SQL Output: SELECT Fname FROM student WHERE stuid IN (SELECT stuid FROM has_pet WHERE petid IN (SELECT petid FROM pets WHERE pettype = 'cat') AND petid IN (SELECT petid FROM pets WHERE pettype = 'dog'));, Real Output: SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid = T2.stuid JOIN pets AS T3 ON T3.petid = T2.petid WHERE T3.pettype = 'dog'
+
+Index 942: SQL Output: SELECT home_team FROM table_name_71 WHERE away_team = 'Manly', Real Output: SELECT home_team FROM table_name_71 WHERE away_team = "manly"
+
+Index 943: SQL Output: SELECT MIN(attendance) FROM table_name_21 WHERE points > 14 AND arena = 'Staples Center Arena', Real Output: SELECT MIN(attendance) FROM table_name_21 WHERE points > 14 AND arena = "staples center"
+
+Index 944: SQL Output: SELECT MAX(week) FROM table_name_90 WHERE opponent = 'Atlanta Falcons', Real Output: SELECT MAX(week) FROM table_name_90 WHERE opponent = "atlanta falcons"
+
+Index 945: SQL Output: SELECT * FROM table_name_71 WHERE driver = 'John Watson' AND grid < 11, Real Output: SELECT AVG(laps) FROM table_name_71 WHERE driver = "john watson" AND grid < 11
+
+Index 946: SQL Output: SELECT film FROM table_name_49 WHERE country = 'Spain', Real Output: SELECT film FROM table_name_49 WHERE country = "spain"
+
+Index 947: SQL Output: SELECT music_director FROM table_name_3 WHERE year = '1994', Real Output: SELECT music_director FROM table_name_3 WHERE year = 1994
+
+Index 948: SQL Output: SELECT text_of_notes FROM Assessment_Notes WHERE teacher_id IN (SELECT teacher_id FROM Teachers WHERE last_name = 'Schuster');, Real Output: SELECT T1.text_of_notes FROM Assessment_Notes AS T1 JOIN Teachers AS T2 ON T1.teacher_id = T2.teacher_id WHERE T2.last_name = "Schuster"
+
+Index 949: SQL Output: SELECT season FROM table_name_72 WHERE races > 14 AND podiums > 4 ORDER BY season ASC LIMIT 1, Real Output: SELECT MIN(season) FROM table_name_72 WHERE races > 14 AND podiums > 4
+
+Index 950: SQL Output: SELECT score FROM table_name_71 WHERE game > 76 AND location_attendance = 'madison square garden 19,763' AND high_rebounds = 'wilson chandler (8)', Real Output: SELECT score FROM table_name_71 WHERE game > 76 AND location_attendance = "madison square garden 19,763" AND high_rebounds = "wilson chandler (8)"
+
+Index 951: SQL Output: SELECT COUNT(*) FROM table_26240046_1 WHERE played_by = 'Morgan the Dog', Real Output: SELECT MAX(season_3) FROM table_26240046_1 WHERE played_by = "Morgan the Dog"
+
+Index 952: SQL Output: SELECT family_families FROM table_19897294_5 WHERE no_overall = '1', Real Output: SELECT family_families FROM table_19897294_5 WHERE no_overall = "UK17"
+
+Index 953: SQL Output: SELECT lane FROM table_name_84 WHERE react = '0.209' AND rank > '6', Real Output: SELECT lane FROM table_name_84 WHERE react > 0.209 AND rank > 6
+
+Index 954: SQL Output: SELECT partner FROM table_name_94 WHERE opponents_in_the_final = 'Serena Williams Venus Williams', Real Output: SELECT partner FROM table_name_94 WHERE opponents_in_the_final = "serena williams venus williams"
+
+Index 955: SQL Output: SELECT year FROM table_141541_5 WHERE change = '+8.0%', Real Output: SELECT year FROM table_141541_5 WHERE change = "+8.0%"
+
+Index 956: SQL Output: SELECT overall FROM table_13110459_2 WHERE viewers__m_ = '2.61', Real Output: SELECT overall FROM table_13110459_2 WHERE viewers__m_ = "2.61"
+
+Index 957: SQL Output: SELECT * FROM table_name_33 WHERE aggregate = '4-2', Real Output: SELECT 1 AS st_leg FROM table_name_33 WHERE aggregate = "4-2"
+
+Index 958: SQL Output: SELECT country FROM table_name_37 WHERE year_s__won = '1964', Real Output: SELECT country FROM table_name_37 WHERE year_s__won = "1964"
+
+Index 959: SQL Output: SELECT MIN(crowd) FROM table_name_25 WHERE away_team = 'st kilda', Real Output: SELECT MIN(crowd) FROM table_name_25 WHERE away_team = "st kilda"
+
+Index 960: SQL Output: SELECT race FROM table_name_48 WHERE pole_position = 'Niki Lauda', Real Output: SELECT race AS Winner FROM table_name_48 WHERE pole_position = "niki lauda"
+
+Index 961: SQL Output: SELECT country, name, status, moving_to FROM table_name_85 WHERE status = 'transferred' OR status = 'released' OR name = 'Solano', Real Output: SELECT country FROM table_name_85 WHERE status = "transferred" AND moving_to = "released" AND name = "solano"
+
+Index 962: SQL Output: SELECT candidate_id FROM candidates WHERE candidate_id = 'stanley.monahan@example.org', Real Output: SELECT T2.candidate_id FROM people AS T1 JOIN candidates AS T2 ON T1.person_id = T2.candidate_id WHERE T1.email_address = "stanley.monahan@example.org"
+
+Index 963: SQL Output: SELECT SUM(pick) FROM table_name_3 WHERE college = 'texas a&i' AND round > 1, Real Output: SELECT SUM(pick) FROM table_name_3 WHERE college = "texas a&i" AND round > 1
+
+Index 964: SQL Output: SELECT date FROM table_name_92 WHERE opponent = 'Diamondbacks' AND score = '2-7', Real Output: SELECT date FROM table_name_92 WHERE opponent = "diamondbacks" AND score = "2-7"
+
+Index 965: SQL Output: SELECT round FROM table_name_12 WHERE nhl_team = 'edmonton oilers' AND player = 'vyacheslav trukhno', Real Output: SELECT AVG(round) FROM table_name_12 WHERE nhl_team = "edmonton oilers" AND player = "vyacheslav trukhno"
+
+Index 966: SQL Output: SELECT country FROM table_name_22 WHERE swimsuit > 9.46 AND interview > 9.22 AND average < 9.6, Real Output: SELECT country FROM table_name_22 WHERE average < 9.6 AND interview > 9.22 AND swimsuit > 9.46
+
+Index 968: SQL Output: SELECT elimination FROM table_name_28 WHERE wrestler = 'Regal', Real Output: SELECT elimination AS Move FROM table_name_28 WHERE wrestler = "regal"
+
+Index 969: SQL Output: SELECT score FROM table_name_53 WHERE player = 'Lew Worsham', Real Output: SELECT score FROM table_name_53 WHERE player = "lew worsham"
+
+Index 970: SQL Output: SELECT country FROM table_1506950_4 WHERE tournament = 'open championship', Real Output: SELECT country FROM table_1506950_4 WHERE tournament = "The Open Championship"
+
+Index 971: SQL Output: SELECT model_name FROM table_1147701_5 WHERE engine_code = 'd5252', Real Output: SELECT model_name FROM table_1147701_5 WHERE engine_code = "D5252 T"
+
+Index 972: SQL Output: SELECT cfl_team FROM table_28059992_2 WHERE player = 'jeff traversy', Real Output: SELECT COUNT(cfl_team) FROM table_28059992_2 WHERE player = "Jeff Traversy"
+
+Index 973: SQL Output: SELECT * FROM table_2562572_30 WHERE type = 'rabe', Real Output: SELECT type FROM table_2562572_30 WHERE settlement = "Rabe"
+
+Index 974: SQL Output: SELECT area_km_2 FROM table_171236_2 WHERE census_ranking = '1,016', Real Output: SELECT area_km_2 FROM table_171236_2 WHERE census_ranking = "1,016 of 5,008"
+
+Index 975: SQL Output: SELECT round FROM table_name_85 WHERE position = 'c', Real Output: SELECT MAX(round) FROM table_name_85 WHERE position = "(c)"
+
+Index 976: SQL Output: SELECT torque FROM table_name_49 WHERE name = 'daewoo' AND power = '1.6', Real Output: SELECT torque FROM table_name_49 WHERE name = "1.6 petrol" AND power = "daewoo"
+
+Index 977: SQL Output: SELECT SUM(tonnage_grt) FROM table_name_94 WHERE date = '4 feb 16', Real Output: SELECT COUNT(tonnage_grt) FROM table_name_94 WHERE type = "cargo ship" AND date = "4 feb 16"
+
+Index 979: SQL Output: SELECT * FROM table_name_42 WHERE instrumental = 'tkven-i', Real Output: SELECT instrumental FROM table_name_42 WHERE genitive = "tkven-i"
+
+Index 980: SQL Output: SELECT rank FROM table_24431264_18 WHERE withdrew_due_to = 'right foot injury', Real Output: SELECT COUNT(rank) FROM table_24431264_18 WHERE withdrew_due_to = "right foot injury"
+
+Index 981: SQL Output: SELECT locale FROM table_21093403_1 WHERE shot_pct = '78', Real Output: SELECT locale FROM table_21093403_1 WHERE shot_pct = 78
+
+Index 982: SQL Output: SELECT * FROM table_name_6 WHERE points < 4, Real Output: SELECT entrant FROM table_name_6 WHERE engine = "ferrari v8" AND points < 4
+
+Index 983: SQL Output: SELECT lane FROM table_name_72 WHERE time = '2:08.11' AND rank > 3;, Real Output: SELECT COUNT(lane) FROM table_name_72 WHERE time = "2:08.11" AND rank > 3
+
+Index 984: SQL Output: SELECT ioc_code FROM table_2879165_1 WHERE country = 'Singapore', Real Output: SELECT ioc_code FROM table_2879165_1 WHERE country = "Singapore"
+
+Index 985: SQL Output: SELECT SUM(points) FROM table_13741576_6 WHERE points_for = 'and', Real Output: SELECT points FROM table_13741576_6 WHERE points_for = "546"
+
+Index 986: SQL Output: SELECT SUM(against) FROM table_name_75 WHERE ballarat_fl = 'East Point' AND wins < 16, Real Output: SELECT SUM(against) FROM table_name_75 WHERE ballarat_fl = "east point" AND wins < 16
+
+Index 987: SQL Output: SELECT college, overall FROM table_name_96 WHERE pick__number = '1' AND overall < '242', Real Output: SELECT COUNT(pick__number) FROM table_name_96 WHERE college = "arkansas state" AND overall < 242
+
+Index 988: SQL Output: SELECT MIN(points) FROM table_name_48 WHERE engine = 'Lamborghini v12' OR chassis = 'Minardi m191b', Real Output: SELECT MIN(points) FROM table_name_48 WHERE engine = "lamborghini v12" AND chassis = "minardi m191b"
+
+Index 989: SQL Output: SELECT score FROM table_name_5 WHERE surface = 'clay' AND date = '2006-05-29', Real Output: SELECT score FROM table_name_5 WHERE surface = "clay" AND date = "may 29, 2006"
+
+Index 990: SQL Output: SELECT score FROM table_name_82 WHERE opponent = 'milos raonic', Real Output: SELECT score FROM table_name_82 WHERE opponent = "milos raonic"
+
+Index 991: SQL Output: SELECT runners_up, winners, years_runner_up FROM table_name_9 WHERE runners_up = 'under 1' AND years_runner_up = '1985' OR years_runner_up = '1996', Real Output: SELECT runners_up FROM table_name_9 WHERE winners < 1 AND years_runner_up = "1985 , 1996"
+
+Index 992: SQL Output: SELECT original_artist FROM table_21501565_1 WHERE theme = 'N/A', Real Output: SELECT original_artist FROM table_21501565_1 WHERE theme = "N/A"
+
+Index 993: SQL Output: SELECT team FROM table_name_32 WHERE player = 'Dave Coggin', Real Output: SELECT team FROM table_name_32 WHERE player = "dave coggin"
+
+Index 994: SQL Output: SELECT january FROM table_15945862_1 WHERE june = 'June', Real Output: SELECT january FROM table_15945862_1 WHERE june = "7.34"
+
+Index 995: SQL Output: SELECT pos FROM table_name_41 WHERE name = 'Elise Norwood', Real Output: SELECT pos FROM table_name_41 WHERE name = "elise norwood"
+
+Index 996: SQL Output: SELECT bus_type FROM table_25005714_3 WHERE texture___gt__s_ = 'fillrate', Real Output: SELECT bus_type FROM table_25005714_3 WHERE texture___gt__s_ = "Fillrate"
+
+Index 997: SQL Output: SELECT * FROM table_name_51 WHERE scoring_average = 4, Real Output: SELECT AVG(scoring_average) FROM table_name_51 WHERE top_10s = 4
+
+Index 999: SQL Output: SELECT date_of_birth FROM table_22344463_2 WHERE height = '185cm' AND home_team = 'Heaton Mersey', Real Output: SELECT date_of_birth FROM table_22344463_2 WHERE height = "185cm" AND home_team = "Heaton Mersey"
+
+Accuracy: 4.20%
