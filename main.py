@@ -10,8 +10,8 @@ import yaml
 sys.path.append("model")
 sys.path.append("utils")
 
-from model import Model
-from utils import parse_prompt
+from model.model import Model
+from utils.utils import parse_prompt, extract_question_context
 
 log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
@@ -131,11 +131,11 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, context, question, answer):
+    def infer(self, model_config, context, question, answer, is_verif):
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(context, question, answer)
+            output = model.infer_model(context, question, answer, is_verif)
             logging.info("Inference Done")
             return output
         except Exception as e:
@@ -167,7 +167,7 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            self.infer(model_config, val_context, val_question, val_answer)
+            self.infer(model_config, val_context, val_question, val_answer, True)
 
             logging.info("Validation completed.")
         except Exception as e:
@@ -222,8 +222,9 @@ class Runner:
                 logger.info(model_config.__dict__)
 
                 prompt = parse_prompt(args.prompt_file)
+                question, context = extract_question_context(prompt)
 
-                result = self.infer(model_config, prompt)
+                result = self.infer(model_config, context, question, False)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required

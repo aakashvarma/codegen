@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
+from utils.utils import extract_sql_output
 
 sys.path.append("../utils")
 sys.path.append("../model_operators")
@@ -167,7 +168,7 @@ class Model:
 #             logging.error(error_message, exc_info=True)
 #             raise RuntimeError(error_message) from e
 
-    def infer_model(self, context, question, answer):
+    def infer_model(self, context, question, answer, is_verif):
         """
         Perform model inference on the provided prompt.
 
@@ -184,12 +185,7 @@ class Model:
             real_output_arr = []
             prompts = []
             answers = []
-            mini_batch = 4
-
-            logging.info("Start tokenizing prompts.")
-            for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
-                for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
-                    full_prompt = (
+            full_prompt = (
 """You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
 You must output the SQL query that answers the question.
 
@@ -201,11 +197,40 @@ You must output the SQL query that answers the question.
 
 ### Response:
 """
-                    )
-                    prompts.append(full_prompt.format(question[i], context[i]))
-                    answers.append(answer[i])
+            )
+            if(is_verif):
+                mini_batch = 4
+                logging.info("Start tokenizing prompts.")
+                for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
+                    for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
+                        prompts.append(full_prompt.format(question[i], context[i]))
+                        answers.append(answer[i])
 
-                model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
+                    model_inputs = self.tokenizer(prompts, padding=True, return_tensors="pt").to("cuda")
+
+                    logging.info("Start generating outputs.")
+                    self.model.eval()
+
+                    with torch.no_grad():
+                        generated_tokens = self.model.generate(
+                            **model_inputs, max_new_tokens=100
+                        )
+                        decoded_output = self.tokenizer.batch_decode(
+                            generated_tokens, skip_special_tokens=True
+                        )
+                        sql_output_arr.append(decoded_output)
+                        real_output_arr.append(answers)
+
+                    prompts = []
+                    answers = []
+
+                with open('output_data.pkl', 'wb') as file:
+                    pickle.dump((sql_output_arr, real_output_arr), file)
+            else:
+                logging.info("Start tokenizing prompts.")
+
+                prompt = (full_prompt.format(question, context))
+                model_inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda")
 
                 logging.info("Start generating outputs.")
                 self.model.eval()
@@ -217,15 +242,8 @@ You must output the SQL query that answers the question.
                     decoded_output = self.tokenizer.batch_decode(
                         generated_tokens, skip_special_tokens=True
                     )
-                    sql_output_arr.append(decoded_output)
-                    real_output_arr.append(answers)
-                    # print(decoded_output)
-
-                prompts = []
-                answers = []
-
-            with open('output_data.pkl', 'wb') as file:
-                pickle.dump((sql_output_arr, real_output_arr), file)
+                    sql_output = extract_sql_output(decoded_output)
+                    print("Output: ", sql_output)
 
         except Exception as e:
             error_message = f"Error during model inference: {e}"
