@@ -1,4 +1,5 @@
 import json
+import re
 
 
 def load_from_json(file_path):
@@ -35,3 +36,21 @@ def calculate_accuracy(sql_output_arr, real_output_arr):
     total_predictions = len(sql_output_arr)
     accuracy = correct_predictions / total_predictions
     return accuracy
+
+def extract_sql_output(sql_input):
+    match = re.search(r'### Response:\s*(.*?)\s*(?:###|$)', sql_input, re.DOTALL)
+    sql_query = match.group(1).strip()
+    sql_output = re.sub(r'\n\s*\n', '\n', sql_query)
+    return sql_output
+
+def extract_question_context(text):
+    context_pattern = re.compile(r'Context: (.+)', re.IGNORECASE)
+    question_pattern = re.compile(r'Input: (.+)', re.IGNORECASE)
+
+    context_match = context_pattern.search(text)
+    question_match = question_pattern.search(text)
+
+    context = context_match.group(1).strip() if context_match else None
+    question = question_match.group(1).strip() if question_match else None
+
+    return question, context
