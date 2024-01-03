@@ -140,12 +140,32 @@ You must output the SQL query that answers the question.
 
         training_arguments = self.configure_training_arguments()
 
+        def compute_metrics(pred):
+            import pdb; pdb.set_trace()
+            references = pred.label_ids
+            generated_texts = pred.predictions
+
+            # bleu_scores = []
+            # for reference, generated_text in zip(references, generated_texts):
+            #     reference_text = train_dataset[reference]['text']
+            #     bleu_score = sentence_bleu([reference_text], generated_text)
+            #     bleu_scores.append(bleu_score)
+            #
+            # return {
+            #     'bleu': sum(bleu_scores) / len(bleu_scores)
+            # }
+
+            return {
+                'bleu': "NaN"
+            }
+
         trainer = Trainer(
             model=self.model,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,
             args=training_arguments,
             data_collator=self.configure_data_collator(),
+            compute_metrics=compute_metrics
         )
 
         return trainer
@@ -173,6 +193,7 @@ You must output the SQL query that answers the question.
             warmup_ratio=self.trainer_config.warmup_ratio,
             group_by_length=True,
             lr_scheduler_type=self.trainer_config.lr_scheduler_type,
+            evaluation_strategy="epoch",
         )
 
     def configure_data_collator(self):
