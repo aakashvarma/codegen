@@ -167,11 +167,13 @@ You must output the SQL query that answers the question.
                 for idx2 in range(len(preds[idx])):
                     if preds[idx][idx2] == -100:
                         preds[idx][idx2] = 50256
+                    if labels[idx][idx2] == -100:
+                        labels[idx][idx2] = 50256
 
             decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
 
             # Replace -100 in the labels as we can't decode them.
-            labels = np.where(labels != 50256, labels, self.tokenizer.pad_token_id)
+            # labels = np.where(labels != 50256, labels, self.tokenizer.pad_token_id)
             decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
 
             return {
