@@ -6,6 +6,7 @@ import os
 import nltk
 from nltk.translate.bleu_score import sentence_bleu
 import torch
+import numpy as np
 
 
 class LLMTrainer:
@@ -143,18 +144,35 @@ You must output the SQL query that answers the question.
 
         training_arguments = self.configure_training_arguments()
 
-        def compute_metrics(pred):
-            references = pred.label_ids
-            generated_texts = pred.predictions
-            print("references:", references.size)
-            print("generated_texts:", generated_texts.size)
-            print()
-
+        def compute_metrics(eval_preds):
+            # references = pred.label_ids
+            # generated_texts = pred.predictions
+            # print("references:", references.size)
+            # print("generated_texts:", generated_texts.size)
+            # print()
+            #
             # bleu_scores = []
             # for reference, generated_text in zip(references, generated_texts):
             #     reference_text = train_dataset[reference]['text']
             #     bleu_score = sentence_bleu([reference_text], generated_text)
             #     bleu_scores.append(bleu_score)
+
+            preds, labels = eval_preds
+
+            import pdb; pdb.set_trace()
+
+            if isinstance(preds, tuple):
+                preds = preds[0]
+            for idx in range(len(preds)):
+                for idx2 in range(len(preds[idx])):
+                    if preds[idx][idx2] == -100:
+                        preds[idx][idx2] = 50256
+
+            decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
+
+            # Replace -100 in the labels as we can't decode them.
+            labels = np.where(labels != 50256, labels, self.tokenizer.pad_token_id)
+            decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
 
             return {
                 'bleu': 1
