@@ -3,6 +3,8 @@ from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
 import pickle
 import os
+import nltk
+from nltk.translate.bleu_score import sentence_bleu
 
 
 class LLMTrainer:
@@ -141,22 +143,19 @@ You must output the SQL query that answers the question.
         training_arguments = self.configure_training_arguments()
 
         def compute_metrics(pred):
-            import pdb; pdb.set_trace()
             references = pred.label_ids
             generated_texts = pred.predictions
+            print("references:", references)
+            print("generated_texts:", generated_text)
 
-            # bleu_scores = []
-            # for reference, generated_text in zip(references, generated_texts):
-            #     reference_text = train_dataset[reference]['text']
-            #     bleu_score = sentence_bleu([reference_text], generated_text)
-            #     bleu_scores.append(bleu_score)
-            #
-            # return {
-            #     'bleu': sum(bleu_scores) / len(bleu_scores)
-            # }
+            bleu_scores = []
+            for reference, generated_text in zip(references, generated_texts):
+                reference_text = train_dataset[reference]['text']
+                bleu_score = sentence_bleu([reference_text], generated_text)
+                bleu_scores.append(bleu_score)
 
             return {
-                'bleu': "NaN"
+                'bleu': sum(bleu_scores) / len(bleu_scores)
             }
 
         trainer = Trainer(
