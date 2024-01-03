@@ -146,8 +146,8 @@ You must output the SQL query that answers the question.
         def compute_metrics(pred):
             references = pred.label_ids
             generated_texts = pred.predictions
-            print("references:", references)
-            print("generated_texts:", generated_texts)
+            # print("references:", references)
+            # print("generated_texts:", generated_texts)
 
             bleu_scores = []
             for reference, generated_text in zip(references, generated_texts):
