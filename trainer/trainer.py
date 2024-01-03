@@ -79,7 +79,7 @@ class LLMTrainer:
             logging.error("Error while dumping pickle file: %s", e, exc_info=True)
             raise e
 
-        return train_dataset, eval_dataset
+        return train_dataset, validation_dataset
 
     def tokenize(self, prompt):
         """
