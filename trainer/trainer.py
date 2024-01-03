@@ -5,6 +5,7 @@ import pickle
 import os
 import nltk
 from nltk.translate.bleu_score import sentence_bleu
+import torch
 
 
 class LLMTrainer:
@@ -158,13 +159,18 @@ You must output the SQL query that answers the question.
                 'bleu': sum(bleu_scores) / len(bleu_scores)
             }
 
+        def preprocess_logits_for_metrics(logits, labels):
+            pred_ids = torch.argmax(logits, dim=-1)
+            return pred_ids, labels
+
         trainer = Trainer(
             model=self.model,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,
             args=training_arguments,
             data_collator=self.configure_data_collator(),
-            compute_metrics=compute_metrics
+            compute_metrics=compute_metrics,
+            preprocess_logits_for_metrics=preprocess_logits_for_metrics,
         )
 
         return trainer
