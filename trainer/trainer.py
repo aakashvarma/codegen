@@ -146,8 +146,8 @@ You must output the SQL query that answers the question.
         def compute_metrics(pred):
             references = pred.label_ids
             generated_texts = pred.predictions
-            print("references:", references)
-            print("generated_texts:", generated_texts)
+            print("references:", references.size)
+            print("generated_texts:", generated_texts.size)
             print()
 
             # bleu_scores = []
