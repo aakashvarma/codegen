@@ -219,6 +219,7 @@ You must output the SQL query that answers the question.
             group_by_length=True,
             lr_scheduler_type=self.trainer_config.lr_scheduler_type,
             evaluation_strategy=self.trainer_config.evaluation_strategy,
+            eval_steps=self.trainer_config.logging_steps,
         )
 
     def configure_data_collator(self):
