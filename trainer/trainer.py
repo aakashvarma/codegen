@@ -175,6 +175,8 @@ You must output the SQL query that answers the question.
             prediction_lens = [np.count_nonzero(pred != self.tokenizer.pad_token_id) for pred in preds]
             result["gen_len"] = np.mean(prediction_lens)
 
+            print(result)
+
             return result
 
 
