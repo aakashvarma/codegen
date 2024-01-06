@@ -206,11 +206,11 @@ You must output the SQL query that answers the question.
             bf16=self.trainer_config.compute_type == "bf16",
             max_grad_norm=self.trainer_config.max_grad_norm,
             # max_steps=self.trainer_config.max_steps,
-            num_train_epochs=2,
+            num_train_epochs=self.trainer_config.num_train_epochs,
             warmup_ratio=self.trainer_config.warmup_ratio,
             group_by_length=True,
             lr_scheduler_type=self.trainer_config.lr_scheduler_type,
-            evaluation_strategy="epoch",
+            evaluation_strategy=self.trainer_config.evaluation_strategy,
         )
 
     def configure_data_collator(self):
