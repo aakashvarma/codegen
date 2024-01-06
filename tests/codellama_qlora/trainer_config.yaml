@@ -6,7 +6,7 @@ trainer_config:
   gradient_accumulation_steps: 4
   optim: "paged_adamw_32bit"
   save_steps: 100
-  logging_steps: 10
+  logging_steps: 100
   learning_rate: 0.0002
   max_grad_norm: 0.3
   max_steps: 100
