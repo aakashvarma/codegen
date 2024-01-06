@@ -119,7 +119,7 @@ You must output the SQL query that answers the question.
                     generated_tokens = self.model.generate(
                         **model_inputs, max_new_tokens=100
                     )[0]
-                    decoded_output = self.tokenizer.batch_decode(
+                    decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
                     sql_output = extract_sql_output(decoded_output)
