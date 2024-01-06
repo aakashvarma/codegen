@@ -3,10 +3,9 @@ from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
 import pickle
 import os
-import nltk
-from nltk.translate.bleu_score import sentence_bleu
 import torch
 import numpy as np
+import evaluate
 
 
 class LLMTrainer:
@@ -158,6 +157,7 @@ You must output the SQL query that answers the question.
             #     bleu_scores.append(bleu_score)
 
             preds, labels = eval_preds
+            metric = evaluate.load("rouge")
 
             import pdb; pdb.set_trace()
 
@@ -171,14 +171,18 @@ You must output the SQL query that answers the question.
                         labels[idx][idx2] = 50256
 
             decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
-
-            # Replace -100 in the labels as we can't decode them.
-            # labels = np.where(labels != 50256, labels, self.tokenizer.pad_token_id)
             decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
 
-            return {
-                'bleu': 1
-            }
+            result = metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True)
+
+            # The results of the Rouge metric are then multiplied by 100 and rounded to four decimal places.
+            result = {k: round(v * 100, 4) for k, v in result.items()}
+
+            prediction_lens = [np.count_nonzero(pred != self.tokenizer.pad_token_id) for pred in preds]
+            result["gen_len"] = np.mean(prediction_lens)
+
+            return result
+
 
         def preprocess_logits_for_metrics(logits, labels):
             pred_ids = torch.argmax(logits, dim=-1)
