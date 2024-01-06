@@ -3,6 +3,9 @@ from transformers import TrainingArguments, DataCollatorForSeq2Seq, Trainer
 from datasets import load_dataset
 import pickle
 import os
+import torch
+import numpy as np
+import evaluate
 
 
 class LLMTrainer:
@@ -77,7 +80,7 @@ class LLMTrainer:
             logging.error("Error while dumping pickle file: %s", e, exc_info=True)
             raise e
 
-        return train_dataset, eval_dataset
+        return train_dataset, validation_dataset
 
     def tokenize(self, prompt):
         """
@@ -140,12 +143,45 @@ You must output the SQL query that answers the question.
 
         training_arguments = self.configure_training_arguments()
 
+        def compute_metrics(eval_preds):
+            preds, labels = eval_preds
+            metric = evaluate.load("rouge")
+
+            if isinstance(preds, tuple):
+                preds = preds[0]
+            for idx in range(len(preds)):
+                for idx2 in range(len(preds[idx])):
+                    if preds[idx][idx2] == -100:
+                        preds[idx][idx2] = 50256
+                    if labels[idx][idx2] == -100:
+                        labels[idx][idx2] = 50256
+
+            decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
+            decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
+
+            result = metric.compute(predictions=decoded_preds, references=decoded_labels, use_stemmer=True)
+
+            # The results of the Rouge metric are then multiplied by 100 and rounded to four decimal places.
+            result = {k: round(v * 100, 4) for k, v in result.items()}
+
+            prediction_lens = [np.count_nonzero(pred != self.tokenizer.pad_token_id) for pred in preds]
+            result["gen_len"] = np.mean(prediction_lens)
+
+            return result
+
+
+        def preprocess_logits_for_metrics(logits, labels):
+            pred_ids = torch.argmax(logits, dim=-1)
+            return pred_ids, labels
+
         trainer = Trainer(
             model=self.model,
             train_dataset=tokenized_train_dataset,
             eval_dataset=tokenized_val_dataset,
             args=training_arguments,
             data_collator=self.configure_data_collator(),
+            compute_metrics=compute_metrics,
+            preprocess_logits_for_metrics=preprocess_logits_for_metrics,
         )
 
         return trainer
@@ -169,10 +205,12 @@ You must output the SQL query that answers the question.
             fp16=self.trainer_config.compute_type == "fp16",
             bf16=self.trainer_config.compute_type == "bf16",
             max_grad_norm=self.trainer_config.max_grad_norm,
-            max_steps=self.trainer_config.max_steps,
+            # max_steps=self.trainer_config.max_steps,
+            num_train_epochs=self.trainer_config.num_train_epochs,
             warmup_ratio=self.trainer_config.warmup_ratio,
             group_by_length=True,
             lr_scheduler_type=self.trainer_config.lr_scheduler_type,
+            evaluation_strategy=self.trainer_config.evaluation_strategy,
         )
 
     def configure_data_collator(self):

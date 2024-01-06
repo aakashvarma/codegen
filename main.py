@@ -83,7 +83,9 @@ class TrainerConfiguration:
             max_steps=100,
             warmup_ratio=0.03,
             lr_scheduler_type="constant",
-            compute_type="fp16"
+            compute_type="fp16",
+            num_train_epochs=1,
+            evaluation_strategy='steps'
     ):
         self.dataset_name = dataset_name
         self.block_size = block_size
@@ -101,6 +103,8 @@ class TrainerConfiguration:
         self.warmup_ratio = warmup_ratio
         self.lr_scheduler_type = lr_scheduler_type
         self.compute_type = compute_type
+        self.num_train_epochs = num_train_epochs
+        self.evaluation_strategy = evaluation_strategy
 
     @classmethod
     def from_yaml(cls, yaml_path):
