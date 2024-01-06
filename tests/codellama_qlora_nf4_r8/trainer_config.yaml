@@ -1,7 +1,7 @@
 trainer_config:
   dataset_name: "b-mc2/sql-create-context"
   block_size: 512
-  model_output_dir: "tests/codellama_qlora/__run.default"
+  model_output_dir: "tests/codellama_qlora_nf4_r8/__run.default"
   per_device_train_batch_size: 4
   gradient_accumulation_steps: 4
   optim: "paged_adamw_32bit"
