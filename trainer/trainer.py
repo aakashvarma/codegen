@@ -73,6 +73,14 @@ class LLMTrainer:
         try:
             val_data_filename = "val_data.pkl"
             val_file_path = os.path.join(self.trainer_config.model_output_dir, val_data_filename)
+
+            if not os.path.exists(self.trainer_config.model_output_dir):
+                os.makedirs(self.trainer_config.model_output_dir)
+
+            if not os.path.exists(val_file_path):
+                with open(val_file_path, 'w'):
+                    pass  # This will create an empty file
+
             with open(val_file_path, "wb") as file:
                 data = {"context": val_context, "question": val_question, "answer": val_answer}
                 pickle.dump(data, file)

@@ -164,18 +164,6 @@ class Runner:
             val_input_filepath = os.path.join(validation_dir, val_input_filename)
             val_output_filepath = os.path.join(validation_dir, val_output_filename)
 
-            # Create validation directory if it doesn't exist
-            if not os.path.exists(validation_dir):
-                os.makedirs(validation_dir)
-
-            # Create validation input file if it doesn't exist
-            val_input_filepath = os.path.join(validation_dir, val_input_filename)
-            if not os.path.exists(val_input_filepath):
-                with open(val_input_filepath, 'w'):
-                    pass  # This will create an empty file
-
-            # Create validation output file if it doesn't exist
-            val_output_filepath = os.path.join(validation_dir, val_output_filename)
             if not os.path.exists(val_output_filepath):
                 with open(val_output_filepath, 'w'):
                     pass  # This will create an empty file
