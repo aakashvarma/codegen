@@ -1,0 +1,2 @@
+Input: Which Class has a Frequency MHz larger than 91.5, and a City of license of hyannis, nebraska?
+Context: CREATE TABLE table_name_12 (class VARCHAR, frequency_mhz VARCHAR, city_of_license VARCHAR)
