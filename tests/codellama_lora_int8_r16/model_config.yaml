@@ -1,6 +1,6 @@
 model_config:
   model_name: "codellama/CodeLlama-7b-hf"
-#  pretrained_model_dir: "tests/codellama_lora_int8_r16/__run.default"
+  pretrained_model_dir: "tests/codellama_lora_int8_r16/__run.default/checkpoint-15000"
   cache_dir: null
   bits: 8
   double_quant: true
