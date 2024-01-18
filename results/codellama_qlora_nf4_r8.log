@@ -1,0 +1,194 @@
+CUDA_VISIBLE_DEVICES=1 python3 main.py --model_yaml tests/codellama_qlora_nf4_r8/model_config.yaml --trainer_yaml tests/codellama_qlora_nf4_r8/trainer_config.yaml --finetune_yaml tests/codellama_qlora_nf4_r8/finetune_config.yaml --finetune |&tee codellama_qlora_nf4_r8.log
+`AnnotionFormat` is deprecated and will be removed in v4.38. Please use `transformers.image_utils.AnnotationFormat` instead.
+2024-01-06 11:32:31,500 - INFO - Starting the script.
+2024-01-06 11:32:31,507 - INFO - Model Configuration:
+2024-01-06 11:32:31,507 - INFO - {'model_name': 'codellama/CodeLlama-7b-hf', 'pretrained_model_dir': None, 'cache_dir': None, 'r': 64, 'lora_alpha': 32.0, 'lora_dropout': 0.05, 'bits': 4, 'double_quant': True, 'quant_type': 'nf4', 'trust_remote_code': False, 'use_auth_token': False, 'compute_type': 'fp16'}
+2024-01-06 11:32:31,507 - INFO - LLMTrainer Configuration:
+2024-01-06 11:32:31,507 - INFO - {'dataset_name': 'b-mc2/sql-create-context', 'block_size': 512, 'multi_gpu': False, 'tensor_parallel': False, 'model_output_dir': 'tests/codellama_qlora_nf4_r8/__run.default', 'per_device_train_batch_size': 4, 'gradient_accumulation_steps': 4, 'optim': 'paged_adamw_32bit', 'save_steps': 1000, 'logging_steps': 1000, 'learning_rate': 0.0002, 'max_grad_norm': 0.3, 'max_steps': 100, 'warmup_ratio': 0.03, 'lr_scheduler_type': 'constant', 'compute_type': 'fp16', 'num_train_epochs': 5, 'evaluation_strategy': 'steps'}
+2024-01-06 11:32:31,507 - INFO - FineTune Configuration:
+2024-01-06 11:32:31,507 - INFO - {'r': 8, 'lora_alpha': 16, 'lora_dropout': 0.05}
+2024-01-06 11:32:31,508 - INFO - Fine-tuning started.
+2024-01-06 11:32:31,508 - INFO - Setting up model for fine-tuning.
+2024-01-06 11:32:31,508 - INFO - Setting up Finetuning configuration.
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py:472: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
+2024-01-06 11:32:34,279 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.63s/it]
+2024-01-06 11:32:49,208 - INFO - Finetuning configuration successful.
+Map: 100%|██████████| 62861/62861 [00:22<00:00, 2800.86 examples/s]
+Map: 100%|██████████| 7858/7858 [00:02<00:00, 2799.67 examples/s]
+2024-01-06 11:33:39,071 - WARNING - Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+wandb: Currently logged in as: varmology. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.16.1
+wandb: Run data is saved locally in /auto/worka/aakash/llm/codegen/wandb/run-20240106_113354-sil7ygqe
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fanciful-mountain-27
+wandb: ⭐️ View project at https://wandb.ai/varmology/huggingface
+wandb: 🚀 View run at https://wandb.ai/varmology/huggingface/runs/sil7ygqe
+  0%|          | 0/19645 [00:00<?, ?it/s]You're using a CodeLlamaTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+  5%|▌         | 1000/19645 [1:14:41<20:57:28,  4.05s/it]{'loss': 0.4846, 'learning_rate': 0.0002, 'epoch': 0.25}
+                                                 2024-01-06 12:59:33,233 - INFO - Using default tokenizer.
+  5%|▌         | 1000/19645 [1:26:22<20:57:28,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 10%|█         | 2000/19645 [2:41:31<19:48:32,  4.04s/it]{'rouge1': 89.0912, 'rouge2': 81.8722, 'rougeL': 88.5355, 'rougeLsum': 88.958, 'gen_len': 404.4097734792568}
+{'eval_loss': 0.44780683517456055, 'eval_rouge1': 89.0912, 'eval_rouge2': 81.8722, 'eval_rougeL': 88.5355, 'eval_rougeLsum': 88.958, 'eval_gen_len': 404.4097734792568, 'eval_runtime': 700.6024, 'eval_samples_per_second': 11.216, 'eval_steps_per_second': 1.403, 'epoch': 0.25}
+{'loss': 0.4234, 'learning_rate': 0.0002, 'epoch': 0.51}
+                                                 2024-01-06 14:26:21,692 - INFO - Using default tokenizer.
+ 10%|█         | 2000/19645 [2:53:10<19:48:32,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 15%|█▌        | 3000/19645 [4:08:08<18:41:05,  4.04s/it]{'rouge1': 89.3165, 'rouge2': 82.3064, 'rougeL': 88.8455, 'rougeLsum': 89.2013, 'gen_len': 404.0593026215322}
+{'eval_loss': 0.4219121038913727, 'eval_rouge1': 89.3165, 'eval_rouge2': 82.3064, 'eval_rougeL': 88.8455, 'eval_rougeLsum': 89.2013, 'eval_gen_len': 404.0593026215322, 'eval_runtime': 699.0506, 'eval_samples_per_second': 11.241, 'eval_steps_per_second': 1.406, 'epoch': 0.51}
+{'loss': 0.4087, 'learning_rate': 0.0002, 'epoch': 0.76}
+                                                 2024-01-06 15:52:58,240 - INFO - Using default tokenizer.
+ 15%|█▌        | 3000/19645 [4:19:46<18:41:05,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 20%|██        | 4000/19645 [5:35:07<19:55:49,  4.59s/it]{'rouge1': 89.4012, 'rouge2': 82.4654, 'rougeL': 88.9641, 'rougeLsum': 89.2859, 'gen_len': 404.58080936625095}
+{'eval_loss': 0.4104005694389343, 'eval_rouge1': 89.4012, 'eval_rouge2': 82.4654, 'eval_rougeL': 88.9641, 'eval_rougeLsum': 89.2859, 'eval_gen_len': 404.58080936625095, 'eval_runtime': 697.752, 'eval_samples_per_second': 11.262, 'eval_steps_per_second': 1.409, 'epoch': 0.76}
+{'loss': 0.3994, 'learning_rate': 0.0002, 'epoch': 1.02}
+                                                 2024-01-06 17:19:57,268 - INFO - Using default tokenizer.
+ 20%|██        | 4000/19645 [5:46:44<19:55:49,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 25%|██▌       | 5000/19645 [7:01:48<18:44:11,  4.61s/it]{'rouge1': 89.5042, 'rouge2': 82.6132, 'rougeL': 89.0911, 'rougeLsum': 89.4069, 'gen_len': 405.1273861033342}
+{'eval_loss': 0.4009837806224823, 'eval_rouge1': 89.5042, 'eval_rouge2': 82.6132, 'eval_rougeL': 89.0911, 'eval_rougeLsum': 89.4069, 'eval_gen_len': 405.1273861033342, 'eval_runtime': 697.6274, 'eval_samples_per_second': 11.264, 'eval_steps_per_second': 1.409, 'epoch': 1.02}
+{'loss': 0.38, 'learning_rate': 0.0002, 'epoch': 1.27}
+                                                 2024-01-06 18:46:38,556 - INFO - Using default tokenizer.
+ 25%|██▌       | 5000/19645 [7:13:26<18:44:11,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 31%|███       | 6000/19645 [8:28:15<17:33:29,  4.63s/it]{'rouge1': 89.5489, 'rouge2': 82.7017, 'rougeL': 89.1343, 'rougeLsum': 89.4453, 'gen_len': 405.4826927971494}
+{'eval_loss': 0.3959276080131531, 'eval_rouge1': 89.5489, 'eval_rouge2': 82.7017, 'eval_rougeL': 89.1343, 'eval_rougeLsum': 89.4453, 'eval_gen_len': 405.4826927971494, 'eval_runtime': 698.2893, 'eval_samples_per_second': 11.253, 'eval_steps_per_second': 1.408, 'epoch': 1.27}
+{'loss': 0.3752, 'learning_rate': 0.0002, 'epoch': 1.53}
+                                                 2024-01-06 20:13:05,148 - INFO - Using default tokenizer.
+ 31%|███       | 6000/19645 [8:39:53<17:33:29,  4/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 36%|███▌      | 7000/19645 [9:54:31<16:03:55,  4.57s/it]{'rouge1': 89.6169, 'rouge2': 82.7577, 'rougeL': 89.2042, 'rougeLsum': 89.5117, 'gen_len': 404.93255281242045}
+{'eval_loss': 0.39087575674057007, 'eval_rouge1': 89.6169, 'eval_rouge2': 82.7577, 'eval_rougeL': 89.2042, 'eval_rougeLsum': 89.5117, 'eval_gen_len': 404.93255281242045, 'eval_runtime': 697.6766, 'eval_samples_per_second': 11.263, 'eval_steps_per_second': 1.409, 'epoch': 1.53}
+{'loss': 0.3733, 'learning_rate': 0.0002, 'epoch': 1.78}
+                                                 2024-01-06 21:39:21,037 - INFO - Using default tokenizer.
+ 36%|███▌      | 7000/19645 [10:06:08<16:03:55,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 41%|████      | 8000/19645 [11:21:04<13:24:47,  4.15s/it]{'rouge1': 89.6655, 'rouge2': 82.8356, 'rougeL': 89.2508, 'rougeLsum': 89.5515, 'gen_len': 405.2504454059557}
+{'eval_loss': 0.38696014881134033, 'eval_rouge1': 89.6655, 'eval_rouge2': 82.8356, 'eval_rougeL': 89.2508, 'eval_rougeLsum': 89.5515, 'eval_gen_len': 405.2504454059557, 'eval_runtime': 696.8054, 'eval_samples_per_second': 11.277, 'eval_steps_per_second': 1.411, 'epoch': 1.78}
+{'loss': 0.3663, 'learning_rate': 0.0002, 'epoch': 2.04}
+                                                 2024-01-06 23:05:53,076 - INFO - Using default tokenizer.
+ 41%|████      | 8000/19645 [11:32:40<13:24:47,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 46%|████▌     | 9000/19645 [12:47:23<12:13:47,  4.14s/it]{'rouge1': 89.623, 'rouge2': 82.8027, 'rougeL': 89.2164, 'rougeLsum': 89.5151, 'gen_len': 404.62522270297785}
+{'eval_loss': 0.384656697511673, 'eval_rouge1': 89.623, 'eval_rouge2': 82.8027, 'eval_rougeL': 89.2164, 'eval_rougeLsum': 89.5151, 'eval_gen_len': 404.62522270297785, 'eval_runtime': 696.0397, 'eval_samples_per_second': 11.29, 'eval_steps_per_second': 1.412, 'epoch': 2.04}
+{'loss': 0.3462, 'learning_rate': 0.0002, 'epoch': 2.29}
+                                                 2024-01-07 00:32:13,515 - INFO - Using default tokenizer.
+ 46%|████▌     | 9000/19645 [12:59:01<12:13:47,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 51%|█████     | 10000/19645 [14:14:15<11:03:52,  4.13s/it]{'rouge1': 89.692, 'rouge2': 82.8431, 'rougeL': 89.2851, 'rougeLsum': 89.5888, 'gen_len': 404.4492237210486}
+{'eval_loss': 0.38356342911720276, 'eval_rouge1': 89.692, 'eval_rouge2': 82.8431, 'eval_rougeL': 89.2851, 'eval_rougeLsum': 89.5888, 'eval_gen_len': 404.4492237210486, 'eval_runtime': 697.8967, 'eval_samples_per_second': 11.26, 'eval_steps_per_second': 1.409, 'epoch': 2.29}
+{'loss': 0.3465, 'learning_rate': 0.0002, 'epoch': 2.55}
+                                                 2024-01-07 01:59:05,327 - INFO - Using default tokenizer.
+ 51%|█████     | 10000/19645 [14:25:53<11:03:52, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 56%|█████▌    | 11000/19645 [15:40:48<9:55:53,  4.14s/it]{'rouge1': 89.6918, 'rouge2': 82.891, 'rougeL': 89.3049, 'rougeLsum': 89.5903, 'gen_len': 404.22664800203614}
+{'eval_loss': 0.3800300359725952, 'eval_rouge1': 89.6918, 'eval_rouge2': 82.891, 'eval_rougeL': 89.3049, 'eval_rougeLsum': 89.5903, 'eval_gen_len': 404.22664800203614, 'eval_runtime': 697.845, 'eval_samples_per_second': 11.26, 'eval_steps_per_second': 1.409, 'epoch': 2.55}
+{'loss': 0.348, 'learning_rate': 0.0002, 'epoch': 2.8}
+                                                 2024-01-07 03:25:36,622 - INFO - Using default tokenizer.
+ 56%|█████▌    | 11000/19645 [15:52:25<9:55:53,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 61%|██████    | 12000/19645 [17:07:15<10:14:42,  4.82s/it]{'rouge1': 89.749, 'rouge2': 82.9432, 'rougeL': 89.3504, 'rougeLsum': 89.6421, 'gen_len': 404.1140239246628}
+{'eval_loss': 0.3770987093448639, 'eval_rouge1': 89.749, 'eval_rouge2': 82.9432, 'eval_rougeL': 89.3504, 'eval_rougeLsum': 89.6421, 'eval_gen_len': 404.1140239246628, 'eval_runtime': 697.1687, 'eval_samples_per_second': 11.271, 'eval_steps_per_second': 1.41, 'epoch': 2.8}
+{'loss': 0.342, 'learning_rate': 0.0002, 'epoch': 3.05}
+                                                 2024-01-07 04:52:04,446 - INFO - Using default tokenizer.
+ 61%|██████    | 12000/19645 [17:18:52<10:14:42, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 66%|██████▌   | 13000/19645 [18:33:52<8:54:21,  4.82s/it]{'rouge1': 89.7259, 'rouge2': 82.9627, 'rougeL': 89.3545, 'rougeLsum': 89.6239, 'gen_len': 404.5739373886485}
+{'eval_loss': 0.37940025329589844, 'eval_rouge1': 89.7259, 'eval_rouge2': 82.9627, 'eval_rougeL': 89.3545, 'eval_rougeLsum': 89.6239, 'eval_gen_len': 404.5739373886485, 'eval_runtime': 697.0342, 'eval_samples_per_second': 11.273, 'eval_steps_per_second': 1.41, 'epoch': 3.05}
+{'loss': 0.3232, 'learning_rate': 0.0002, 'epoch': 3.31}
+                                                 2024-01-07 06:18:42,080 - INFO - Using default tokenizer.
+ 66%|██████▌   | 13000/19645 [18:45:30<8:54:21,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 71%|███████▏  | 14000/19645 [20:00:09<7:33:56,  4.82s/it]{'rouge1': 89.7412, 'rouge2': 82.9553, 'rougeL': 89.3533, 'rougeLsum': 89.6373, 'gen_len': 404.1962331382031}
+{'eval_loss': 0.3773253262042999, 'eval_rouge1': 89.7412, 'eval_rouge2': 82.9553, 'eval_rougeL': 89.3533, 'eval_rougeLsum': 89.6373, 'eval_gen_len': 404.1962331382031, 'eval_runtime': 697.7733, 'eval_samples_per_second': 11.262, 'eval_steps_per_second': 1.409, 'epoch': 3.31}
+{'loss': 0.3236, 'learning_rate': 0.0002, 'epoch': 3.56}
+                                                 2024-01-07 07:44:58,841 - INFO - Using default tokenizer.
+ 71%|███████▏  | 14000/19645 [20:11:46<7:33:56,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 76%|███████▋  | 15000/19645 [21:26:25<6:12:06,  4.81s/it]{'rouge1': 89.7998, 'rouge2': 83.0311, 'rougeL': 89.4183, 'rougeLsum': 89.6999, 'gen_len': 405.2505726648002}
+{'eval_loss': 0.3758237063884735, 'eval_rouge1': 89.7998, 'eval_rouge2': 83.0311, 'eval_rougeL': 89.4183, 'eval_rougeLsum': 89.6999, 'eval_gen_len': 405.2505726648002, 'eval_runtime': 696.8779, 'eval_samples_per_second': 11.276, 'eval_steps_per_second': 1.411, 'epoch': 3.56}
+{'loss': 0.3236, 'learning_rate': 0.0002, 'epoch': 3.82}
+                                                 2024-01-07 09:11:15,162 - INFO - Using default tokenizer.
+ 76%|███████▋  | 15000/19645 [21:38:03<6:12:06,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 81%|████████▏ | 16000/19645 [22:53:00<4:17:24,  4.24s/it]{'rouge1': 89.8122, 'rouge2': 83.0516, 'rougeL': 89.4271, 'rougeLsum': 89.7106, 'gen_len': 404.51438024942735}
+{'eval_loss': 0.3727772533893585, 'eval_rouge1': 89.8122, 'eval_rouge2': 83.0516, 'eval_rougeL': 89.4271, 'eval_rougeLsum': 89.7106, 'eval_gen_len': 404.51438024942735, 'eval_runtime': 698.1369, 'eval_samples_per_second': 11.256, 'eval_steps_per_second': 1.408, 'epoch': 3.82}
+{'loss': 0.3186, 'learning_rate': 0.0002, 'epoch': 4.07}
+                                                 2024-01-07 10:37:50,819 - INFO - Using default tokenizer.
+ 81%|████████▏ | 16000/19645 [23:04:38<4:17:24,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 87%|████████▋ | 17000/19645 [24:19:37<3:07:43,  4.26s/it]{'rouge1': 89.7166, 'rouge2': 82.9469, 'rougeL': 89.3413, 'rougeLsum': 89.6173, 'gen_len': 404.6410027996946}
+{'eval_loss': 0.3778788447380066, 'eval_rouge1': 89.7166, 'eval_rouge2': 82.9469, 'eval_rougeL': 89.3413, 'eval_rougeLsum': 89.6173, 'eval_gen_len': 404.6410027996946, 'eval_runtime': 698.0731, 'eval_samples_per_second': 11.257, 'eval_steps_per_second': 1.408, 'epoch': 4.07}
+{'loss': 0.3011, 'learning_rate': 0.0002, 'epoch': 4.33}
+                                                 2024-01-07 12:04:27,578 - INFO - Using default tokenizer.
+ 87%|████████▋ | 17000/19645 [24:31:15<3:07:43,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 92%|█████████▏| 18000/19645 [25:46:12<1:56:14,  4.24s/it]{'rouge1': 89.7508, 'rouge2': 82.9622, 'rougeL': 89.3642, 'rougeLsum': 89.6502, 'gen_len': 404.82667345380503}
+{'eval_loss': 0.37691792845726013, 'eval_rouge1': 89.7508, 'eval_rouge2': 82.9622, 'eval_rougeL': 89.3642, 'eval_rougeLsum': 89.6502, 'eval_gen_len': 404.82667345380503, 'eval_runtime': 697.7684, 'eval_samples_per_second': 11.262, 'eval_steps_per_second': 1.409, 'epoch': 4.33}
+{'loss': 0.3046, 'learning_rate': 0.0002, 'epoch': 4.58}
+                                                 2024-01-07 13:31:01,065 - INFO - Using default tokenizer.
+ 92%|█████████▏| 18000/19645 [25:57:48<1:56:14,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 97%|█████████▋| 19000/19645 [27:12:22<46:05,  4.29s/it]{'rouge1': 89.7857, 'rouge2': 83.0025, 'rougeL': 89.4025, 'rougeLsum': 89.6825, 'gen_len': 404.51667090862816}
+{'eval_loss': 0.37347176671028137, 'eval_rouge1': 89.7857, 'eval_rouge2': 83.0025, 'eval_rougeL': 89.4025, 'eval_rougeLsum': 89.6825, 'eval_gen_len': 404.51667090862816, 'eval_runtime': 696.8794, 'eval_samples_per_second': 11.276, 'eval_steps_per_second': 1.411, 'epoch': 4.58}
+{'loss': 0.3074, 'learning_rate': 0.0002, 'epoch': 4.84}
+                                                 2024-01-07 14:57:11,755 - INFO - Using default tokenizer.
+ 97%|█████████▋| 19000/19645 [27:23:59<46:05,  4./auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+100%|██████████| 19645/19645 [28:11:57<00:00,  5.17s/it]
+{'rouge1': 89.7815, 'rouge2': 83.0074, 'rougeL': 89.4017, 'rougeLsum': 89.6849, 'gen_len': 404.2235937897684}
+{'eval_loss': 0.3715403378009796, 'eval_rouge1': 89.7815, 'eval_rouge2': 83.0074, 'eval_rougeL': 89.4017, 'eval_rougeLsum': 89.6849, 'eval_gen_len': 404.2235937897684, 'eval_runtime': 696.7867, 'eval_samples_per_second': 11.277, 'eval_steps_per_second': 1.411, 'epoch': 4.84}
+{'train_runtime': 101522.7529, 'train_samples_per_second': 3.096, 'train_steps_per_second': 0.194, 'train_loss': 0.35597940951274776, 'epoch': 5.0}
+2024-01-07 15:45:54,725 - INFO - Finetuned model saved to: tests/codellama_qlora_nf4_r8/__run.default
+2024-01-07 15:45:54,726 - INFO - Fine-tuning completed.
+2024-01-07 15:45:54,726 - INFO - Script completed fine-tuning successfully.
+wandb:
+wandb: Run history:
+wandb:                   eval/gen_len ▃▁▄▆█▅▇▄▃▂▁▄▂▇▃▄▅▃▂
+wandb:                      eval/loss █▆▅▄▃▃▂▂▂▂▂▂▂▁▁▂▁▁▁
+wandb:                    eval/rouge1 ▁▃▄▅▅▆▇▆▇▇▇▇▇██▇▇██
+wandb:                    eval/rouge2 ▁▄▅▅▆▆▇▇▇▇▇▇▇██▇▇██
+wandb:                    eval/rougeL ▁▃▄▅▆▆▇▆▇▇▇▇▇██▇███
+wandb:                 eval/rougeLsum ▁▃▄▅▆▆▇▆▇▇▇▇▇██▇▇██
+wandb:                   eval/runtime █▆▄▃▄▄▂▁▄▄▃▃▄▂▄▄▄▂▂
+wandb:        eval/samples_per_second ▁▃▅▆▅▅▇█▅▅▆▆▅▇▅▅▅▇▇
+wandb:          eval/steps_per_second ▁▃▆▆▅▆▇█▆▆▆▆▆▇▅▅▆▇▇
+wandb:                    train/epoch ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:              train/global_step ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:            train/learning_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                     train/loss █▆▅▅▄▄▄▃▃▃▃▃▂▂▂▂▁▁▁
+wandb:               train/total_flos ▁
+wandb:               train/train_loss ▁
+wandb:            train/train_runtime ▁
+wandb: train/train_samples_per_second ▁
+wandb:   train/train_steps_per_second ▁
+wandb:
+wandb: Run summary:
+wandb:                   eval/gen_len 404.22359
+wandb:                      eval/loss 0.37154
+wandb:                    eval/rouge1 89.7815
+wandb:                    eval/rouge2 83.0074
+wandb:                    eval/rougeL 89.4017
+wandb:                 eval/rougeLsum 89.6849
+wandb:                   eval/runtime 696.7867
+wandb:        eval/samples_per_second 11.277
+wandb:          eval/steps_per_second 1.411
+wandb:                    train/epoch 5.0
+wandb:              train/global_step 19645
+wandb:            train/learning_rate 0.0002
+wandb:                     train/loss 0.3074
+wandb:               train/total_flos 1.7583193127868826e+18
+wandb:               train/train_loss 0.35598
+wandb:            train/train_runtime 101522.7529
+wandb: train/train_samples_per_second 3.096
+wandb:   train/train_steps_per_second 0.194
+wandb:
+wandb: 🚀 View run fanciful-mountain-27 at: https://wandb.ai/varmology/huggingface/runs/sil7ygqe
+wandb: ️⚡ View job at https://wandb.ai/varmology/huggingface/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyNTYzMTA0MQ==/version_details/v22
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240106_113354-sil7ygqe/logs

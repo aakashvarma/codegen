@@ -1,0 +1,236 @@
+ CUDA_VISIBLE_DEVICES=1 python3 main.py --model_yaml tests/codellama_lora_int8_r1/model_config.yaml --trainer_yaml tests/codellama_lora_int8_r1/trainer_config.yaml --finetune_yaml tests/codellama_lora_int8_r1/finetune_config.yaml --finetune |&tee codellama_lora_int8_r1.log
+
+`AnnotionFormat` is deprecated and will be removed in v4.38. Please use `transformers.image_utils.AnnotationFormat` instead.
+2024-01-09 06:56:49,396 - INFO - Starting the script.
+2024-01-09 06:56:49,400 - INFO - Model Configuration:
+2024-01-09 06:56:49,400 - INFO - {'model_name': 'codellama/CodeLlama-7b-hf', 'pretrained_model_dir': None, 'cache_dir': None, 'r': 64, 'lora_alpha': 32.0, 'lora_dropout': 0.05, 'bits': 8, 'double_quant': True, 'quant_type': 'nf4', 'trust_remote_code': False, 'use_auth_token': False, 'compute_type': 'fp16'}
+2024-01-09 06:56:49,400 - INFO - LLMTrainer Configuration:
+2024-01-09 06:56:49,400 - INFO - {'dataset_name': 'b-mc2/sql-create-context', 'block_size': 512, 'multi_gpu': False, 'tensor_parallel': False, 'model_output_dir': 'tests/codellama_lora_int8_r1/__run.default', 'per_device_train_batch_size': 4, 'gradient_accumulation_steps': 4, 'optim': 'paged_adamw_32bit', 'save_steps': 1000, 'logging_steps': 1000, 'learning_rate': 0.0002, 'max_grad_norm': 0.3, 'max_steps': 100, 'warmup_ratio': 0.03, 'lr_scheduler_type': 'constant', 'compute_type': 'fp16', 'num_train_epochs': 5, 'evaluation_strategy': 'steps'}
+2024-01-09 06:56:49,400 - INFO - FineTune Configuration:
+2024-01-09 06:56:49,400 - INFO - {'r': 1, 'lora_alpha': 2, 'lora_dropout': 0.05}
+2024-01-09 06:56:49,400 - INFO - Fine-tuning started.
+2024-01-09 06:56:49,400 - INFO - Setting up model for fine-tuning.
+2024-01-09 06:56:49,400 - INFO - Setting up Finetuning configuration.
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py:472: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
+2024-01-09 06:56:53,436 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards: 100%|██████████| 2/2 [00:07<00:00,  3.73s/it]
+2024-01-09 06:57:12,229 - INFO - Finetuning configuration successful.
+Map: 100%|██████████| 62861/62861 [00:24<00:00, 2599.73 examples/s]
+Map: 100%|██████████| 7858/7858 [00:03<00:00, 2515.80 examples/s]
+2024-01-09 06:58:29,972 - WARNING - Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+wandb: Currently logged in as: varmology. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.16.1
+wandb: Run data is saved locally in /auto/worka/aakash/llm/codegen/wandb/run-20240109_065844-8ejuketm
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run earnest-valley-30
+wandb: ⭐️ View project at https://wandb.ai/varmology/huggingface
+wandb: 🚀 View run at https://wandb.ai/varmology/huggingface/runs/8ejuketm
+  0%|          | 0/19645 [00:00<?, ?it/s]You're using a CodeLlamaTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+  5%|▌         | 1000/19645 [1:39:46<27:48:48,  5.37s/it]{'loss': 0.5347, 'learning_rate': 0.0002, 'epoch': 0.25}
+                                                 2024-01-09 08:47:02,151 - INFO - Using default tokenizer.
+  5%|▌         | 1000/19645 [1:49:02<27:48:48,  5/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 10%|█         | 2000/19645 [3:28:47<25:52:49,  5.28s/it]{'rouge1': 88.7852, 'rouge2': 81.4655, 'rougeL': 88.2083, 'rougeLsum': 88.656, 'gen_len': 325.7144311529651}
+{'eval_loss': 0.4694322645664215, 'eval_rouge1': 88.7852, 'eval_rouge2': 81.4655, 'eval_rougeL': 88.2083, 'eval_rougeLsum': 88.656, 'eval_gen_len': 325.7144311529651, 'eval_runtime': 556.0926, 'eval_samples_per_second': 14.131, 'eval_steps_per_second': 1.768, 'epoch': 0.25}
+{'loss': 0.4449, 'learning_rate': 0.0002, 'epoch': 0.51}
+                                                 2024-01-09 10:36:03,875 - INFO - Using default tokenizer.
+ 10%|█         | 2000/19645 [3:38:04<25:52:49,  5/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 15%|█▌        | 3000/19645 [5:17:53<24:07:39,  5.22s/it]{'rouge1': 89.0389, 'rouge2': 81.8886, 'rougeL': 88.5472, 'rougeLsum': 88.9218, 'gen_len': 325.03919572410285}
+{'eval_loss': 0.44542765617370605, 'eval_rouge1': 89.0389, 'eval_rouge2': 81.8886, 'eval_rougeL': 88.5472, 'eval_rougeLsum': 88.9218, 'eval_gen_len': 325.03919572410285, 'eval_runtime': 557.1334, 'eval_samples_per_second': 14.104, 'eval_steps_per_second': 1.764, 'epoch': 0.51}
+{'loss': 0.4317, 'learning_rate': 0.0002, 'epoch': 0.76}
+                                                 2024-01-09 12:25:08,761 - INFO - Using default tokenizer.
+ 15%|█▌        | 3000/19645 [5:27:09<24:07:39,  5/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 20%|██        | 4000/19645 [7:07:02<26:34:42,  6.12s/it]{'rouge1': 89.0835, 'rouge2': 81.9323, 'rougeL': 88.5943, 'rougeLsum': 88.9599, 'gen_len': 326.5327055230338}
+{'eval_loss': 0.4355357587337494, 'eval_rouge1': 89.0835, 'eval_rouge2': 81.9323, 'eval_rougeL': 88.5943, 'eval_rougeLsum': 88.9599, 'eval_gen_len': 326.5327055230338, 'eval_runtime': 555.8943, 'eval_samples_per_second': 14.136, 'eval_steps_per_second': 1.768, 'epoch': 0.76}
+{'loss': 0.4232, 'learning_rate': 0.0002, 'epoch': 1.02}
+                                                 2024-01-09 14:14:16,689 - INFO - Using default tokenizer.
+ 20%|██        | 4000/19645 [7:16:17<26:34:42,  6/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 25%|██▌       | 5000/19645 [8:55:44<24:59:22,  6.14s/it]{'rouge1': 89.2089, 'rouge2': 82.1956, 'rougeL': 88.7593, 'rougeLsum': 89.0943, 'gen_len': 326.0360142529906}
+{'eval_loss': 0.4218445420265198, 'eval_rouge1': 89.2089, 'eval_rouge2': 82.1956, 'eval_rougeL': 88.7593, 'eval_rougeLsum': 89.0943, 'eval_gen_len': 326.0360142529906, 'eval_runtime': 555.0749, 'eval_samples_per_second': 14.157, 'eval_steps_per_second': 1.771, 'epoch': 1.02}
+{'loss': 0.4105, 'learning_rate': 0.0002, 'epoch': 1.27}
+                                                 2024-01-09 16:02:59,539 - INFO - Using default tokenizer.
+ 25%|██▌       | 5000/19645 [9:05:00<24:59:22,  6/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 31%|███       | 6000/19645 [10:44:37<23:19:44,  6.15s/it]{'rouge1': 89.3699, 'rouge2': 82.3352, 'rougeL': 88.8884, 'rougeLsum': 89.2495, 'gen_len': 326.3715958259099}
+{'eval_loss': 0.4178112745285034, 'eval_rouge1': 89.3699, 'eval_rouge2': 82.3352, 'eval_rougeL': 88.8884, 'eval_rougeLsum': 89.2495, 'eval_gen_len': 326.3715958259099, 'eval_runtime': 556.4248, 'eval_samples_per_second': 14.122, 'eval_steps_per_second': 1.767, 'epoch': 1.27}
+{'loss': 0.406, 'learning_rate': 0.0002, 'epoch': 1.53}
+                                                 2024-01-09 17:51:50,760 - INFO - Using default tokenizer.
+ 31%|███       | 6000/19645 [10:53:51<23:19:44,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 36%|███▌      | 7000/19645 [12:33:30<21:37:27,  6.16s/it]{'rouge1': 89.3928, 'rouge2': 82.3738, 'rougeL': 88.9241, 'rougeLsum': 89.2766, 'gen_len': 326.7948587426826}
+{'eval_loss': 0.41338101029396057, 'eval_rouge1': 89.3928, 'eval_rouge2': 82.3738, 'eval_rougeL': 88.9241, 'eval_rougeLsum': 89.2766, 'eval_gen_len': 326.7948587426826, 'eval_runtime': 554.3772, 'eval_samples_per_second': 14.174, 'eval_steps_per_second': 1.773, 'epoch': 1.53}
+{'loss': 0.405, 'learning_rate': 0.0002, 'epoch': 1.78}
+                                                 2024-01-09 19:40:46,848 - INFO - Using default tokenizer.
+ 36%|███▌      | 7000/19645 [12:42:47<21:37:27,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 41%|████      | 8000/19645 [14:22:21<17:28:49,  5.40s/it]{'rouge1': 89.4686, 'rouge2': 82.4516, 'rougeL': 88.9729, 'rougeLsum': 89.3412, 'gen_len': 326.42402646983965}
+{'eval_loss': 0.4097710847854614, 'eval_rouge1': 89.4686, 'eval_rouge2': 82.4516, 'eval_rougeL': 88.9729, 'eval_rougeLsum': 89.3412, 'eval_gen_len': 326.42402646983965, 'eval_runtime': 556.7166, 'eval_samples_per_second': 14.115, 'eval_steps_per_second': 1.766, 'epoch': 1.78}
+{'loss': 0.4005, 'learning_rate': 0.0002, 'epoch': 2.04}
+                                                 2024-01-09 21:29:36,300 - INFO - Using default tokenizer.
+ 41%|████      | 8000/19645 [14:31:36<17:28:49,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 46%|████▌     | 9000/19645 [16:12:09<16:10:01,  5.47s/it]{'rouge1': 89.3754, 'rouge2': 82.4473, 'rougeL': 88.9561, 'rougeLsum': 89.2705, 'gen_len': 327.0451768897938}
+{'eval_loss': 0.4072003960609436, 'eval_rouge1': 89.3754, 'eval_rouge2': 82.4473, 'eval_rougeL': 88.9561, 'eval_rougeLsum': 89.2705, 'eval_gen_len': 327.0451768897938, 'eval_runtime': 555.9152, 'eval_samples_per_second': 14.135, 'eval_steps_per_second': 1.768, 'epoch': 2.04}
+{'loss': 0.3927, 'learning_rate': 0.0002, 'epoch': 2.29}
+                                                 2024-01-09 23:19:25,335 - INFO - Using default tokenizer.
+ 46%|████▌     | 9000/19645 [16:21:25<16:10:01,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 51%|█████     | 10000/19645 [18:01:11<14:26:19,  5.39s/it]{'rouge1': 89.4421, 'rouge2': 82.5054, 'rougeL': 89.0131, 'rougeLsum': 89.3391, 'gen_len': 326.80847543904304}
+{'eval_loss': 0.40552908182144165, 'eval_rouge1': 89.4421, 'eval_rouge2': 82.5054, 'eval_rougeL': 89.0131, 'eval_rougeLsum': 89.3391, 'eval_gen_len': 326.80847543904304, 'eval_runtime': 556.0013, 'eval_samples_per_second': 14.133, 'eval_steps_per_second': 1.768, 'epoch': 2.29}
+{'loss': 0.3919, 'learning_rate': 0.0002, 'epoch': 2.55}
+                                                 2024-01-10 01:08:25,049 - INFO - Using default tokenizer.
+ 51%|█████     | 10000/19645 [18:10:25<14:26:19, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 56%|█████▌    | 11000/19645 [19:50:42<12:59:20,  5.41s/it]{'rouge1': 89.4299, 'rouge2': 82.4934, 'rougeL': 89.0113, 'rougeLsum': 89.322, 'gen_len': 326.9713667599898}
+{'eval_loss': 0.40326786041259766, 'eval_rouge1': 89.4299, 'eval_rouge2': 82.4934, 'eval_rougeL': 89.0113, 'eval_rougeLsum': 89.322, 'eval_gen_len': 326.9713667599898, 'eval_runtime': 553.8206, 'eval_samples_per_second': 14.189, 'eval_steps_per_second': 1.775, 'epoch': 2.55}
+{'loss': 0.3905, 'learning_rate': 0.0002, 'epoch': 2.8}
+                                                 2024-01-10 02:57:58,307 - INFO - Using default tokenizer.
+ 56%|█████▌    | 11000/19645 [19:59:58<12:59:20, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 61%|██████    | 12000/19645 [21:40:21<13:36:14,  6.41s/it]{'rouge1': 89.4215, 'rouge2': 82.496, 'rougeL': 88.9893, 'rougeLsum': 89.3114, 'gen_len': 326.8457622804785}
+{'eval_loss': 0.40311703085899353, 'eval_rouge1': 89.4215, 'eval_rouge2': 82.496, 'eval_rougeL': 88.9893, 'eval_rougeLsum': 89.3114, 'eval_gen_len': 326.8457622804785, 'eval_runtime': 555.7471, 'eval_samples_per_second': 14.14, 'eval_steps_per_second': 1.769, 'epoch': 2.8}
+{'loss': 0.3887, 'learning_rate': 0.0002, 'epoch': 3.05}
+                                                 2024-01-10 04:47:35,297 - INFO - Using default tokenizer.
+ 61%|██████    | 12000/19645 [21:49:35<13:36:14, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 66%|██████▌   | 13000/19645 [23:30:08<11:46:55,  6.38s/it]{'rouge1': 89.526, 'rouge2': 82.6175, 'rougeL': 89.0954, 'rougeLsum': 89.4156, 'gen_len': 327.32336472384833}
+{'eval_loss': 0.4008987843990326, 'eval_rouge1': 89.526, 'eval_rouge2': 82.6175, 'eval_rougeL': 89.0954, 'eval_rougeLsum': 89.4156, 'eval_gen_len': 327.32336472384833, 'eval_runtime': 554.3687, 'eval_samples_per_second': 14.175, 'eval_steps_per_second': 1.773, 'epoch': 3.05}
+{'loss': 0.3809, 'learning_rate': 0.0002, 'epoch': 3.31}
+                                                 2024-01-10 06:37:21,651 - INFO - Using default tokenizer.
+ 66%|██████▌   | 13000/19645 [23:39:22<11:46:55, /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 71%|███████▏  | 14000/19645 [25:18:59<9:56:04,  6.34s/it]{'rouge1': 89.4807, 'rouge2': 82.6067, 'rougeL': 89.0786, 'rougeLsum': 89.3757, 'gen_len': 327.2354288623059}
+{'eval_loss': 0.40018051862716675, 'eval_rouge1': 89.4807, 'eval_rouge2': 82.6067, 'eval_rougeL': 89.0786, 'eval_rougeLsum': 89.3757, 'eval_gen_len': 327.2354288623059, 'eval_runtime': 553.5411, 'eval_samples_per_second': 14.196, 'eval_steps_per_second': 1.776, 'epoch': 3.31}
+{'loss': 0.3827, 'learning_rate': 0.0002, 'epoch': 3.56}
+                                                 2024-01-10 08:26:13,919 - INFO - Using default tokenizer.
+ 71%|███████▏  | 14000/19645 [25:28:14<9:56:04,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 76%|███████▋  | 15000/19645 [27:08:39<8:08:41,  6.31s/it]{'rouge1': 89.5321, 'rouge2': 82.6596, 'rougeL': 89.1163, 'rougeLsum': 89.4282, 'gen_len': 327.2977856961059}
+{'eval_loss': 0.39904582500457764, 'eval_rouge1': 89.5321, 'eval_rouge2': 82.6596, 'eval_rougeL': 89.1163, 'eval_rougeLsum': 89.4282, 'eval_gen_len': 327.2977856961059, 'eval_runtime': 555.3546, 'eval_samples_per_second': 14.15, 'eval_steps_per_second': 1.77, 'epoch': 3.56}
+{'loss': 0.3822, 'learning_rate': 0.0002, 'epoch': 3.82}
+                                                 2024-01-10 10:15:52,340 - INFO - Using default tokenizer.
+ 76%|███████▋  | 15000/19645 [27:17:52<8:08:41,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 81%|████████▏ | 16000/19645 [28:57:51<5:42:37,  5.64s/it]{'rouge1': 89.5216, 'rouge2': 82.6734, 'rougeL': 89.129, 'rougeLsum': 89.4216, 'gen_len': 327.4927462458641}
+{'eval_loss': 0.39738041162490845, 'eval_rouge1': 89.5216, 'eval_rouge2': 82.6734, 'eval_rougeL': 89.129, 'eval_rougeLsum': 89.4216, 'eval_gen_len': 327.4927462458641, 'eval_runtime': 553.4626, 'eval_samples_per_second': 14.198, 'eval_steps_per_second': 1.776, 'epoch': 3.82}
+{'loss': 0.3809, 'learning_rate': 0.0002, 'epoch': 4.07}
+                                                 2024-01-10 12:05:07,105 - INFO - Using default tokenizer.
+ 81%|████████▏ | 16000/19645 [29:07:07<5:42:37,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 87%|████████▋ | 17000/19645 [30:46:47<4:08:38,  5.64s/it]{'rouge1': 89.5003, 'rouge2': 82.6068, 'rougeL': 89.0729, 'rougeLsum': 89.3922, 'gen_len': 327.54034105370323}
+{'eval_loss': 0.39650362730026245, 'eval_rouge1': 89.5003, 'eval_rouge2': 82.6068, 'eval_rougeL': 89.0729, 'eval_rougeLsum': 89.3922, 'eval_gen_len': 327.54034105370323, 'eval_runtime': 556.732, 'eval_samples_per_second': 14.115, 'eval_steps_per_second': 1.766, 'epoch': 4.07}
+{'loss': 0.3723, 'learning_rate': 0.0002, 'epoch': 4.33}
+                                                 2024-01-10 13:54:02,657 - INFO - Using default tokenizer.
+ 87%|████████▋ | 17000/19645 [30:56:03<4:08:38,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 92%|█████████▏| 18000/19645 [32:35:57<2:32:30,  5.56s/it]{'rouge1': 89.4755, 'rouge2': 82.5978, 'rougeL': 89.0639, 'rougeLsum': 89.3657, 'gen_len': 327.469585136167}
+{'eval_loss': 0.3959363102912903, 'eval_rouge1': 89.4755, 'eval_rouge2': 82.5978, 'eval_rougeL': 89.0639, 'eval_rougeLsum': 89.3657, 'eval_gen_len': 327.469585136167, 'eval_runtime': 555.8441, 'eval_samples_per_second': 14.137, 'eval_steps_per_second': 1.768, 'epoch': 4.33}
+{'loss': 0.3741, 'learning_rate': 0.0002, 'epoch': 4.58}
+                                                 2024-01-10 15:43:10,715 - INFO - Using default tokenizer.
+ 92%|█████████▏| 18000/19645 [32:45:11<2:32:30,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 97%|█████████▋| 19000/19645 [34:25:34<1:03:23,  5.90s/it]{'rouge1': 89.4802, 'rouge2': 82.5869, 'rougeL': 89.0656, 'rougeLsum': 89.3733, 'gen_len': 327.6913973021125}
+{'eval_loss': 0.3951409161090851, 'eval_rouge1': 89.4802, 'eval_rouge2': 82.5869, 'eval_rougeL': 89.0656, 'eval_rougeLsum': 89.3733, 'eval_gen_len': 327.6913973021125, 'eval_runtime': 553.4327, 'eval_samples_per_second': 14.199, 'eval_steps_per_second': 1.776, 'epoch': 4.58}
+{'loss': 0.3766, 'learning_rate': 0.0002, 'epoch': 4.84}
+                                                 2024-01-10 17:32:50,558 - INFO - Using default tokenizer.
+ 97%|█████████▋| 19000/19645 [34:34:51<1:03:23,  /auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/auto/worka/aakash/llm/__llm_env/lib/python3.11/site-packages/bitsandbytes/autograd/_functions.py:322: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+ 99%|█████████▉| 19517/19645 [35:26:08<13:44,  6.44s/it]wandb: Network error (ConnectionError), entering retry loop.
+100%|██████████| 19645/19645 [35:38:54<00:00,  6.53s/it]
+{'rouge1': 89.5559, 'rouge2': 82.6872, 'rougeL': 89.1374, 'rougeLsum': 89.4467, 'gen_len': 327.29676762534996}
+{'eval_loss': 0.3939535319805145, 'eval_rouge1': 89.5559, 'eval_rouge2': 82.6872, 'eval_rougeL': 89.1374, 'eval_rougeLsum': 89.4467, 'eval_gen_len': 327.29676762534996, 'eval_runtime': 556.7488, 'eval_samples_per_second': 14.114, 'eval_steps_per_second': 1.766, 'epoch': 4.84}
+{'train_runtime': 128336.2534, 'train_samples_per_second': 2.449, 'train_steps_per_second': 0.153, 'train_loss': 0.40267475814605735, 'epoch': 5.0}
+2024-01-10 18:37:39,043 - INFO - Finetuned model saved to: tests/codellama_lora_int8_r1/__run.default
+2024-01-10 18:37:39,043 - INFO - Fine-tuning completed.
+2024-01-10 18:37:39,043 - INFO - Script completed fine-tuning successfully.
+wandb:
+wandb: Run history:
+wandb:                   eval/gen_len ▃▁▅▄▅▆▅▆▆▆▆▇▇▇▇█▇█▇
+wandb:                      eval/loss █▆▅▄▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁
+wandb:                    eval/rouge1 ▁▃▄▅▆▇▇▆▇▇▇█▇██▇▇▇█
+wandb:                    eval/rouge2 ▁▃▄▅▆▆▇▇▇▇▇█████▇▇█
+wandb:                    eval/rougeL ▁▄▄▅▆▆▇▇▇▇▇█████▇▇█
+wandb:                 eval/rougeLsum ▁▃▄▅▆▆▇▆▇▇▇█▇███▇▇█
+wandb:                   eval/runtime ▆█▆▄▇▃▇▆▆▂▅▃▁▅▁▇▆▁▇
+wandb:        eval/samples_per_second ▃▁▃▅▂▆▂▃▃▇▄▆█▄█▂▃█▂
+wandb:          eval/steps_per_second ▃▁▃▅▃▆▂▃▃▇▄▆█▄█▂▃█▂
+wandb:                    train/epoch ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:              train/global_step ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:            train/learning_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                     train/loss █▄▄▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁
+wandb:               train/total_flos ▁
+wandb:               train/train_loss ▁
+wandb:            train/train_runtime ▁
+wandb: train/train_samples_per_second ▁
+wandb:   train/train_steps_per_second ▁
+wandb:
+wandb: Run summary:
+wandb:                   eval/gen_len 327.29677
+wandb:                      eval/loss 0.39395
+wandb:                    eval/rouge1 89.5559
+wandb:                    eval/rouge2 82.6872
+wandb:                    eval/rougeL 89.1374
+wandb:                 eval/rougeLsum 89.4467
+wandb:                   eval/runtime 556.7488
+wandb:        eval/samples_per_second 14.114
+wandb:          eval/steps_per_second 1.766
+wandb:                    train/epoch 5.0
+wandb:              train/global_step 19645
+wandb:            train/learning_rate 0.0002
+wandb:                     train/loss 0.3766
+wandb:               train/total_flos 1.7560646261788508e+18
+wandb:               train/train_loss 0.40267
+wandb:            train/train_runtime 128336.2534
+wandb: train/train_samples_per_second 2.449
+wandb:   train/train_steps_per_second 0.153
+wandb:
+wandb: 🚀 View run earnest-valley-30 at: https://wandb.ai/varmology/huggingface/runs/8ejuketm
+wandb: ️⚡ View job at https://wandb.ai/varmology/huggingface/jobs/QXJ0aWZhY3RDb2xsZWN0aW9uOjEyNTYzMTA0MQ==/version_details/v24
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240109_065844-8ejuketm/logs
