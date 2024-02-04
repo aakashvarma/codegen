@@ -215,7 +215,7 @@ You must output the SQL query that answers the question.
             fp16=self.trainer_config.compute_type == "fp16",
             bf16=self.trainer_config.compute_type == "bf16",
             max_grad_norm=self.trainer_config.max_grad_norm,
-            # max_steps=self.trainer_config.max_steps,
+            max_steps=100,
             num_train_epochs=self.trainer_config.num_train_epochs,
             warmup_ratio=self.trainer_config.warmup_ratio,
             group_by_length=True,

@@ -1,0 +1,9 @@
+model_config:
+  model_name: "meta-llama/Llama-2-7b-hf"
+  cache_dir: null
+  bits: 4
+  double_quant: true
+  quant_type: "nf4"
+  trust_remote_code: false
+  use_auth_token: false
+  compute_type: "fp16"

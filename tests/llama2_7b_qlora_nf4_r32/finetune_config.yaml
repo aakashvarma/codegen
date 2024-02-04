@@ -1,0 +1,4 @@
+finetune_config:
+  r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
