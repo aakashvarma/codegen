@@ -34,7 +34,6 @@ class ModelConfiguration:
     def __init__(
             self,
             model_name="codellama/CodeLlama-7b-hf",
-            pretrained_model_dir=None,
             cache_dir=None,
             r=64,
             lora_alpha=32.0,
@@ -47,7 +46,6 @@ class ModelConfiguration:
             compute_type="fp16",
     ):
         self.model_name = model_name
-        self.pretrained_model_dir = pretrained_model_dir
         self.cache_dir = cache_dir
         self.r = r
         self.lora_alpha = lora_alpha
@@ -185,8 +183,23 @@ class Runner:
             logging.error("Error during model validation: %s", e, exc_info=True)
             raise e
 
+    def validate_args(self, args):
+        logger.info("Validating arguments.")
+        if args.merge_adapter and not args.model_path:
+            raise argparse.ArgumentError("--merge_adapter requires --model_path to be provided.")
+        if args.model_with_adapter and not args.model_path:
+            raise argparse.ArgumentError("--model_with_adapter requires --model_path to be provided.")
+        if args.merge_adapter and args.model_with_adapter:
+            raise argparse.ArgumentError("--merge_adapter and --model_with_adapter cannot be provided together. --model_with_adapter should be used only for inference.")
+        if args.finetune and args.model_path:
+            raise argparse.ArgumentError("--finetune and --model_path cannot be passed together")
+
     def get_parser(self):
         parser = argparse.ArgumentParser(description="Script Arguments")
+        parser.add_argument(
+            "--model_path",
+            help="Path to the model file.",
+        )
         parser.add_argument(
             "--model_yaml",
             required=True,
@@ -209,19 +222,41 @@ class Runner:
             help="Path to the pickle file containing the validation data.",
         )
         parser.add_argument(
-            "--infer", action="store_true", help="Perform inference."
+            "--infer",
+            action="store_true",
+            help="Perform inference.",
+            default=False
         )
         parser.add_argument(
-            "--finetune", action="store_true", help="Perform fine-tuning."
+            "--finetune",
+            action="store_true",
+            help="Perform fine-tuning.",
+            default=False
         )
         parser.add_argument(
-            "--validate", action="store_true", help="Perform validation."
+            "--validate",
+            action="store_true",
+            help="Perform validation.",
+            default=False
+        )
+        parser.add_argument(
+            "--model_with_adapter",
+            action="store_true",
+            help="If True and model path is passed, then model path should have the adapter details. Else if False, then it is assumed that the model is a merged model / base model.",
+            default=False
+        )
+        parser.add_argument(
+            "--merge_adapter",
+            action="store_true",
+            help="When set to True, the adapter is merged to the model present in the model path.",
+            default=False
         )
         return parser
 
     def main(self):
         try:
             args = self.get_parser().parse_args()
+            self.validate_args(args)
 
             logger.info("Starting the script.")
 

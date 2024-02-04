@@ -3,6 +3,7 @@ import logging
 import torch
 from peft import PeftModel
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+import os
 
 
 class Quantizer:
@@ -24,7 +25,7 @@ class Quantizer:
     def __init__(self, model_config):
         self.model_config = model_config
 
-    def get_model(self):
+    def get_model(self, model_path, model_with_adapter, merge_model):
         """
         Get the fine-tuning model based on the provided configuration.
 
@@ -41,44 +42,75 @@ class Quantizer:
                 else torch.float32
             )
         )
-
-        model = AutoModelForCausalLM.from_pretrained(
-            self.model_config.model_name,
-            cache_dir=self.model_config.cache_dir,
-            load_in_4bit=self.model_config.bits == 4,
-            load_in_8bit=self.model_config.bits == 8,
-            device_map=device_map,
-            quantization_config=BitsAndBytesConfig(
-                load_in_4bit=self.model_config.bits == 4,
-                load_in_8bit=self.model_config.bits == 8,
-                llm_int8_threshold=6.0,
-                llm_int8_has_fp16_weight=False,
-                bnb_4bit_compute_dtype=compute_dtype,
-                bnb_4bit_use_double_quant=self.model_config.double_quant,
-                bnb_4bit_quant_type=self.model_config.quant_type,
-            ),
-            torch_dtype=(
-                torch.float32
-                if self.model_config.compute_type == "fp16"
-                else (
-                    torch.bfloat16
-                    if self.model_config.compute_type == "bf16"
-                    else torch.float32
-                )
-            ),
-            trust_remote_code=self.model_config.trust_remote_code,
-            use_auth_token=self.model_config.use_auth_token,
-        )
-        model.config.use_cache = False
-
-        if self.model_config.pretrained_model_dir:
+        # execute model present in the path
+        if not model_with_adapter:
             try:
-                model = PeftModel.from_pretrained(model, self.model_config.pretrained_model_dir)
-                logging.info("Picking the pre-tuned model from the path: {}".format(self.model_config.pretrained_model_dir))
+                logging.info("Picking the model from the path: {}".format(model_path))
+                model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto")
             except Exception as e:
-                error_message = "Pretrained model directory is not present."
+                error_message = "Model not present in model path."
                 logging.error(error_message)
                 raise ValueError(error_message)
+
+        else:
+            model = AutoModelForCausalLM.from_pretrained(
+                self.model_config.model_name,
+                cache_dir=self.model_config.cache_dir,
+                # load_in_4bit=self.model_config.bits == 4,
+                # load_in_8bit=self.model_config.bits == 8,
+                device_map=device_map,
+                quantization_config=BitsAndBytesConfig(
+                    load_in_4bit=self.model_config.bits == 4,
+                    load_in_8bit=self.model_config.bits == 8,
+                    # llm_int8_threshold=6.0,
+                    # llm_int8_has_fp16_weight=False,
+                    bnb_4bit_compute_dtype=compute_dtype,
+                    # bnb_4bit_use_double_quant=self.model_config.double_quant,
+                    # bnb_4bit_quant_type=self.model_config.quant_type,
+                ),
+                # torch_dtype=(
+                #     torch.float32
+                #     if self.model_config.compute_type == "fp16"
+                #     else (
+                #         torch.bfloat16
+                #         if self.model_config.compute_type == "bf16"
+                #         else torch.float32
+                #     )
+                # ),
+                trust_remote_code=self.model_config.trust_remote_code,
+                use_auth_token=self.model_config.use_auth_token,
+            )
+            model.config.use_cache = False
+
+            if model_with_adapter:
+                logging.info("Picking the pre-tuned model from the path: {}".format(model_path))
+                try:
+                    model = PeftModel.from_pretrained(model, model_path)
+                    logging.info("Picking the pre-tuned model from the path: {}".format(model_path))
+                except Exception as e:
+                    error_message = "Model not present in model path."
+                    logging.error(error_message)
+                    raise ValueError(error_message)
+
+            if merge_model:
+                try:
+                    directory, filename = os.path.split(model_path)
+                    directories = directory.split(os.path.sep)
+                    directories[-1] += "_merged_model"
+                    merged_model_path = os.path.join(os.path.sep.join(directories), filename)
+
+                    logging.info("Picking the pre-tuned model from the path to be merged: {}".format(model_path))
+                    model = PeftModel.from_pretrained(model, model_path)
+                    merged_model = model.merge_and_unload()
+                    merged_model.save_pretrained(merged_model_path, safe_serialization=True)
+
+                    model = merged_model
+
+                    logging.info("Model adapter merged and saved to the path: {}".format(merged_model_path))
+                except Exception as e:
+                    error_message = "Model not present in model path."
+                    logging.error(error_message)
+                    raise ValueError(error_message)
 
         return model
 
