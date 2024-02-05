@@ -51,6 +51,11 @@ class Quantizer:
 
                 logging.info("Picking the pre-tuned model from the path to be merged: {}".format(model_path))
 
+                tokenizer = AutoTokenizer.from_pretrained(
+                    self.model_config.model_name,
+                    trust_remote_code=True,
+                    return_token_type_ids=False
+                )
                 model = AutoPeftModelForCausalLM.from_pretrained(
                     model_path,
                     low_cpu_mem_usage=True,
@@ -60,7 +65,7 @@ class Quantizer:
                 )
                 merged_model = model.merge_and_unload()
                 merged_model.save_pretrained(merged_model_path, safe_serialization=True)
-                # tokenizer.save_pretrained("merged_model")
+                tokenizer.save_pretrained(merged_model)
 
                 model = merged_model
 
