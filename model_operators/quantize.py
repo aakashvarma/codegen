@@ -53,6 +53,9 @@ class Quantizer:
                 raise ValueError(error_message)
 
         else:
+            if (self.model_config.model_name == "meta-llama/Llama-2-7b-hf"):
+                from huggingface_hub import login
+                login()
             model = AutoModelForCausalLM.from_pretrained(
                 self.model_config.model_name,
                 cache_dir=self.model_config.cache_dir,
