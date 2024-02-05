@@ -42,8 +42,36 @@ class Quantizer:
                 else torch.float32
             )
         )
+        if merge_model:
+            try:
+                directory, filename = os.path.split(model_path)
+                directories = directory.split(os.path.sep)
+                directories[-1] += "_merged_model"
+                merged_model_path = os.path.join(os.path.sep.join(directories), filename)
+
+                logging.info("Picking the pre-tuned model from the path to be merged: {}".format(model_path))
+
+                model = AutoPeftModelForCausalLM.from_pretrained(
+                    model_path,
+                    low_cpu_mem_usage=True,
+                    return_dict=True,
+                    torch_dtype=compute_dtype,
+                    device_map="cuda",
+                )
+                merged_model = model.merge_and_unload()
+                merged_model.save_pretrained(merged_model_path, safe_serialization=True)
+                # tokenizer.save_pretrained("merged_model")
+
+                model = merged_model
+
+                logging.info("Model adapter merged and saved to the path: {}".format(merged_model_path))
+            except Exception as e:
+                error_message = "Error occurred in get_model() of quantize.py while merging_model."
+                logging.error(error_message)
+                raise ValueError(error_message)
+
         # execute model present in the path
-        if not model_with_adapter and model_path is not None and merge_model is False:
+        elif merge_model is False and model_with_adapter is False and model_path is not None:
             try:
                 logging.info("Picking the model from the path: {}".format(model_path))
                 model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto")
@@ -92,33 +120,6 @@ class Quantizer:
                     logging.info("Picking the pre-tuned model from the path: {}".format(model_path))
                 except Exception as e:
                     error_message = "Model not present in model path."
-                    logging.error(error_message)
-                    raise ValueError(error_message)
-
-            if merge_model:
-                try:
-                    directory, filename = os.path.split(model_path)
-                    directories = directory.split(os.path.sep)
-                    directories[-1] += "_merged_model"
-                    merged_model_path = os.path.join(os.path.sep.join(directories), filename)
-
-                    logging.info("Picking the pre-tuned model from the path to be merged: {}".format(model_path))
-
-                    model = AutoPeftModelForCausalLM.from_pretrained(
-                        model_path,
-                        low_cpu_mem_usage=True,
-                        return_dict=True,
-                        torch_dtype=compute_dtype,
-                        device_map="cuda",
-                    )
-                    merged_model = model.merge_and_unload()
-                    merged_model.save_pretrained(merged_model_path, safe_serialization=True)
-
-                    model = merged_model
-
-                    logging.info("Model adapter merged and saved to the path: {}".format(merged_model_path))
-                except Exception as e:
-                    error_message = "Error occurred in get_model() of quantize.py while merging_model."
                     logging.error(error_message)
                     raise ValueError(error_message)
 
