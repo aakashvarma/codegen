@@ -270,7 +270,7 @@ class Runner:
                 prompt = parse_prompt(args.prompt_file)
                 question, context = extract_question_context(prompt)
 
-                result = self.infer(model_config, context, question,None, args.model_path, args.model_with_adapter, args.merge_model)
+                result = self.infer(model_config, context, question,None, args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
@@ -290,13 +290,13 @@ class Runner:
                 logger.info(finetune_config.__dict__)
 
                 self.finetune(model_config, trainer_config, finetune_config,
-                              args.model_path, args.model_with_adapter, args.merge_model)
+                              args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Script completed fine-tuning successfully.")
             elif args.validate:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_model)
+                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Script completed successfully")
 
         except ValueError as ve:
