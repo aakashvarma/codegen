@@ -186,8 +186,8 @@ class Runner:
     def merge_adapter_with_base_model(self, model_config, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Merging adapter started")
-            model = Model(model_config, model_path, model_with_adapter, merge_model)
-            model.merge_model()
+            model = Model(model_config)
+            model.merge_model(model_path, model_with_adapter, merge_model)
             logging.info("Merging adapter completed.")
         except Exception as e:
             logging.error("Error during merging adapter: %s", e, exc_info=True)
