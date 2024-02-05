@@ -65,7 +65,7 @@ class Quantizer:
                 )
                 merged_model = model.merge_and_unload()
                 merged_model.save_pretrained(merged_model_path, safe_serialization=True)
-                tokenizer.save_pretrained(merged_model)
+                tokenizer.save_pretrained(merged_model_path)
 
                 model = merged_model
 
