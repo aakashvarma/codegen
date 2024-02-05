@@ -183,8 +183,20 @@ class Runner:
             logging.error("Error during model validation: %s", e, exc_info=True)
             raise e
 
+    def merge_adapter_with_base_model(self, model_config, model_path, model_with_adapter, merge_model):
+        try:
+            logging.info("Merging adapter started")
+            model = Model(model_config, model_path, model_with_adapter, merge_model)
+            model.merge_model()
+            logging.info("Merging adapter completed.")
+        except Exception as e:
+            logging.error("Error during merging adapter: %s", e, exc_info=True)
+            raise e
+
     def validate_args(self, args):
         logger.info("Validating arguments.")
+        if args.merge_adapter and args.infer:
+            raise argparse.ArgumentError("--merge_adapter and --infer cannot be provided together.")
         if args.merge_adapter and not args.model_path:
             raise argparse.ArgumentError("--merge_adapter requires --model_path to be provided.")
         if args.model_with_adapter and not args.model_path:
@@ -271,7 +283,7 @@ class Runner:
                 question, context = extract_question_context(prompt)
 
                 result = self.infer(model_config, context, question,None, args.model_path, args.model_with_adapter, args.merge_adapter)
-                logger.info("Script completed successfully with result: %s", result)
+                logger.info("Inference completed successfully with result: %s", result)
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
                 if not args.trainer_yaml or not args.finetune_yaml:
@@ -291,13 +303,20 @@ class Runner:
 
                 self.finetune(model_config, trainer_config, finetune_config,
                               args.model_path, args.model_with_adapter, args.merge_adapter)
-                logger.info("Script completed fine-tuning successfully.")
+                logger.info("Fine-tuning completed successfully.")
             elif args.validate:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
                 self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_adapter)
-                logger.info("Script completed successfully")
+                logger.info("Validation completed successfully")
+            elif args.merge_adapter:
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_model)
+                logger.info("Adapter merging completed successfully")
+
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)

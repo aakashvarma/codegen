@@ -58,6 +58,19 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
+    def merge_model(self, model_path, model_with_adapter, merge_model):
+        try:
+            logging.info("Setting up model for adapter merging.")
+            quantizer = Quantizer(self.model_config)
+            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model)
+            return self.model, self.tokenizer
+
+        except Exception as e:
+            error_message = f"Error on setting up the model for adapter merging: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message) from e
+
+
     def infer_model(self, context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath):
         try:
             self.get_inference_model_and_tokenizer(model_path, model_with_adapter, merge_model)
