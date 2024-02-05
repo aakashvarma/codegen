@@ -1,7 +1,7 @@
 import logging
 
 import torch
-from peft import PeftModel
+from peft import PeftModel, AutoPeftModelForCausalLM
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import os
 
@@ -103,7 +103,14 @@ class Quantizer:
                     merged_model_path = os.path.join(os.path.sep.join(directories), filename)
 
                     logging.info("Picking the pre-tuned model from the path to be merged: {}".format(model_path))
-                    model = PeftModel.from_pretrained(model, model_path)
+
+                    model = AutoPeftModelForCausalLM.from_pretrained(
+                        model_path,
+                        low_cpu_mem_usage=True,
+                        return_dict=True,
+                        torch_dtype=compute_dtype,
+                        device_map="cuda",
+                    )
                     merged_model = model.merge_and_unload()
                     merged_model.save_pretrained(merged_model_path, safe_serialization=True)
 
@@ -111,7 +118,7 @@ class Quantizer:
 
                     logging.info("Model adapter merged and saved to the path: {}".format(merged_model_path))
                 except Exception as e:
-                    error_message = "Model not present in model path."
+                    error_message = "Error occurred in get_model() of quantize.py while merging_model."
                     logging.error(error_message)
                     raise ValueError(error_message)
 
