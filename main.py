@@ -314,7 +314,7 @@ class Runner:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_model)
+                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Adapter merging completed successfully")
 
 
