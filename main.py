@@ -133,28 +133,28 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, context, question, answer, is_verif=False, val_output_filepath=None):
+    def infer(self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None):
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(context, question, answer, is_verif, val_output_filepath)
+            output = model.infer_model(context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath)
             logging.info("Inference Done")
             return output
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
-    def finetune(self, model_config, trainer_config, finetune_config):
+    def finetune(self, model_config, trainer_config, finetune_config, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Fine-tuning started.")
             model = Model(model_config, trainer_config, finetune_config)
-            model.finetune_model()
+            model.finetune_model(model_path, model_with_adapter, merge_model)
             logging.info("Fine-tuning completed.")
         except Exception as e:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
-    def validate(self, model_config, validation_dir):
+    def validate(self, model_config, validation_dir, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Validation started.")
             val_input_filename = "val_data.pkl"
@@ -176,7 +176,7 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            self.infer(model_config, val_context, val_question, val_answer, True, val_output_filepath)
+            self.infer(model_config, val_context, val_question, val_answer, model_path, model_with_adapter, merge_model, True, val_output_filepath)
 
             logging.info("Validation completed.")
         except Exception as e:
@@ -270,7 +270,7 @@ class Runner:
                 prompt = parse_prompt(args.prompt_file)
                 question, context = extract_question_context(prompt)
 
-                result = self.infer(model_config, context, question, False)
+                result = self.infer(model_config, context, question,None, args.model_path, args.model_with_adapter, args.merge_model)
                 logger.info("Script completed successfully with result: %s", result)
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
@@ -289,13 +289,14 @@ class Runner:
                 logger.info("FineTune Configuration:")
                 logger.info(finetune_config.__dict__)
 
-                self.finetune(model_config, trainer_config, finetune_config)
+                self.finetune(model_config, trainer_config, finetune_config,
+                              args.model_path, args.model_with_adapter, args.merge_model)
                 logger.info("Script completed fine-tuning successfully.")
             elif args.validate:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.validate(model_config, args.validation_dir)
+                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_model)
                 logger.info("Script completed successfully")
 
         except ValueError as ve:

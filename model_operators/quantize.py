@@ -128,7 +128,7 @@ class Quantizer:
 
         return tokenizer
 
-    def model_setup(self):
+    def model_setup(self, model_path, model_with_adapter, merge_model):
         """
         Set up Finetune configuration.
 
@@ -137,7 +137,7 @@ class Quantizer:
         """
         logging.info("Setting up Model configuration.")
         try:
-            model = self.get_model()
+            model = self.get_model(model_path, model_with_adapter, merge_model)
             tokenizer = self.get_tokenizer()
 
             logging.info("Model configuration successful.")

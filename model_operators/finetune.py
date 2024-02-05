@@ -57,7 +57,7 @@ class FineTuner(Quantizer):
 
         return model
 
-    def model_setup(self):
+    def model_setup(self, model_path, model_with_adapter, merge_model):
         """
         Sets up the fine-tuning configuration, including loading the model and tokenizer.
 
@@ -66,7 +66,7 @@ class FineTuner(Quantizer):
         """
         logging.info("Setting up Finetuning configuration.")
         try:
-            model = self.get_model()
+            model = self.get_model(model_path, model_with_adapter, merge_model)
             model = self.prepare_model(model)
             tokenizer = self.get_tokenizer()
 
