@@ -43,7 +43,7 @@ class Quantizer:
             )
         )
         # execute model present in the path
-        if not model_with_adapter:
+        if not model_with_adapter and model_path is not None:
             try:
                 logging.info("Picking the model from the path: {}".format(model_path))
                 model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto")
