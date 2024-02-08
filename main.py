@@ -236,7 +236,7 @@ class Runner:
                 question, context = extract_question_context(prompt)
 
                 result = self.infer(model_config, context, question, False)
-                logger.info("Script completed successfully with result: %s", result)
+                logger.info("Script completed successfully")
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
                 if not args.trainer_yaml or not args.finetune_yaml:
