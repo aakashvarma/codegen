@@ -8,7 +8,12 @@ This documentation provides detailed information on the installation, usage, con
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Fine-tuning](#fine-tuning)
+  - [Model Merging](#model-merging)
+  - [Inference](#inference)
+  - [Validation](#validation)
 - [Configuration](#configuration)
+  - [Example YAML Configuration](#example-yaml-configuration)
 - [Error Handling](#error-handling)
 - [Contributing](#contributing)
 - [License](#license)
@@ -33,90 +38,144 @@ This documentation provides detailed information on the installation, usage, con
    pip install trl
    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
    ```
+Certainly! Here are the commands with duplicates removed:
 
-## Usage
+### Usage
 
-### Example 1: Inference
+Before running the commands, ensure that the necessary configuration files are set up according to the provided examples.
 
-Perform model inference using the following command:
-
-```bash
-python script.py --model_yaml config.yaml --prompt_file prompt.txt --infer
-```
-
-### Example 2: Finetuning
-
-Perform model finetuning with the following command:
+#### Fine-tuning
 
 ```bash
-python script_name.py --model_yaml path/to/config.yaml --trainer_yaml trainer_config.yaml --finetune_yaml finetune_config.yaml --finetune
+python3 main.py --model_yaml <path-to-model-config-yaml> --trainer_yaml <path-to-trainer-config-yaml> --finetune_yaml <path-to-finetune-config-yaml> --finetune
 ```
 
-## Configuration
+#### Model Merging
 
-### ModelConfiguration
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --model_path <path-to-model> --merge_adapter
+```
+#### Inference
 
-Configuration class for model arguments.
+Inference of the original huggingface model
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --prompt_file <path-to-prompt-text-file> --infer
+```
 
-#### Arguments:
+Inference of the model (or merged model) without LoRA adapters from path
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --prompt_file <path-to-prompt-text-file> --model_path <path-to-model> --infer
+```
 
-- `model_name` (Optional[str]): The name of the model. Default is "codellama/CodeLlama-7b-hf".
-- `pretrained_model_dir` (Optional[str]): Pre-trained model directory path. Default is None.
-- `cache_dir` (Optional[str]): The directory to cache the model. Default is None.
-- `r` (Optional[int]): Parameter 'r' for the model. Default is 64.
-- `lora_alpha` (Optional[float]): Alpha value for LoRA. Default is 32.
-- `lora_dropout` (Optional[float]): Dropout value for LoRA. Default is 0.05.
-- `bits` (Optional[int]): Number of bits. Default is 4.
-- `double_quant` (Optional[bool]): Whether to double quantization or not. Default is True.
-- `quant_type` (str): Type of quantization. Default is "nf4".
-- `trust_remote_code` (Optional[bool]): Whether to trust remote code or not. Default is False.
-- `use_auth_token` (Union[bool, str]): Authentication token. Default is False.
-- `compute_type` (Optional[str]): Type of computation. Default is "fp16".
+Inference of the model with LoRA adapters from path
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --prompt_file <path-to-prompt-text-file> --model_path <path-to-model> --model_with_adapter --infer
+```
 
-#### Methods:
+#### Validation
+--validation_dir <path-to-validation-data-directory> should be passed for model validation additionally. <path-to-validation-data-directory> should be a pickle file. 
 
-- `from_yaml(yaml_path)`: Create an instance of ModelConfiguration from a YAML file.
+Validation of the model (or merged model) without LoRA adapters from path
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --validation_dir <path-to-validation-data-directory> --model_path <path-to-model> --validate
+```
 
-### TrainerConfiguration
+Validation of the model with LoRA adapters from path
+```bash
+python3 main.py --model_yaml <path-to-model-config-yaml> --validation_dir <path-to-validation-data-directory> --model_path <path-to-model> --model_with_adapter --validate
+```
 
-Configuration class for data training arguments.
+Replace `<path-to-...>` with the appropriate paths to your configuration files, data files, and model checkpoints. Additionally, ensure that the appropriate CUDA visible devices are set if using GPU acceleration (`CUDA_VISIBLE_DEVICES`).
 
-#### Arguments:
+### Example YAML Configuration
 
-- `dataset_name` (Optional[str]): Name of the dataset. Default is "b-mc2/sql-create-context".
-- `block_size` (Optional[int]): Block size for the dataset. Default is 512.
-- `multi_gpu` (Optional[bool]): Whether to use multiple GPUs. Default is False.
-- `tensor_parallel` (Optional[bool]): Whether to use tensor parallelism. Default is False.
-- `model_output_dir` (Optional[str]): Output directory for the model. Default is "__run.default".
-- `per_device_train_batch_size` (Optional[int]): Batch size per device during training. Default is 4.
-- `gradient_accumulation_steps` (Optional[int]): Number of gradient accumulation steps. Default is 4.
-- `optim` (Optional[str]): Optimization algorithm. Default is "paged_adamw_32bit".
-- `save_steps` (Optional[int]): Number of steps before saving a checkpoint. Default is 100.
-- `logging_steps` (Optional[int]): Number of steps before logging. Default is 10.
-- `learning_rate` (Optional[float]): Learning rate for training. Default is 0.0002.
-- `max_grad_norm` (Optional[float]): Maximum gradient norm for gradient clipping. Default is 0.3.
-- `max_steps` (Optional[int]): Maximum number of training steps. Default is 100.
-- `warmup_ratio` (Optional[float]): Warmup ratio for the learning rate schedule. Default is 0.03.
-- `lr_scheduler_type` (Optional[str]): Type of learning rate scheduler. Default is "constant".
-- `compute_type` (Optional[str]): Type of computation. Default is "fp16".
+Below is an example of how the YAML configuration files should be structured:
 
-#### Methods:
+#### Model Configuration YAML:
 
-- `from_yaml(yaml_path)`: Create an instance of TrainerConfiguration from a YAML file.
+- `model_name`: The name or identifier of the pre-trained model to be used. For example, `"codellama/CodeLlama-7b-hf"`.
+- `cache_dir`: Directory path where the pre-trained model cache will be stored. If not specified, it defaults to `None`.
+- `r`: An integer representing a hyperparameter (`r`) used in the model. Its specific significance would be defined by the model architecture or implementation.
+- `lora_alpha`: Another hyperparameter (`lora_alpha`) used in the model, typically specific to the model's architecture or design.
+- `lora_dropout`: Dropout rate for regularization in the model. Dropout is a technique used to prevent overfitting in neural networks.
+- `bits`: Number of bits used for quantization. Quantization is a technique used to reduce the memory and computational requirements of deep learning models.
+- `double_quant`: Boolean indicating whether double quantization is used. Double quantization is a technique that quantizes weights and activations separately.
+- `quant_type`: Type of quantization method used, such as `"nf4"` (which specific type is not clear without further context).
+- `trust_remote_code`: Boolean indicating whether to trust remote code sources. This could be relevant when loading models or dependencies from external sources.
+- `use_auth_token`: Boolean indicating whether to use an authentication token. This might be necessary for accessing certain models or resources.
+- `compute_type`: Type of computation used, such as `"fp16"` for 16-bit floating point arithmetic.
 
-### FineTuneConfiguration
+```yaml
+model_config:
+    model_name: "codellama/CodeLlama-7b-hf"
+    cache_dir: null
+    r: 64
+    lora_alpha: 32.0
+    lora_dropout: 0.05
+    bits: 4
+    double_quant: true
+    quant_type: "nf4"
+    trust_remote_code: false
+    use_auth_token: false
+    compute_type: "fp16"
+```
 
-Configuration class for fine-tuning arguments.
+#### Trainer Configuration YAML:
 
-#### Arguments:
+- `dataset_name`: Name or identifier of the dataset used for training.
+- `block_size`: Maximum length of input sequences (usually in tokens).
+- `multi_gpu`: Boolean indicating whether to use multiple GPUs for training.
+- `tensor_parallel`: Boolean indicating whether to use tensor parallelism for training.
+- `model_output_dir`: Directory where the trained model will be saved.
+- `per_device_train_batch_size`: Batch size per GPU for training.
+- `gradient_accumulation_steps`: Number of steps before gradient accumulation. Useful for training with large batch sizes.
+- `optim`: Optimization algorithm used for training (e.g., `"paged_adamw_32bit"`).
+- `save_steps`: Frequency of saving checkpoints during training.
+- `logging_steps`: Frequency of logging training statistics.
+- `learning_rate`: Initial learning rate for training.
+- `max_grad_norm`: Maximum gradient norm, used for gradient clipping.
+- `max_steps`: Maximum number of training steps.
+- `warmup_ratio`: Ratio of warmup steps to total training steps.
+- `lr_scheduler_type`: Type of learning rate scheduler used during training.
+- `compute_type`: Type of computation used, typically defined in terms of precision (e.g., `"fp16"` for 16-bit floating point arithmetic).
+- `num_train_epochs`: Number of training epochs.
+- `evaluation_strategy`: Strategy for evaluating the model during training, such as `"steps"` or `"epoch"`.
 
-- `r` (Optional[int]): Parameter 'r' for fine-tuning. Default is 16.
-- `lora_alpha` (Optional[float]): Alpha value for LoRA during fine-tuning. Default is 32.
-- `lora_dropout` (Optional[float]): Dropout value for LoRA during fine-tuning. Default is 0.05.
+```yaml
+trainer_config:
+    dataset_name: "b-mc2/sql-create-context"
+    block_size: 512
+    multi_gpu: false
+    tensor_parallel: false
+    model_output_dir: "__run.default"
+    per_device_train_batch_size: 4
+    gradient_accumulation_steps: 4
+    optim: "paged_adamw_32bit"
+    save_steps: 100
+    logging_steps: 10
+    learning_rate: 0.0002
+    max_grad_norm: 0.3
+    max_steps: 100
+    warmup_ratio: 0.03
+    lr_scheduler_type: "constant"
+    compute_type: "fp16"
+    num_train_epochs: 1
+    evaluation_strategy: "steps"
+```
 
-#### Methods:
+#### Fine-tune Configuration YAML:
 
-- `from_yaml(yaml_path)`: Create an instance of FineTuneConfiguration from a YAML file.
+- `r`: Hyperparameter specific to the fine-tuning process, with its meaning likely related to the fine-tuning algorithm or model architecture.
+- `lora_alpha`: Another hyperparameter used in fine-tuning, possibly related to regularization or optimization.
+- `lora_dropout`: Dropout rate specific to fine-tuning, similar to the `lora_dropout` in the model configuration.
+
+```yaml
+finetune_config:
+    r: 16
+    lora_alpha: 32.0
+    lora_dropout: 0.05
+```
+
 
 ## Error Handling
 
