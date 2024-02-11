@@ -120,9 +120,9 @@ class Quantizer:
 
             if model_with_adapter:
                 logging.info("Picking the pre-tuned model from the path: {}".format(model_path))
+                logging.info("This model has a LoRA adapter.")
                 try:
                     model = PeftModel.from_pretrained(model, model_path)
-                    logging.info("Picking the pre-tuned model from the path: {}".format(model_path))
                 except Exception as e:
                     error_message = "Model not present in model path."
                     logging.error(error_message)
