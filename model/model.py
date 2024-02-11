@@ -93,7 +93,7 @@ You must output the SQL query that answers the question.
 """
             )
             if(is_verif):
-                mini_batch = 4
+                mini_batch = 2
                 logging.info("Start tokenizing prompts and generate outputs.")
                 for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
                     for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
