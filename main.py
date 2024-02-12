@@ -282,8 +282,9 @@ class Runner:
                 prompt = parse_prompt(args.prompt_file)
                 question, context = extract_question_context(prompt)
 
-                result = self.infer(model_config, context, question,None, args.model_path, args.model_with_adapter, args.merge_adapter)
-                logger.info("Inference completed successfully with result: %s", result)
+                result = self.infer(model_config, context, question, False)
+                logger.info("Script completed successfully")
+
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
                 if not args.trainer_yaml or not args.finetune_yaml:
