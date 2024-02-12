@@ -34,7 +34,6 @@ class ModelConfiguration:
     def __init__(
             self,
             model_name="codellama/CodeLlama-7b-hf",
-            pretrained_model_dir=None,
             cache_dir=None,
             r=64,
             lora_alpha=32.0,
@@ -47,7 +46,6 @@ class ModelConfiguration:
             compute_type="fp16",
     ):
         self.model_name = model_name
-        self.pretrained_model_dir = pretrained_model_dir
         self.cache_dir = cache_dir
         self.r = r
         self.lora_alpha = lora_alpha
@@ -135,28 +133,28 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, context, question, answer, is_verif=False, val_output_filepath=None):
+    def infer(self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None):
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(context, question, answer, is_verif, val_output_filepath)
+            output = model.infer_model(context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath)
             logging.info("Inference Done")
             return output
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
-    def finetune(self, model_config, trainer_config, finetune_config):
+    def finetune(self, model_config, trainer_config, finetune_config, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Fine-tuning started.")
             model = Model(model_config, trainer_config, finetune_config)
-            model.finetune_model()
+            model.finetune_model(model_path, model_with_adapter, merge_model)
             logging.info("Fine-tuning completed.")
         except Exception as e:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
-    def validate(self, model_config, validation_dir):
+    def validate(self, model_config, validation_dir, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Validation started.")
             val_input_filename = "val_data.pkl"
@@ -178,15 +176,42 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            self.infer(model_config, val_context, val_question, val_answer, True, val_output_filepath)
+            self.infer(model_config, val_context, val_question, val_answer, model_path, model_with_adapter, merge_model, True, val_output_filepath)
 
             logging.info("Validation completed.")
         except Exception as e:
             logging.error("Error during model validation: %s", e, exc_info=True)
             raise e
 
+    def merge_adapter_with_base_model(self, model_config, model_path, model_with_adapter, merge_model):
+        try:
+            logging.info("Merging adapter started")
+            model = Model(model_config)
+            model.merge_model(model_path, model_with_adapter, merge_model)
+            logging.info("Merging adapter completed.")
+        except Exception as e:
+            logging.error("Error during merging adapter: %s", e, exc_info=True)
+            raise e
+
+    def validate_args(self, args):
+        logger.info("Validating arguments.")
+        if args.merge_adapter and args.infer:
+            raise argparse.ArgumentError("--merge_adapter and --infer cannot be provided together.")
+        if args.merge_adapter and not args.model_path:
+            raise argparse.ArgumentError("--merge_adapter requires --model_path to be provided.")
+        if args.model_with_adapter and not args.model_path:
+            raise argparse.ArgumentError("--model_with_adapter requires --model_path to be provided.")
+        if args.merge_adapter and args.model_with_adapter:
+            raise argparse.ArgumentError("--merge_adapter and --model_with_adapter cannot be provided together. --model_with_adapter should be used only for inference.")
+        if args.finetune and args.model_path:
+            raise argparse.ArgumentError("--finetune and --model_path cannot be passed together")
+
     def get_parser(self):
         parser = argparse.ArgumentParser(description="Script Arguments")
+        parser.add_argument(
+            "--model_path",
+            help="Path to the model file.",
+        )
         parser.add_argument(
             "--model_yaml",
             required=True,
@@ -209,19 +234,41 @@ class Runner:
             help="Path to the pickle file containing the validation data.",
         )
         parser.add_argument(
-            "--infer", action="store_true", help="Perform inference."
+            "--infer",
+            action="store_true",
+            help="Perform inference.",
+            default=False
         )
         parser.add_argument(
-            "--finetune", action="store_true", help="Perform fine-tuning."
+            "--finetune",
+            action="store_true",
+            help="Perform fine-tuning.",
+            default=False
         )
         parser.add_argument(
-            "--validate", action="store_true", help="Perform validation."
+            "--validate",
+            action="store_true",
+            help="Perform validation.",
+            default=False
+        )
+        parser.add_argument(
+            "--model_with_adapter",
+            action="store_true",
+            help="If True and model path is passed, then model path should have the adapter details. Else if False, then it is assumed that the model is a merged model / base model.",
+            default=False
+        )
+        parser.add_argument(
+            "--merge_adapter",
+            action="store_true",
+            help="When set to True, the adapter is merged to the model present in the model path.",
+            default=False
         )
         return parser
 
     def main(self):
         try:
             args = self.get_parser().parse_args()
+            self.validate_args(args)
 
             logger.info("Starting the script.")
 
@@ -237,6 +284,7 @@ class Runner:
 
                 result = self.infer(model_config, context, question, False)
                 logger.info("Script completed successfully")
+
             elif args.finetune:
                 # For fine-tuning, all three YAML files are required
                 if not args.trainer_yaml or not args.finetune_yaml:
@@ -254,14 +302,22 @@ class Runner:
                 logger.info("FineTune Configuration:")
                 logger.info(finetune_config.__dict__)
 
-                self.finetune(model_config, trainer_config, finetune_config)
-                logger.info("Script completed fine-tuning successfully.")
+                self.finetune(model_config, trainer_config, finetune_config,
+                              args.model_path, args.model_with_adapter, args.merge_adapter)
+                logger.info("Fine-tuning completed successfully.")
             elif args.validate:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.validate(model_config, args.validation_dir)
-                logger.info("Script completed successfully")
+                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_adapter)
+                logger.info("Validation completed successfully")
+            elif args.merge_adapter:
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter)
+                logger.info("Adapter merging completed successfully")
+
 
         except ValueError as ve:
             error_logger.error("ValueError: %s", ve)

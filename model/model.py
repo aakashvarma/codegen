@@ -34,11 +34,11 @@ class Model:
     def __str__(self):
         return f"Model Config: {self.model_config}"
 
-    def get_inference_model_and_tokenizer(self):
+    def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Setting up model for inference.")
             quantizer = Quantizer(self.model_config)
-            self.model, self.tokenizer = quantizer.model_setup()
+            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model)
             return self.model, self.tokenizer
 
         except Exception as e:
@@ -46,11 +46,11 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
-    def get_finetuning_model_and_tokenizer(self):
+    def get_finetuning_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Setting up model for fine-tuning.")
             finetuner = FineTuner(self.model_config, self.finetune_config)
-            self.model, self.tokenizer = finetuner.model_setup()
+            self.model, self.tokenizer = finetuner.model_setup(model_path, model_with_adapter, merge_model)
             return self.model, self.tokenizer
 
         except Exception as e:
@@ -58,9 +58,22 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
-    def infer_model(self, context, question, answer, is_verif, val_output_filepath):
+    def merge_model(self, model_path, model_with_adapter, merge_model):
         try:
-            self.get_inference_model_and_tokenizer()
+            logging.info("Setting up model for adapter merging.")
+            quantizer = Quantizer(self.model_config)
+            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model)
+            return self.model, self.tokenizer
+
+        except Exception as e:
+            error_message = f"Error on setting up the model for adapter merging: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message) from e
+
+
+    def infer_model(self, context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath):
+        try:
+            self.get_inference_model_and_tokenizer(model_path, model_with_adapter, merge_model)
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
@@ -80,7 +93,7 @@ You must output the SQL query that answers the question.
 """
             )
             if(is_verif):
-                mini_batch = 4
+                mini_batch = 2
                 logging.info("Start tokenizing prompts and generate outputs.")
                 for k in tqdm(range(0, 1000, mini_batch), desc="Outer Loop"):
                     for i in tqdm(range(k, k + mini_batch), desc="Inner Loop", leave=False):
@@ -130,9 +143,9 @@ You must output the SQL query that answers the question.
             logging.error(error_message, exc_info=True)
             raise RuntimeError(error_message) from e
 
-    def finetune_model(self):
+    def finetune_model(self, model_path, model_with_adapter, merge_model):
         try:
-            self.get_finetuning_model_and_tokenizer()
+            self.get_finetuning_model_and_tokenizer(model_path, model_with_adapter, merge_model)
             trainer_obj = LLMTrainer(
                 self.model, self.tokenizer, self.trainer_config
             )
