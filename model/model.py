@@ -37,17 +37,17 @@ class Model:
     def __str__(self):
         return f"Model Config: {self.model_config}"
 
-    def get_gptq_quantization_model_and_tokenizer(self, model_path):
-        try:
-            logging.info("Setting up model for gptq quantization.")
-            quantizer = Quantizer(self.model_config)
-            self.model, self.tokenizer = quantizer.model_setup(model_path, False, False)
-            return self.model, self.tokenizer
-
-        except Exception as e:
-            error_message = f"Error on setting up the model for gptq quantization: {e}"
-            logging.error(error_message)
-            raise RuntimeError(error_message) from e
+    # def get_gptq_quantization_model_and_tokenizer(self, model_path):
+    #     try:
+    #         logging.info("Setting up model for gptq quantization.")
+    #         quantizer = Quantizer(self.model_config)
+    #         self.model, self.tokenizer = quantizer.model_setup(model_path, False, False)
+    #         return self.model, self.tokenizer
+    #
+    #     except Exception as e:
+    #         error_message = f"Error on setting up the model for gptq quantization: {e}"
+    #         logging.error(error_message)
+    #         raise RuntimeError(error_message) from e
 
     def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
         try:
@@ -183,12 +183,15 @@ You must output the SQL query that answers the question.
             directories[-1] += "_gptq_quantized_model"
             gptq_quantized_model_path = os.path.join(os.path.sep.join(directories), filename)
 
-            self.get_gptq_quantization_model_and_tokenizer(model_path)
+            # self.get_gptq_quantization_model_and_tokenizer(model_path)
             trainer_obj = LLMTrainer(
-                self.model, self.tokenizer, self.trainer_config
+                None, None, self.trainer_config
             )
             dataset = trainer_obj.get_gptq_dataset(100)
 
+            self.tokenizer = AutoTokenizer.from_pretrained(
+                model_path, trust_remote_code=True, return_token_type_ids=False
+            )
             quantization_config = GPTQConfig(
                 bits=4,
                 dataset=dataset,
@@ -198,13 +201,13 @@ You must output the SQL query that answers the question.
 
             logging.info("Start Quantization")
 
-            quant_model = AutoModelForCausalLM.from_pretrained(
+            self.model = AutoModelForCausalLM.from_pretrained(
                 model_path, quantization_config=quantization_config,
                 device_map="auto"
             )
 
             logging.info("Saving quantized model and tokenizer")
-            quant_model.save_pretrained(gptq_quantized_model_path)
+            self.model.save_pretrained(gptq_quantized_model_path)
             self.tokenizer.save_pretrained(gptq_quantized_model_path)
 
             logging.info(
