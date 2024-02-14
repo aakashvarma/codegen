@@ -333,7 +333,7 @@ class Runner:
 
                 self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Adapter merging completed successfully")
-            elif args.quantize:
+            elif args.gptq:
                 if not args.trainer_yaml:
                     raise ValueError("--trainer_yaml is required for quantization.")
 
