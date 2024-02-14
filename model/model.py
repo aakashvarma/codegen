@@ -204,7 +204,7 @@ You must output the SQL query that answers the question.
             )
 
             logging.info("Saving quantized model and tokenizer")
-            self.model.save_pretrained(gptq_quantized_model_path)
+            quant_model.save_pretrained(gptq_quantized_model_path)
             self.tokenizer.save_pretrained(gptq_quantized_model_path)
 
             logging.info(
