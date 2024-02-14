@@ -199,7 +199,7 @@ You must output the SQL query that answers the question.
             logging.info("Start Quantization")
 
             quant_model = AutoModelForCausalLM.from_pretrained(
-                self.model, quantization_config=quantization_config,
+                model_path, quantization_config=quantization_config,
                 device_map="auto"
             )
 
