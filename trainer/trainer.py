@@ -90,6 +90,33 @@ class LLMTrainer:
 
         return train_dataset, validation_dataset
 
+    def get_gptq_dataset(self, num_samples):
+        dataset = load_dataset(self.trainer_config.dataset_name, split="train")
+        shuffled_dataset = dataset.shuffle(seed=42)
+        small_dataset = shuffled_dataset.select(range(num_samples))
+        def generate_and_tokenize_prompt(data_point):
+            prompts = []
+            for i in data_point:
+                full_prompt = (
+f"""You are a powerful text-to-SQL model. Your job is to answer questions about a database. You are given a question and context regarding one or more tables.
+You must output the SQL query that answers the question.
+
+### Input:
+{i["question"]}
+
+### Context:
+{i["context"]}
+
+### Response:
+{i["answer"]}
+"""
+                )
+                prompts.append(full_prompt)
+            return prompts
+
+        dataset = generate_and_tokenize_prompt(small_dataset)
+        return dataset
+
     def tokenize(self, prompt):
         """
         Tokenizes a given prompt using the tokenizer and adds labels for LM training.

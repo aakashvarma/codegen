@@ -10,6 +10,9 @@ from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
 from utils import extract_sql_output
 
+import os
+from transformers import GPTQConfig, AutoModelForCausalLM, AutoTokenizer
+
 sys.path.append("../utils")
 sys.path.append("../model_operators")
 sys.path.append("../trainer")
@@ -33,6 +36,18 @@ class Model:
 
     def __str__(self):
         return f"Model Config: {self.model_config}"
+
+    def get_gptq_quantization_model_and_tokenizer(self, model_path):
+        try:
+            logging.info("Setting up model for gptq quantization.")
+            quantizer = Quantizer(self.model_config)
+            self.model, self.tokenizer = quantizer.model_setup(model_path, False, False)
+            return self.model, self.tokenizer
+
+        except Exception as e:
+            error_message = f"Error on setting up the model for gptq quantization: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message) from e
 
     def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
         try:
@@ -160,3 +175,43 @@ You must output the SQL query that answers the question.
             error_message = f"Error in model fine-tuning: {e}"
             logging.error(error_message)
             raise RuntimeError(error_message) from e
+
+    def gptq_quantize_model(self, model_path):
+        try:
+            directory, filename = os.path.split(model_path)
+            directories = directory.split(os.path.sep)
+            directories[-1] += "_gptq_quantized_model"
+            gptq_quantized_model_path = os.path.join(os.path.sep.join(directories), filename)
+
+            self.get_gptq_quantization_model_and_tokenizer(model_path)
+            trainer_obj = LLMTrainer(
+                self.model, self.tokenizer, self.trainer_config
+            )
+            dataset = trainer_obj.get_gptq_dataset(100)
+
+            quantization_config = GPTQConfig(
+                bits=4,
+                dataset=dataset,
+                desc_act=False,
+                tokenizer=self.tokenizer,
+            )
+
+            logging.info("Start Quantization")
+
+            quant_model = AutoModelForCausalLM.from_pretrained(
+                self.model, quantization_config=quantization_config,
+                device_map="auto"
+            )
+
+            logging.info("Saving quantized model and tokenizer")
+            self.model.save_pretrained(gptq_quantized_model_path)
+            self.tokenizer.save_pretrained(gptq_quantized_model_path)
+
+            logging.info(
+                "GPTQ quantized model saved to: %s", gptq_quantized_model_path
+            )
+        except Exception as e:
+            error_message = f"Error in gptq quantization: {e}"
+            logging.error(error_message)
+            raise RuntimeError(error_message) from e
+
