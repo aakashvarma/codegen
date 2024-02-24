@@ -193,6 +193,16 @@ class Runner:
             logging.error("Error during merging adapter: %s", e, exc_info=True)
             raise e
 
+    def gptq_quantize(self, model_config, trainer_config, model_path):
+        try:
+            logging.info("GPTQ quantization started")
+            model = Model(model_config, trainer_config)
+            model.gptq_quantize_model(model_path)
+            logging.info("GPTQ quantization completed.")
+        except Exception as e:
+            logging.error("Error during gptq quantization: %s", e, exc_info=True)
+            raise e
+
     def validate_args(self, args):
         logger.info("Validating arguments.")
         if args.merge_adapter and args.infer:
@@ -263,6 +273,12 @@ class Runner:
             help="When set to True, the adapter is merged to the model present in the model path.",
             default=False
         )
+        parser.add_argument(
+            "--gptq",
+            action="store_true",
+            help="When set to True, the model present in the model path would be quantized using the gptq quantization.",
+            default=False
+        )
         return parser
 
     def main(self):
@@ -320,6 +336,20 @@ class Runner:
 
                 self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter)
                 logger.info("Adapter merging completed successfully")
+            elif args.gptq:
+                if not args.trainer_yaml:
+                    raise ValueError("--trainer_yaml is required for quantization.")
+
+                trainer_config = TrainerConfiguration.from_yaml(args.trainer_yaml)
+
+                logger.info("Model Configuration:")
+                logger.info(model_config.__dict__)
+
+                logger.info("LLMTrainer Configuration:")
+                logger.info(trainer_config.__dict__)
+
+                self.gptq_quantize(model_config, trainer_config, args.model_path)
+                logger.info("GPTQ quantization completed successfully")
 
 
         except ValueError as ve:
