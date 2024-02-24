@@ -7,31 +7,10 @@ import os
 
 
 class Quantizer:
-    """
-    Class for setting up and configuring a model for fine-tuning.
-
-    Args:
-        model_config: Model configuration object.
-
-    Methods:
-        get_model(): Get the fine-tuning model based on the provided configuration.
-        get_tokenizer(): Get the tokenizer for the fine-tuning model.
-        model_setup(): Set up fine-tuning configuration.
-
-    Attributes:
-        model_config: Model configuration object.
-    """
-
     def __init__(self, model_config):
         self.model_config = model_config
 
     def get_model(self, model_path, model_with_adapter, merge_model):
-        """
-        Get the fine-tuning model based on the provided configuration.
-
-        Returns:
-            transformers.AutoModelForCausalLM: The fine-tuning model.
-        """
         device_map = "auto"
         compute_dtype = (
             torch.float16
