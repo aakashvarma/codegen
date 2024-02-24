@@ -282,7 +282,10 @@ class Runner:
                 prompt = parse_prompt(args.prompt_file)
                 question, context = extract_question_context(prompt)
 
-                result = self.infer(model_config, context, question, False)
+                # self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None
+                result = self.infer(model_config, context, question, answer=None,
+                                    args.model_path, args.model_with_adapter, 
+                                    args.merge_adapter, is_verif=False, None)
                 logger.info("Script completed successfully")
 
             elif args.finetune:
