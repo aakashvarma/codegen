@@ -57,7 +57,7 @@ class Quantizer:
         # execute model present in the path
         elif merge_model is False and model_with_adapter is False and model_path is not None:
             try:
-                if "gptq_quantized_model" in model_path:
+                if "_gptq_quantized_model" in model_path:
                     logging.info("Loading GPTQ model from path: {}".format(model_path))
                     model = AutoModelForCausalLM.from_pretrained(
                         model_path
