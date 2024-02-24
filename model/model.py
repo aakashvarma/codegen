@@ -9,6 +9,7 @@ from tqdm import tqdm
 from model_operators.finetune import Quantizer, FineTuner
 from trainer.trainer import LLMTrainer
 from utils import extract_sql_output
+from time import perf_counter
 
 import os
 from transformers import GPTQConfig, AutoModelForCausalLM, AutoTokenizer
@@ -144,13 +145,17 @@ You must output the SQL query that answers the question.
                 self.model.eval()
 
                 with torch.no_grad():
+                    start_time = perf_counter()
                     generated_tokens = self.model.generate(
                         **model_inputs, max_new_tokens=100
                     )[0]
+                    end_time = perf_counter()
+
                     decoded_output = self.tokenizer.decode(
                         generated_tokens, skip_special_tokens=True
                     )
                     sql_output = extract_sql_output(decoded_output)
+                    print("Inference time: ", end_time - start_time)
                     print("Output: ", sql_output)
 
         except Exception as e:
