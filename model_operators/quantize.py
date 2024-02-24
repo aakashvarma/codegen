@@ -60,7 +60,8 @@ class Quantizer:
                 if "_gptq_quantized_model" in model_path:
                     logging.info("Loading GPTQ model from path: {}".format(model_path))
                     model = AutoModelForCausalLM.from_pretrained(
-                        model_path
+                        model_path,
+                        device_map="cuda"
                     )
                 else:
                     logging.info("Loading model from path (merged model): {}".format(model_path))
