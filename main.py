@@ -299,9 +299,7 @@ class Runner:
                 question, context = extract_question_context(prompt)
 
                 # self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None
-                result = self.infer(model_config, context, question, answer=None,
-                                    args.model_path, args.model_with_adapter, 
-                                    args.merge_adapter, is_verif=False, None)
+                result = self.infer(model_config, context, question, None, args.model_path, args.model_with_adapter, args.merge_adapter, is_verif=False, val_output_filepath=None)
                 logger.info("Script completed successfully")
 
             elif args.finetune:
