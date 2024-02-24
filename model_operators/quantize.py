@@ -57,35 +57,41 @@ class Quantizer:
         # execute model present in the path
         elif merge_model is False and model_with_adapter is False and model_path is not None:
             try:
-                logging.info("Picking the model from the path: {}".format(model_path))
-                model = AutoModelForCausalLM.from_pretrained(
-                    model_path,
-                    load_in_4bit=self.model_config.bits == 4,
-                    load_in_8bit=self.model_config.bits == 8,
-                    device_map=device_map,
-                    quantization_config=BitsAndBytesConfig(
+                if "gptq_quantized_model" in model_path:
+                    logging.info("Loading GPTQ model from path: {}".format(model_path))
+                    model = AutoModelForCausalLM.from_pretrained(
+                        model_path
+                    )
+                else:
+                    logging.info("Loading model from path (merged model): {}".format(model_path))
+                    model = AutoModelForCausalLM.from_pretrained(
+                        model_path,
                         load_in_4bit=self.model_config.bits == 4,
                         load_in_8bit=self.model_config.bits == 8,
-                        llm_int8_threshold=6.0,
-                        llm_int8_has_fp16_weight=False,
-                        bnb_4bit_compute_dtype=compute_dtype,
-                        bnb_4bit_use_double_quant=self.model_config.double_quant,
-                        bnb_4bit_quant_type=self.model_config.quant_type,
-                    ),
-                    torch_dtype=(
-                        torch.float32
-                        if self.model_config.compute_type == "fp16"
-                        else (
-                            torch.bfloat16
-                            if self.model_config.compute_type == "bf16"
-                            else torch.float32
-                        )
-                    ),
-                    trust_remote_code=self.model_config.trust_remote_code,
-                    use_auth_token=self.model_config.use_auth_token,
-                )
+                        device_map=device_map,
+                        quantization_config=BitsAndBytesConfig(
+                            load_in_4bit=self.model_config.bits == 4,
+                            load_in_8bit=self.model_config.bits == 8,
+                            llm_int8_threshold=6.0,
+                            llm_int8_has_fp16_weight=False,
+                            bnb_4bit_compute_dtype=compute_dtype,
+                            bnb_4bit_use_double_quant=self.model_config.double_quant,
+                            bnb_4bit_quant_type=self.model_config.quant_type,
+                        ),
+                        torch_dtype=(
+                            torch.float32
+                            if self.model_config.compute_type == "fp16"
+                            else (
+                                torch.bfloat16
+                                if self.model_config.compute_type == "bf16"
+                                else torch.float32
+                            )
+                        ),
+                        trust_remote_code=self.model_config.trust_remote_code,
+                        use_auth_token=self.model_config.use_auth_token,
+                    )
             except Exception as e:
-                error_message = "Model not present in model path."
+                error_message = "Error in loading model without adapter."
                 logging.error(error_message)
                 raise ValueError(error_message)
 
@@ -128,7 +134,7 @@ class Quantizer:
                 try:
                     model = PeftModel.from_pretrained(model, model_path)
                 except Exception as e:
-                    error_message = "Model not present in model path."
+                    error_message = "Error in loading model with adapter."
                     logging.error(error_message)
                     raise ValueError(error_message)
 
