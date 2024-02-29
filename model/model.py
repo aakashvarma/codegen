@@ -38,18 +38,6 @@ class Model:
     def __str__(self):
         return f"Model Config: {self.model_config}"
 
-    # def get_gptq_quantization_model_and_tokenizer(self, model_path):
-    #     try:
-    #         logging.info("Setting up model for gptq quantization.")
-    #         quantizer = Quantizer(self.model_config)
-    #         self.model, self.tokenizer = quantizer.model_setup(model_path, False, False)
-    #         return self.model, self.tokenizer
-    #
-    #     except Exception as e:
-    #         error_message = f"Error on setting up the model for gptq quantization: {e}"
-    #         logging.error(error_message)
-    #         raise RuntimeError(error_message) from e
-
     def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
         try:
             logging.info("Setting up model for inference.")
