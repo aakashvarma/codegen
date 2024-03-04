@@ -23,10 +23,10 @@ class FineTuner(Quantizer):
 
         return model
 
-    def model_setup(self, model_path, model_with_adapter, merge_model):
+    def model_setup(self, model_path, model_with_adapter, merge_model, llm_int8):
         logging.info("Setting up Finetuning configuration.")
         try:
-            model = self.get_model(model_path, model_with_adapter, merge_model)
+            model = self.get_model(model_path, model_with_adapter, merge_model, llm_int8)
             model = self.prepare_model(model)
             tokenizer = self.get_tokenizer()
 

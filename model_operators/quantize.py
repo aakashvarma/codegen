@@ -10,7 +10,7 @@ class Quantizer:
     def __init__(self, model_config):
         self.model_config = model_config
 
-    def get_model(self, model_path, model_with_adapter, merge_model):
+    def get_model(self, model_path, model_with_adapter, merge_model, llm_int8):
         device_map = "auto"
         compute_dtype = (
             torch.float16
@@ -65,32 +65,39 @@ class Quantizer:
                     )
                 else:
                     logging.info("Loading model from path (merged model): {}".format(model_path))
-                    model = AutoModelForCausalLM.from_pretrained(
-                        model_path,
-                        load_in_4bit=self.model_config.bits == 4,
-                        load_in_8bit=self.model_config.bits == 8,
-                        device_map=device_map,
-                        quantization_config=BitsAndBytesConfig(
+                    if (llm_int8):
+                        model = AutoModelForCausalLM.from_pretrained(
+                            model_path,
                             load_in_4bit=self.model_config.bits == 4,
                             load_in_8bit=self.model_config.bits == 8,
-                            llm_int8_threshold=6.0,
-                            llm_int8_has_fp16_weight=False,
-                            bnb_4bit_compute_dtype=compute_dtype,
-                            bnb_4bit_use_double_quant=self.model_config.double_quant,
-                            bnb_4bit_quant_type=self.model_config.quant_type,
-                        ),
-                        torch_dtype=(
-                            torch.float32
-                            if self.model_config.compute_type == "fp16"
-                            else (
-                                torch.bfloat16
-                                if self.model_config.compute_type == "bf16"
-                                else torch.float32
-                            )
-                        ),
-                        trust_remote_code=self.model_config.trust_remote_code,
-                        use_auth_token=self.model_config.use_auth_token,
-                    )
+                            device_map=device_map,
+                            quantization_config=BitsAndBytesConfig(
+                                load_in_4bit=self.model_config.bits == 4,
+                                load_in_8bit=self.model_config.bits == 8,
+                                llm_int8_threshold=6.0,
+                                llm_int8_has_fp16_weight=False,
+                                bnb_4bit_compute_dtype=compute_dtype,
+                                bnb_4bit_use_double_quant=self.model_config.double_quant,
+                                bnb_4bit_quant_type=self.model_config.quant_type,
+                            ),
+                            torch_dtype=(
+                                torch.float32
+                                if self.model_config.compute_type == "fp16"
+                                else (
+                                    torch.bfloat16
+                                    if self.model_config.compute_type == "bf16"
+                                    else torch.float32
+                                )
+                            ),
+                            trust_remote_code=self.model_config.trust_remote_code,
+                            use_auth_token=self.model_config.use_auth_token,
+                        )
+                    else:
+                        model = AutoModelForCausalLM.from_pretrained(
+                                    model_path,
+                                    device_map=device_map
+                                )
+                    model.config.use_cache = False
             except Exception as e:
                 error_message = "Error in loading model without adapter."
                 logging.error(error_message)
@@ -100,33 +107,39 @@ class Quantizer:
             if (self.model_config.model_name == "meta-llama/Llama-2-7b-hf"):
                 from huggingface_hub import login
                 login()
-            model = AutoModelForCausalLM.from_pretrained(
-                self.model_config.model_name,
-                cache_dir=self.model_config.cache_dir,
-                load_in_4bit=self.model_config.bits == 4,
-                load_in_8bit=self.model_config.bits == 8,
-                device_map=device_map,
-                quantization_config=BitsAndBytesConfig(
+            if (llm_int8):
+                model = AutoModelForCausalLM.from_pretrained(
+                    self.model_config.model_name,
+                    cache_dir=self.model_config.cache_dir,
                     load_in_4bit=self.model_config.bits == 4,
                     load_in_8bit=self.model_config.bits == 8,
-                    llm_int8_threshold=6.0,
-                    llm_int8_has_fp16_weight=False,
-                    bnb_4bit_compute_dtype=compute_dtype,
-                    bnb_4bit_use_double_quant=self.model_config.double_quant,
-                    bnb_4bit_quant_type=self.model_config.quant_type,
-                ),
-                torch_dtype=(
-                    torch.float32
-                    if self.model_config.compute_type == "fp16"
-                    else (
-                        torch.bfloat16
-                        if self.model_config.compute_type == "bf16"
-                        else torch.float32
-                    )
-                ),
-                trust_remote_code=self.model_config.trust_remote_code,
-                use_auth_token=self.model_config.use_auth_token,
-            )
+                    device_map=device_map,
+                    quantization_config=BitsAndBytesConfig(
+                        load_in_4bit=self.model_config.bits == 4,
+                        load_in_8bit=self.model_config.bits == 8,
+                        llm_int8_threshold=6.0,
+                        llm_int8_has_fp16_weight=False,
+                        bnb_4bit_compute_dtype=compute_dtype,
+                        bnb_4bit_use_double_quant=self.model_config.double_quant,
+                        bnb_4bit_quant_type=self.model_config.quant_type,
+                    ),
+                    torch_dtype=(
+                        torch.float32
+                        if self.model_config.compute_type == "fp16"
+                        else (
+                            torch.bfloat16
+                            if self.model_config.compute_type == "bf16"
+                            else torch.float32
+                        )
+                    ),
+                    trust_remote_code=self.model_config.trust_remote_code,
+                    use_auth_token=self.model_config.use_auth_token,
+                )
+            else:
+                model = AutoModelForCausalLM.from_pretrained(
+                            self.model_config.model_name,
+                            device_map=device_map
+                        )
             model.config.use_cache = False
 
             if model_with_adapter:
@@ -155,7 +168,7 @@ class Quantizer:
 
         return tokenizer
 
-    def model_setup(self, model_path, model_with_adapter, merge_model):
+    def model_setup(self, model_path, model_with_adapter, merge_model, llm_int8):
         """
         Set up Finetune configuration.
 
@@ -164,7 +177,7 @@ class Quantizer:
         """
         logging.info("Setting up Model configuration.")
         try:
-            model = self.get_model(model_path, model_with_adapter, merge_model)
+            model = self.get_model(model_path, model_with_adapter, merge_model, llm_int8)
             tokenizer = self.get_tokenizer()
 
             logging.info("Model configuration successful.")

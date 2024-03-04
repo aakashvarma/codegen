@@ -133,28 +133,28 @@ class Runner:
     def __init__(self) -> None:
         pass
 
-    def infer(self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None):
+    def infer(self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None, llm_int8=False):
         try:
             logging.info("Inference started.")
             model = Model(model_config)
-            output = model.infer_model(context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath)
+            output = model.infer_model(context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath, llm_int8)
             logging.info("Inference Done")
             return output
         except Exception as e:
             logging.error("Error during inference: %s", e, exc_info=True)
             raise e
 
-    def finetune(self, model_config, trainer_config, finetune_config, model_path, model_with_adapter, merge_model):
+    def finetune(self, model_config, trainer_config, finetune_config, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Fine-tuning started.")
             model = Model(model_config, trainer_config, finetune_config)
-            model.finetune_model(model_path, model_with_adapter, merge_model)
+            model.finetune_model(model_path, model_with_adapter, merge_model, llm_int8)
             logging.info("Fine-tuning completed.")
         except Exception as e:
             logging.error("Error during fine-tuning: %s", e, exc_info=True)
             raise e
 
-    def validate(self, model_config, validation_dir, model_path, model_with_adapter, merge_model):
+    def validate(self, model_config, validation_dir, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Validation started.")
             val_input_filename = "val_data.pkl"
@@ -176,18 +176,18 @@ class Runner:
             val_question = loaded_data["question"]
             val_answer = loaded_data["answer"]
 
-            self.infer(model_config, val_context, val_question, val_answer, model_path, model_with_adapter, merge_model, True, val_output_filepath)
+            self.infer(model_config, val_context, val_question, val_answer, model_path, model_with_adapter, merge_model, True, val_output_filepath, llm_int8)
 
             logging.info("Validation completed.")
         except Exception as e:
             logging.error("Error during model validation: %s", e, exc_info=True)
             raise e
 
-    def merge_adapter_with_base_model(self, model_config, model_path, model_with_adapter, merge_model):
+    def merge_adapter_with_base_model(self, model_config, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Merging adapter started")
             model = Model(model_config)
-            model.merge_model(model_path, model_with_adapter, merge_model)
+            model.merge_model(model_path, model_with_adapter, merge_model, llm_int8)
             logging.info("Merging adapter completed.")
         except Exception as e:
             logging.error("Error during merging adapter: %s", e, exc_info=True)
@@ -279,6 +279,12 @@ class Runner:
             help="When set to True, the model present in the model path would be quantized using the gptq quantization.",
             default=False
         )
+        parser.add_argument(
+            "--llm_int8",
+            action="store_true",
+            help="When set to True, the model present in the model path would be quantized using the llm_int8 quantization.",
+            default=False
+        )
         return parser
 
     def main(self):
@@ -299,7 +305,7 @@ class Runner:
                 question, context = extract_question_context(prompt)
 
                 # self, model_config, context, question, answer, model_path, model_with_adapter, merge_model, is_verif=False, val_output_filepath=None
-                result = self.infer(model_config, context, question, None, args.model_path, args.model_with_adapter, args.merge_adapter, is_verif=False, val_output_filepath=None)
+                result = self.infer(model_config, context, question, None, args.model_path, args.model_with_adapter, args.merge_adapter, is_verif=False, val_output_filepath=None, llm_int8=args.llm_int8)
                 logger.info("Script completed successfully")
 
             elif args.finetune:
@@ -320,19 +326,19 @@ class Runner:
                 logger.info(finetune_config.__dict__)
 
                 self.finetune(model_config, trainer_config, finetune_config,
-                              args.model_path, args.model_with_adapter, args.merge_adapter)
+                              args.model_path, args.model_with_adapter, args.merge_adapter, args.llm_int8)
                 logger.info("Fine-tuning completed successfully.")
             elif args.validate:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_adapter)
+                self.validate(model_config, args.validation_dir, args.model_path, args.model_with_adapter, args.merge_adapter, args.llm_int8)
                 logger.info("Validation completed successfully")
             elif args.merge_adapter:
                 logger.info("Model Configuration:")
                 logger.info(model_config.__dict__)
 
-                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter)
+                self.merge_adapter_with_base_model(model_config, args.model_path, args.model_with_adapter, args.merge_adapter, args.llm_int8)
                 logger.info("Adapter merging completed successfully")
             elif args.gptq:
                 if not args.trainer_yaml:

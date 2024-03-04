@@ -38,11 +38,11 @@ class Model:
     def __str__(self):
         return f"Model Config: {self.model_config}"
 
-    def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
+    def get_inference_model_and_tokenizer(self, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Setting up model for inference.")
             quantizer = Quantizer(self.model_config)
-            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model)
+            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model, llm_int8)
             return self.model, self.tokenizer
 
         except Exception as e:
@@ -50,11 +50,11 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
-    def get_finetuning_model_and_tokenizer(self, model_path, model_with_adapter, merge_model):
+    def get_finetuning_model_and_tokenizer(self, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Setting up model for fine-tuning.")
             finetuner = FineTuner(self.model_config, self.finetune_config)
-            self.model, self.tokenizer = finetuner.model_setup(model_path, model_with_adapter, merge_model)
+            self.model, self.tokenizer = finetuner.model_setup(model_path, model_with_adapter, merge_model, llm_int8)
             return self.model, self.tokenizer
 
         except Exception as e:
@@ -62,11 +62,11 @@ class Model:
             logging.error(error_message)
             raise RuntimeError(error_message) from e
 
-    def merge_model(self, model_path, model_with_adapter, merge_model):
+    def merge_model(self, model_path, model_with_adapter, merge_model, llm_int8):
         try:
             logging.info("Setting up model for adapter merging.")
             quantizer = Quantizer(self.model_config)
-            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model)
+            self.model, self.tokenizer = quantizer.model_setup(model_path, model_with_adapter, merge_model, llm_int8)
             return self.model, self.tokenizer
 
         except Exception as e:
@@ -75,9 +75,9 @@ class Model:
             raise RuntimeError(error_message) from e
 
 
-    def infer_model(self, context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath):
+    def infer_model(self, context, question, answer, model_path, model_with_adapter, merge_model, is_verif, val_output_filepath, llm_int8):
         try:
-            self.get_inference_model_and_tokenizer(model_path, model_with_adapter, merge_model)
+            self.get_inference_model_and_tokenizer(model_path, model_with_adapter, merge_model, llm_int8)
             logging.info("Start model inference.")
             sql_output_arr = []
             real_output_arr = []
@@ -151,9 +151,9 @@ You must output the SQL query that answers the question.
             logging.error(error_message, exc_info=True)
             raise RuntimeError(error_message) from e
 
-    def finetune_model(self, model_path, model_with_adapter, merge_model):
+    def finetune_model(self, model_path, model_with_adapter, merge_model, llm_int8):
         try:
-            self.get_finetuning_model_and_tokenizer(model_path, model_with_adapter, merge_model)
+            self.get_finetuning_model_and_tokenizer(model_path, model_with_adapter, merge_model, llm_int8)
             trainer_obj = LLMTrainer(
                 self.model, self.tokenizer, self.trainer_config
             )
