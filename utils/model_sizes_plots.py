@@ -6,7 +6,7 @@ import seaborn as sns
 rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
 rc('text', usetex=True)
 
-colors = ['blue', 'red', 'black', 'green', 'purple']
+colors = ['blue']
 
 model_types = ['Float Base Model', 'Float Model with Adapter', 'Float Merged Model', 'Int4 LLM.int8() Merged', 'Int4 GPTQ Merged']
 model_sizes = [13, 13.18848, 13, 3.7, 3.7]
