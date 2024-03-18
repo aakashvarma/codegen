@@ -66,6 +66,7 @@ class Quantizer:
                 else:
                     logging.info("Loading model from path (merged model): {}".format(model_path))
                     if (llm_int8):
+                        logging.info("Using LLM.int8() config")
                         model = AutoModelForCausalLM.from_pretrained(
                             model_path,
                             load_in_4bit=self.model_config.bits == 4,
@@ -108,6 +109,7 @@ class Quantizer:
                 from huggingface_hub import login
                 login()
             if (llm_int8):
+                logging.info("Using LLM.int8() config")
                 model = AutoModelForCausalLM.from_pretrained(
                     self.model_config.model_name,
                     cache_dir=self.model_config.cache_dir,
